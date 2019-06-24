@@ -1,0 +1,16 @@
+.settings/
+javadata/
+.springBeans
+classes/
+/build
+buildSrc/build
+/spring-*/build
+/src/test/
+target/
+
+# Eclipse artifacts, including WTP generated manifests
+.classpath
+.project
+.tern-project
+spring-*/src/main/java/META-INF/MANIFEST.MF
+
