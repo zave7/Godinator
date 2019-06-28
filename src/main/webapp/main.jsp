@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>jinrogeomsa.jsp</title>
+		<title>main.jsp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
@@ -20,20 +20,22 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.jsp" class="logo"><strong>진로검사 하러가기</strong></a>
+									<a href="index.jsp" class="logo"><strong>당신의 미래를 코디하는 '고디네이터'입니다.</strong></a>
 								</header>
 
 							<!-- Content -->
 								
 									<header class="main">
-										<h1>진로검사 결과</h1>
+										<h2>메인화면</h2>
 									</header>
 
 									<!-- Content -->
-									
+									<pre id="recoSchool">
+										추천학교 보여주기
+									</pre>
 									
 								
-									<hr class="major" />
+									
 								
 
 						</div>
