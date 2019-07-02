@@ -1,6 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#highSchool").keyup(function() {
+	var highName = $("#highSchool").val();
+			$.ajax({
+				url: "/godinator/user/schoolCheck1?highName=" + highName,
+				method:"get",
+				success: function(data) {
+					console.log(data);
+					if(data !=null){
+					var code= '<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>'+
+								'<div class="col-6 col-12-small">'+
+										'<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >'+
+										'<label for="highMentorCheck">선택</label>'+
+									'</div>';
+					$("#highMentorSection").html(code);
+					}
+				}
+			});
+	});
+	
+	$("#university").keyup(function() {
+	var uniName = $("#university").val();
+			$.ajax({
+				url: "/godinator/user/schoolCheck2?uniName=" + uniName,
+				method:"get",
+				success: function(data) {
+					console.log(data);
+					if(data !=null){
+					var code= 	
+					'<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>'+
+						'<div class="col-6 col-12-small">'+
+											'<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >'+
+											'<label for="uniMentorCheck">선택</label>'+
+										'</div>';
+					$("#uniMentorSection").html(code);
+					}
+				}
+			});
+	});
+	
+	
+	
+});
+</script>
 <html>
 	<head>
 		<title>register_2.jsp</title>
@@ -32,35 +79,33 @@
 									</header>
 <br><br>
 									<!-- Content -->
-									<form id="loginForm" name="loginForm">
+									<form id="schoolForm" name="schoolForm" method="post" action="">
 									<div>
 										<h3 id="contentId">출신 고등학교</h3>
-										   <input type="text" name="loginId" id="loginId" value="" />
+										   <input type="text" name="highSchool" id="highSchool" />
 										   <a href="#" class="button">학교 검색</a>
 										   <br>
 										<br>
 										<h3 id="contentPwd">출신 대학교</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
+										   <input type="text" name="university" id="university" />
 										   <a href="#" class="button">학교 검색</a>
 										   <div id="idCheck"></div>
 										   <br>
 									
+								
 									<hr>
-										<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>
-											<div class="col-6 col-12-small">
-																<input type="checkbox" id="demo-copy" name="demo-copy">
-																<label for="demo-copy">선택</label>
-															</div>
-										   <br>
-									
-										<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>
-											<div class="col-6 col-12-small">
-																<input type="checkbox" id="demo-human" name="demo-human" checked>
-																<label for="demo-human">선택</label>
-															</div>
-										   <br>
+									<section id="highMentorSection">
 										
+									</section>						
+										   <br>
+									<section id="uniMentorSection">
 										
+									</section>						
+										   <br>
+										   
+																						
+										
+											
 										
 									</div>
 									</form>
@@ -129,15 +174,15 @@
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="../images/pic07.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic07.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic08.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic08.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic09.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic09.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 									</div>
@@ -171,11 +216,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="godinator/assets/js/jquery.min.js"></script>
-			<script src="godinator/assets/js/browser.min.js"></script>
-			<script src="godinator/assets/js/breakpoints.min.js"></script>
-			<script src="godinator/assets/js/util.js"></script>
-			<script src="godinator/assets/js/main.js"></script>
+			<script src="/godinator/resources/assets/js/jquery.min.js"></script>
+			<script src="/godinator/resources/assets/js/browser.min.js"></script>
+			<script src="/godinator/resources/assets/js/breakpoints.min.js"></script>
+			<script src="/godinator/resources/assets/js/util.js"></script>
+			<script src="/godinator/resources/assets/js/main.js"></script>
 
 	</body>
 </html>

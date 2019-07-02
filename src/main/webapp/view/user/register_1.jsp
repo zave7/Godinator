@@ -5,14 +5,55 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#moveRegisterBtn").click(function(){
-		
-	
+	$("#userId").keyup(function() {
+		var id = $("#userId").val();
+		if(id.length < 5 || id.length > 16) {
+			console.log(id.length);
+			cnt = 1;
+			$("#idresult").css("color", "gray");
+			$("#idresult").text("아이디는 5자이상 16자이하입니다.");
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "/godinator/user/idcheck",
+				dataType : "json",
+				data : {"checkid" : id},
+				success : function(data) {
+					cnt = parseInt(data.idcount);
+					if(cnt == 0) {
+						$("#idresult").css("color", "steelblue");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용 가능합니다.");
+					} else {
+						$("#idresult").css("color", "magenta");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용중입니다.");
+					}
+				}
+			});
+		}
 	});
 	
-	
-	
-	
+	$("#registerBtn").click(function() {
+		
+		if($("#userId").val() == "") {
+			alert("아이디를 입력하세요");
+			return;
+		} else if($("#userName").val() == "") {
+			alert("이름을 입력하세요");
+			return;
+		} else if($("#pass").val() == "") {
+			alert("비밀번호를 입력하세요");
+			return;
+		} else if($("#pass").val() != $("#passcheck").val()) {
+			alert("비밀번호를 확인하세요");
+			return;
+		} else if(cnt != 0) {
+			alert("아이디 중복 확인을 하세요");
+			return;
+		} else {
+			$("#memberform").attr("action", "/godinator/user/register").submit();
+		}
+	});
+
 	/*  $("#zipcodeSearchBtn").click(function() {
 		//alert($("#demo-category").val())
 		  url:"/godinator/zipcode/zipSearch", //Controller호출        
@@ -107,62 +148,65 @@ function makeListJson(jsonStr){
 									</header>
 							<br><br>
 									<!-- Content -->
-									<form id="registerForm" name="registerForm">
+									<form id="memberform" name="memberform" method="post" action="">
 									<div>
 										<h3 id="contentId">이름</h3>
-										   <input type="text" name="loginId" id="loginId" value="" />
+										   <input type="text" name="userName" id="userName" />
 										   <br>
 									
 										<h3 id="contentPwd">아이디</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
-										   <div id="idCheck"></div>
+										   <input type="text" name="userId" id="userId" />
+										   <div id="idresult"></div>
 										   <br>
 									
 										<h3 id="contentPwd">비밀번호</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
+										   <input type="text" name="pass" id="pass" />
 										   <br>
 									
 										<h3 id="contentPwd">비밀번호 확인</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
+										   <input type="text" name="passcheck" id="passcheck" />
 										   <div id="pwdCheck"></div>
 										   <br>
-											 
-										<h3 id="contentPwd">메일</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />@
-
-										  
-											<select name="demo-category" id="demo-category" >
-												<option value="">주소를 선택해주세요</option>
-												<option value="naver.com">naver.com</option>
-												<option value="gmail.com">gmail.com</option>
-												<option value="daum.net">daum.net</option>
-												<option value="hanmail.net">hanmail.net</option>
-											</select>
+										
+										<label for="email">이메일</label><br>
+									<div id="email" class="custom-control-inline">
+									<input type="text" class="form-control" id=email name="email" placeholder="" size="25"> @
+									<select class="form-control" id="emailDomain" name="emailDomain">
+										<option value="naver.com">naver.com</option>
+										<option value="google.com">google.com</option>
+										<option value="daum.net">daum.net</option>
+										<option value="nate.com">nate.com</option>
+										<option value="hanmail.net">hanmail.net</option>
+									</select>
+									</div>
 										   <br>
 										<h5 id="contentPwd">인증번호</h5> <!-- sns로그인시 인증불필요 -->
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
+										   <input type="text" name="loginPwd" id="loginPwd" />
 										   <a class="button" id="emailCheckBtn">이메일 인증</a>
 										   <div id="emailCheck"></div>
 										   <br>
-											 
-										<h3 id="contentPwd">전화번호</h3>
-										<div id="telAll">
-											<div class="tel">
-										   <input type="text" name="tel1" id="tel1" value="">
-										   </div>
-										   
-											   <div class="tel">
-											    <input type="text" name="tel2" id="tel2"  value="">
-											    </div>
-											   
-											    <div class="tel">
-											     <input type="text" name="tel3" id="tel3"  value="">
-											     </div>
-										 </div>
+										
+										<div class="form-group" align="left">
+											<label for="tel">전화번호</label>
+											<div id="tel" class="custom-control-inline">
+											<select class="form-control" id="phone1" name="phone1">
+												<option value="010">010</option>
+												<option value="02">02</option>
+												<option value="031">031</option>
+												<option value="032">032</option>
+												<option value="041">041</option>
+												<option value="051">051</option>
+												<option value="061">061</option>
+											</select> _
+											<input type="text" class="form-control" id="phone2" name="phone2" placeholder="1234"> _
+											<input type="text" class="form-control" id="phone3" name="phone3" placeholder="5678">
+											</div>
+										</div>
+										
 										   <br> <br>
 									     
 										<h3 id="contentPwd">우편번호</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
+										   <input type="text" name="zipcode" id="zipcode"/>
 										   <a href="#" class="button" id="zipcodeSearchBtn">우편번호검색</a>
 										   
 									<form name="zipform" id="zipform" method="post">    <!-- 요청 변수 설정 (검색결과형식 설정, json) -->     
@@ -177,17 +221,17 @@ function makeListJson(jsonStr){
 										   <br>
 										   <br>
 										<h3 id="contentPwd">주소</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value=""/>
+										   <input type="text" name="address" id="address" />
 										   <br>
 									
 										<h3 id="contentPwd">상세주소</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value=""/>
+										   <input type="text" name="addressDetail" id="addressDetail" />
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
 										<li>1/4</li>
-										<li><a href="#" class="button primary" id="moveRegisterBtn">다음페이지</a></li>
+										<li><a href="#" class="button primary" id="registerBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>
@@ -248,15 +292,15 @@ function makeListJson(jsonStr){
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="../images/pic07.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic07.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic08.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic08.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic09.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic09.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 									</div>
@@ -290,11 +334,11 @@ function makeListJson(jsonStr){
 			</div>
 
 		<!-- Scripts -->
-			<script src="godinator/assets/js/jquery.min.js"></script>
-			<script src="godinator/assets/js/browser.min.js"></script>
-			<script src="godinator/assets/js/breakpoints.min.js"></script>
-			<script src="godinator/assets/js/util.js"></script>
-			<script src="godinator/assets/js/main.js"></script>
+			<script src="/godinator/resources/assets/js/jquery.min.js"></script>
+			<script src="/godinator/resources/assets/js/browser.min.js"></script>
+			<script src="/godinator/resources/assets/js/breakpoints.min.js"></script>
+			<script src="/godinator/resources/assets/js/util.js"></script>
+			<script src="/godinator/resources/assets/js/main.js"></script>
 
 	</body>
 </html>
