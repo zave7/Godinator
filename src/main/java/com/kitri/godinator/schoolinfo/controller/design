@@ -1,0 +1,23 @@
+controller
+	SchoolInfoController
+	SchoolNewsController
+		- ModelAndView viewNewsPage()
+		- ModelAndView searchNews()
+	SearchSchoolController
+	
+service
+	SchoolInfoServcie
+	SchoolNewsService
+	SearchSchoolService
+dao
+	SchoolInfoDao
+	SchoolNewsDao
+	SearchSchoolDao
+common
+
+jsoup API
+https://jsoup.org/apidocs/org/jsoup/nodes/Element.html
+
+변수명 -
+	 학교 뉴스
+	 	(학교이름 : schoolName
