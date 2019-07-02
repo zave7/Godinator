@@ -29,6 +29,26 @@ public class UserController {
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String register(MemberDto memberDto, Model model) {
 		System.out.println("register controller");
+//		String phone = tel1+"-"+ tel2+"-"+ tel3;
+//		memberDto.setPhone(phone);
+//		String address = address1 + addressDetail;
+//		memberDto.setAddress(address);
+		
+		int cnt = userService.register(memberDto);
+		if(cnt !=0) {
+			model.addAttribute("registerInfo", memberDto);
+			return "/user/register_2";
+		}else {
+			return "";
+		}
+		
+	}
+		
+	}
+	
+	@RequestMapping(value="/register", method = RequestMethod.POST)
+	public String register(MemberDto memberDto, Model model) {
+		System.out.println("register controller");
 
 		
 		int cnt = userService.register(memberDto);

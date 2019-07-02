@@ -167,18 +167,17 @@ function makeListJson(jsonStr){
 										   <input type="text" name="passcheck" id="passcheck" />
 										   <div id="pwdCheck"></div>
 										   <br>
-											 
-										<h3 id="contentPwd">메일</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />@
-
-										  
-											<select name="demo-category" id="demo-category" >
-												<option value="">주소률택�주�요</option>
-												<option value="naver.com">naver.com</option>
-												<option value="gmail.com">gmail.com</option>
-												<option value="daum.net">daum.net</option>
-												<option value="hanmail.net">hanmail.net</option>
-											</select>
+										
+										<label for="email">�메/label><br>
+									<div id="email" class="custom-control-inline">
+									<input type="text" class="form-control" id=email name="email" placeholder="" size="25"> @
+									<select class="form-control" id="emailDomain" name="emailDomain">
+										<option value="naver.com">naver.com</option>
+										<option value="google.com">google.com</option>
+										<option value="daum.net">daum.net</option>
+										<option value="nate.com">nate.com</option>
+										<option value="hanmail.net">hanmail.net</option>
+									</select>
 									</div>
 										   <br>
 										<h5 id="contentPwd">�증번호</h5> <!-- sns로그�시 �증불필-->

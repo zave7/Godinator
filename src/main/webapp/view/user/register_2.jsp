@@ -97,14 +97,19 @@ $(document).ready(function() {
 <input type="hidden" id="registerId" name="registerId" value="${registerInfo.userId}">
 									<hr>
 									<section id="highMentorSection">
+									<section id="uniMentorSection">
+										
+									</section>						
 										
 									</section>						
 										   <br>
 									<section id="uniMentorSection">
-										
+										   
 									</section>						
 										   <br>
 										   
+											
+										
 									</div>
 									</form>
 										   <br>
