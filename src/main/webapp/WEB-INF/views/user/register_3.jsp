@@ -34,7 +34,7 @@
 <br>
 
 									<!-- Content -->
-									<form id="loginForm" name="loginForm">
+									<form id="HighPreferenceForm" name="HighPreferenceForm">
 									<div class="preference">
 										<h2 class="schoolName">고등학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
@@ -105,6 +105,7 @@
 											<br>
 									</div>
 									
+										<form id="UniPreferenceForm" name="UniPreferenceForm">
 									<div class="preference">
 										<h2 class="schoolName">대학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
@@ -174,7 +175,6 @@
 											</select>
 											<br>
 									</div>
-									
 									</form>
 										   <br>
 									<ul class="actions">
