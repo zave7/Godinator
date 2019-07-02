@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>    
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -11,7 +13,11 @@
 	</head>
 	
 	<script type="text/javascript">
-		$(docu)
+		$(document).ready(function() {
+			$("#moveRegister").click(function() {
+				location.href="/godinator/view/user/register_1.jsp";
+			});
+		});
 	
 	</script>
 	<body class="is-preload">
