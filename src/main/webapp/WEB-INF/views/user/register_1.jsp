@@ -5,7 +5,15 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	 $("#zipcodeSearchBtn").click(function() {
+	$("#moveRegisterBtn").click(function(){
+		
+	
+	});
+	
+	
+	
+	
+	/*  $("#zipcodeSearchBtn").click(function() {
 		//alert($("#demo-category").val())
 		  url:"/godinator/zipcode/zipSearch", //Controller호출        
 		  type:"post",
@@ -27,7 +35,7 @@ $(document).ready(function() {
 			  alert("에러발생"); // AJAX 호출 에러        
 			  } 
 				
-	}); 
+	});  */
 	
 function makeListJson(jsonStr){
 	var htmlStr = "";
@@ -97,9 +105,9 @@ function makeListJson(jsonStr){
 										<h1>회원가입</h1>
 										<h4 class="subtitle">기본 인적사항을 입력해주세요!</h4>
 									</header>
-<br><br>
+							<br><br>
 									<!-- Content -->
-									<form id="loginForm" name="loginForm">
+									<form id="registerForm" name="registerForm">
 									<div>
 										<h3 id="contentId">이름</h3>
 										   <input type="text" name="loginId" id="loginId" value="" />
@@ -130,7 +138,6 @@ function makeListJson(jsonStr){
 												<option value="daum.net">daum.net</option>
 												<option value="hanmail.net">hanmail.net</option>
 											</select>
-										 
 										   <br>
 										<h5 id="contentPwd">인증번호</h5> <!-- sns로그인시 인증불필요 -->
 										   <input type="text" name="loginPwd" id="loginPwd" value="" />
@@ -180,7 +187,7 @@ function makeListJson(jsonStr){
 										   <br>
 									<ul class="actions">
 										<li>1/4</li>
-										<li><a href="#" class="button primary">다음페이지</a></li>
+										<li><a href="#" class="button primary" id="moveRegisterBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>
