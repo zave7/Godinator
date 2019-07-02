@@ -5,4 +5,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.user.dao.UserDao">
+  	<select id="idCheck" parameterType="String" resultType="int">
+  		select count(*)
+  		from member
+  		where user_id = #{id}
+  	</select>
+  	
+  	<insert id="register" parameterType="memberDto">
+  		insert into member
+  		(user_id, user_name, pass, email, email_domain, phone1, phone2, phone3, zipcode, address, address_detail, user_cate, join_date)
+  		values(#{userId}, #{userName}, #{pass}, #{email}, #{emailDomain}, #{phone1},
+  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail}, 'm', sysdate)
+  	</insert>
   </mapper>
