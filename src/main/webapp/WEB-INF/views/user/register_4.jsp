@@ -97,7 +97,6 @@
 									<ul class="actions">
 										<li>4/4</li>
 										<li><a href="#" class="button primary">회원가입</a></li>
-										<li><a href="#" class="button">뒤로가기</a></li>
 									</ul>
 									
 									<hr class="major" />

@@ -32,6 +32,7 @@
 					<value>/WEB-INF/mybatis/schoolinfo/mapper_searchschool.xml</value>
 					<value>/WEB-INF/mybatis/schoolinfo/mapper_schoolnews.xml</value>
 					<value>/WEB-INF/mybatis/schoolinfo/mapper_schoolinfo.xml</value>
+					
 				</list>
 			</property> 
 		</bean>
