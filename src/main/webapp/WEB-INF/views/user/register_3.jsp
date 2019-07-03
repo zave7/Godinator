@@ -34,7 +34,7 @@
 <br>
 
 									<!-- Content -->
-									<form id="loginForm" name="loginForm">
+									<form id="HighPreferenceForm" name="HighPreferenceForm">
 									<div class="preference">
 										<h2 class="schoolName">고등학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
@@ -105,6 +105,7 @@
 											<br>
 									</div>
 									
+										<form id="UniPreferenceForm" name="UniPreferenceForm">
 									<div class="preference">
 										<h2 class="schoolName">대학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
@@ -174,13 +175,11 @@
 											</select>
 											<br>
 									</div>
-									
 									</form>
 										   <br>
 									<ul class="actions">
 										<li>3/4</li>
 										<li><a href="#" class="button primary">다음페이지</a></li>
-										<li><a href="#" class="button">뒤로가기</a></li>
 									</ul>
 									
 								
@@ -242,15 +241,15 @@
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="../images/pic07.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic07.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic08.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic08.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="../images/pic09.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic09.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 									</div>
@@ -284,11 +283,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="godinator/assets/js/jquery.min.js"></script>
-			<script src="godinator/assets/js/browser.min.js"></script>
-			<script src="godinator/assets/js/breakpoints.min.js"></script>
-			<script src="godinator/assets/js/util.js"></script>
-			<script src="godinator/assets/js/main.js"></script>
+			<script src="/godinator/resources/assets/js/jquery.min.js"></script>
+			<script src="/godinator/resources/assets/js/browser.min.js"></script>
+			<script src="/godinator/resources/assets/js/breakpoints.min.js"></script>
+			<script src="/godinator/resources/assets/js/util.js"></script>
+			<script src="/godinator/resources/assets/js/main.js"></script>
 
 	</body>
 </html>
