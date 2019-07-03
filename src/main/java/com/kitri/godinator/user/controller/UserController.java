@@ -1,5 +1,8 @@
 package com.kitri.godinator.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +31,8 @@ public class UserController {
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String register(MemberDto memberDto, Model model) {
-		System.out.println("register controller");
-
+		//System.out.println("register controller");
+		
 		
 		int cnt = userService.register(memberDto);
 		if(cnt !=0) {
@@ -42,14 +45,23 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/mentorRegister", method = RequestMethod.POST)
-	public String mentorRegister(MentorDto mentorDto, @RequestParam("registerId") String registerId, Model model) {
+	public String mentorRegister( 
+			@RequestParam("registerId") String registerId,
+			@RequestParam("highSchool") String highSchool,
+			@RequestParam("university") String university,
+			Model model) {
 		System.out.println("mentorregister controller");
-		mentorDto.setUserId(registerId);
+		System.out.println("가입 id" + registerId);
 		
-		int cnt = userService.register(memberDto);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("registerId", registerId);
+		map.put("highSchool", highSchool);
+		map.put("university", university);
+		
+		int cnt = userService.mentorRegister(map);
 		if(cnt !=0) {
-			model.addAttribute("registerInfo", memberDto);
-			return "/user/register_2";
+			model.addAttribute("registerId", registerId);
+			return "/user/register_3";
 		}else {
 			return "";
 		}

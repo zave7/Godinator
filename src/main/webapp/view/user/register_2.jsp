@@ -45,7 +45,19 @@ $(document).ready(function() {
 	});
 	
 	$("#mentorRegisterBtn").click(function() {
+		/* if(($("#highSchool").val() == null) && ($("input[name='highMentorCheck']:checked").length >0)){
+			alert("고등�교률택�세);
+		}else if(($("#university").val() == null) && ($("input[name='uniMentorCheck']:checked").length >0)){
+			alert("��교률택�세);
+		} */
+		if($("input[name='highMentorCheck']:checked").length >0 || $("input[name='uniMentorCheck']:checked").length >0 ){
+		
 		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
+		
+		}else{//멘토�청 �람
+			alert($("#registerId").val());
+			location.href="/user/register_3?registerId="+$("#registerId").val();
+		}
 	});
 	
 });
@@ -86,16 +98,35 @@ $(document).ready(function() {
 										<h3 id="contentId">출신 고등�교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
 										   <a href="#" class="button">�교 검/a>
-										   <br>
-										<br>
+										   <br><br>
+										   <h5>고등�교 구분</h5>
+										   <div id="h_category" class="custom-control-inline">
+													<select class="form-control" id="h_cate" name="h_cate">
+														<option value="�수목적고등�교">�수목적고등�교</option>
+														<option value="�반고등�교">�반고등�교</option>
+														<option value="�율고등�교">�율고등�교</option>
+														<option value="�성�고�학�>�성�고�학�/option>
+													</select>
+										   </div>
+										<br><br><br><br>
 										<h3 id="contentPwd">출신 ��교</h3>
 										   <input type="text" name="university" id="university" />
 										   <a href="#" class="button">�교 검/a>
-										   <div id="idCheck"></div>
-										   <br>
+										   <br><br>
+										    <h5>��교 구분</h5>
+										   <div id="u_category" class="custom-control-inline">
+													<select class="form-control" id="u_cate" name="u_cate">
+														<option value="�문,�회">�문,�회</option>
+														<option value="�연,공학">�연,공학</option>
+														<option value="�학">�학</option>
+														<option value="�술,체육">�술,체육</option>
+														<option value="교육">교육</option>
+													</select>
+										   </div>
 									
 <input type="hidden" id="registerId" name="registerId" value="${registerInfo.userId}">
 									<hr>
+									<br><br>
 									<section id="highMentorSection">
 									<section id="uniMentorSection">
 										
