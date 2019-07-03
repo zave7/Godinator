@@ -180,7 +180,6 @@
 									<ul class="actions">
 										<li>3/4</li>
 										<li><a href="#" class="button primary">다음페이지</a></li>
-										<li><a href="#" class="button">뒤로가기</a></li>
 									</ul>
 									
 								

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.godinator.model.MemberDto;
+import com.kitri.godinator.model.MentorDto;
 import com.kitri.godinator.user.service.UserService;
 
 @Controller
@@ -28,10 +29,22 @@ public class UserController {
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String register(MemberDto memberDto, Model model) {
 		System.out.println("register controller");
-//		String phone = tel1+"-"+ tel2+"-"+ tel3;
-//		memberDto.setPhone(phone);
-//		String address = address1 + addressDetail;
-//		memberDto.setAddress(address);
+
+		
+		int cnt = userService.register(memberDto);
+		if(cnt !=0) {
+			model.addAttribute("registerInfo", memberDto);
+			return "/user/register_2";
+		}else {
+			return "";
+		}
+		
+	}
+	
+	@RequestMapping(value="/mentorRegister", method = RequestMethod.POST)
+	public String mentorRegister(MentorDto mentorDto, @RequestParam("registerId") String registerId, Model model) {
+		System.out.println("mentorregister controller");
+		mentorDto.setUserId(registerId);
 		
 		int cnt = userService.register(memberDto);
 		if(cnt !=0) {
