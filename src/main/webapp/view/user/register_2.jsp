@@ -44,7 +44,9 @@ $(document).ready(function() {
 			});
 	});
 	
-	
+	$("#mentorRegisterBtn").click(function() {
+		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
+	});
 	
 });
 </script>
@@ -92,7 +94,7 @@ $(document).ready(function() {
 										   <div id="idCheck"></div>
 										   <br>
 									
-								
+<input type="hidden" id="registerId" name="registerId" value="${registerInfo.userId}">
 									<hr>
 									<section id="highMentorSection">
 										
@@ -103,17 +105,12 @@ $(document).ready(function() {
 									</section>						
 										   <br>
 										   
-																						
-										
-											
-										
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
 										<li>2/4</li>
-										<li><a href="#" class="button primary">다음페이지</a></li>
-										<li><a href="#" class="button">뒤로가기</a></li>
+										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>
