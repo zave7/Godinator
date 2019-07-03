@@ -46,12 +46,10 @@
 			<header class="major">
 				<h2>Get in touch</h2>
 			</header>
-			<p>우리는 1조 워우예에</p>
 			<ul class="contact">
 				<li class="icon solid fa-envelope"><a href="#">claire97j@naver.com</a></li>
 				<li class="icon solid fa-phone">(000) 000-0000</li>
-				<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-					Nashville, TN 00000-0000
+				<li class="icon solid fa-home">서울시 구로구 디지털로 34길 43 <br>코오롱사이언스벨리 1차 4층
 				</li>
 			</ul>
 		</section>
