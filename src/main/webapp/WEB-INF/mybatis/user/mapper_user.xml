@@ -17,4 +17,12 @@
   		values(#{userId}, #{userName}, #{pass}, #{email}, #{emailDomain}, #{phone1},
   				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail}, 'm', sysdate)
   	</insert>
+  	
+  	<insert id="mentorRegister" parameterType="map">
+  		insert into mentor
+  		(user_id, mentor, aprvl_date, cate)
+  		values(#{userId}, 
+  		, sysdate,'R')
+  	</insert>
+  	
   </mapper>

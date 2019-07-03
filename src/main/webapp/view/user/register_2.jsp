@@ -46,6 +46,11 @@ $(document).ready(function() {
 	
 	$("#mentorRegisterBtn").click(function() {
 		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
+		
+		}else{//멘토신청 안 한 사람
+			alert($("#registerId").val());
+			location.href="/user/register_3?registerId="+$("#registerId").val();
+		}
 	});
 	
 });
@@ -86,16 +91,35 @@ $(document).ready(function() {
 										<h3 id="contentId">출신 고등학교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
 										   <a href="#" class="button">학교 검색</a>
-										   <br>
-										<br>
+										   <br><br>
+										   <h5>고등학교 구분</h5>
+										   <div id="h_category" class="custom-control-inline">
+													<select class="form-control" id="h_cate" name="h_cate">
+														<option value="특수목적고등학교">특수목적고등학교</option>
+														<option value="일반고등학교">일반고등학교</option>
+														<option value="자율고등학교">자율고등학교</option>
+														<option value="특성화고등학교">특성화고등학교</option>
+													</select>
+										   </div>
+										<br><br><br><br>
 										<h3 id="contentPwd">출신 대학교</h3>
 										   <input type="text" name="university" id="university" />
 										   <a href="#" class="button">학교 검색</a>
-										   <div id="idCheck"></div>
-										   <br>
+										   <br><br>
+										    <h5>대학교 구분</h5>
+										   <div id="u_category" class="custom-control-inline">
+													<select class="form-control" id="u_cate" name="u_cate">
+														<option value="인문,사회">인문,사회</option>
+														<option value="자연,공학">자연,공학</option>
+														<option value="의학">의학</option>
+														<option value="예술,체육">예술,체육</option>
+														<option value="교육">교육</option>
+													</select>
+										   </div>
 									
 <input type="hidden" id="registerId" name="registerId" value="${registerInfo.userId}">
 									<hr>
+									<br><br>
 									<section id="highMentorSection">
 										
 									</section>						
@@ -221,3 +245,4 @@ $(document).ready(function() {
 
 	</body>
 </html>
+
