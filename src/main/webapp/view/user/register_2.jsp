@@ -13,10 +13,10 @@ $(document).ready(function() {
 				success: function(data) {
 					console.log(data);
 					if(data !=null){
-					var code= '<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>'+
+					var code= '<h3 id="contentPwd"><strong>고등�교</strong> 멘토 구분</h3>'+
 								'<div class="col-6 col-12-small">'+
 										'<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >'+
-										'<label for="highMentorCheck">선택</label>'+
+										'<label for="highMentorCheck">�택</label>'+
 									'</div>';
 					$("#highMentorSection").html(code);
 					}
@@ -33,10 +33,10 @@ $(document).ready(function() {
 					console.log(data);
 					if(data !=null){
 					var code= 	
-					'<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>'+
+					'<h3 id="contentPwd"><strong>��교</strong> 멘토 구분</h3>'+
 						'<div class="col-6 col-12-small">'+
 											'<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >'+
-											'<label for="uniMentorCheck">선택</label>'+
+											'<label for="uniMentorCheck">�택</label>'+
 										'</div>';
 					$("#uniMentorSection").html(code);
 					}
@@ -76,21 +76,21 @@ $(document).ready(function() {
 								<div id="loginAll">
 									<header class="main">
 									
-										<h1>회원가입</h1>
-										<h3 class="subtitle">후배들의 멘토가 되어주세요!</h3>
+										<h1>�원가/h1>
+										<h3 class="subtitle">�배�의 멘토가 �어주세</h3>
 									</header>
 <br><br>
 									<!-- Content -->
 									<form id="schoolForm" name="schoolForm" method="post" action="">
 									<div>
-										<h3 id="contentId">출신 고등학교</h3>
+										<h3 id="contentId">출신 고등�교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
-										   <a href="#" class="button">학교 검색</a>
+										   <a href="#" class="button">�교 검/a>
 										   <br>
 										<br>
-										<h3 id="contentPwd">출신 대학교</h3>
+										<h3 id="contentPwd">출신 ��교</h3>
 										   <input type="text" name="university" id="university" />
-										   <a href="#" class="button">학교 검색</a>
+										   <a href="#" class="button">�교 검/a>
 										   <div id="idCheck"></div>
 										   <br>
 									
@@ -110,7 +110,7 @@ $(document).ready(function() {
 										   <br>
 									<ul class="actions">
 										<li>2/4</li>
-										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">다음페이지</a></li>
+										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">�음�이지</a></li>
 									</ul>
 									
 								</div>
