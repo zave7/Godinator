@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.godinator.model.MemberDto;
-import com.kitri.godinator.model.MentorDto;
 import com.kitri.godinator.user.service.UserService;
 
 @Controller
@@ -45,58 +44,29 @@ public class UserController {
 	
 	@RequestMapping(value="/mentorRegister", method = RequestMethod.POST)
 	public String mentorRegister( 
+			MemberDto memberDto,//학교별 cate 담겨있음
 			@RequestParam("registerId") String registerId,
-			@RequestParam("highSchool") String highSchool,
-			@RequestParam("university") String university,
-			@RequestParam("uniMentorCheck") String ucheck,
-			@RequestParam("highMentorCheck") String hcheck,
-			Model model) {
-		System.out.println("mentorregister controller");
-		//System.out.println("가입 id" + registerId);
-		System.out.println("mcheck : " + ucheck);
-		System.out.println("hcheck : " + hcheck);
+			@RequestParam("hSchoolCate") String hSchoolCate,
+			@RequestParam("uSchoolCate") String uSchoolCate,
+			@RequestParam(name ="highSchool", defaultValue = "") String highSchool,
+			@RequestParam(name="university", defaultValue = "") String university,
+			@RequestParam(name="uniMentorCheck", defaultValue = "") String ucheck,
+			@RequestParam(name="highMentorCheck", defaultValue = "") String hcheck,
+			Model model) {		
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("registerId", registerId);
-		map.put("highSchool", highSchool);
-		map.put("university", university);
-		
+		map.put("registerId", registerId);//로그인한 아이디
+		map.put("highSchool", highSchool);//입력한 고등학교 이름
+		map.put("university", university);//입력한 대학교 이름
+		map.put("ucheck", ucheck);//대학교 멘토 체크 유무
+		map.put("hcheck", hcheck);//고등학교 멘토 체크 유무
+		map.put("hSchoolCate", hSchoolCate);//고등학교 멘토 체크 유무
+		map.put("uSchoolCate", uSchoolCate);//고등학교 멘토 체크 유무
+	
 		int cnt = userService.mentorRegister(map);
-		if(cnt !=0) {
+		if(cnt ==2) {
 			model.addAttribute("registerId", registerId);
 			return "user/register_3";
-		}else {
-			return "";
-		}
-		
-	}
-		
-	}
-	
-	@RequestMapping(value="/register", method = RequestMethod.POST)
-	public String register(MemberDto memberDto, Model model) {
-		System.out.println("register controller");
-
-		
-		int cnt = userService.register(memberDto);
-		if(cnt !=0) {
-			model.addAttribute("registerInfo", memberDto);
-			return "/user/register_2";
-		}else {
-			return "";
-		}
-		
-	}
-	
-	@RequestMapping(value="/mentorRegister", method = RequestMethod.POST)
-	public String mentorRegister(MentorDto mentorDto, @RequestParam("registerId") String registerId, Model model) {
-		System.out.println("mentorregister controller");
-		mentorDto.setUserId(registerId);
-		
-		int cnt = userService.register(memberDto);
-		if(cnt !=0) {
-			model.addAttribute("registerInfo", memberDto);
-			return "/user/register_2";
 		}else {
 			return "";
 		}

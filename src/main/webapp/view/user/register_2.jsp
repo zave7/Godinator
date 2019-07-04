@@ -1,75 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#highSchool").keyup(function() {
-	var highName = $("#highSchool").val();
-			$.ajax({
-				url: "/godinator/user/schoolCheck1?highName=" + highName,
-				method:"get",
-				success: function(data) {
-					console.log(data);
-					if(data !=null){
-					var code= '<h3 id="contentPwd"><strong>고등�교</strong> 멘토 구분</h3>'+
-								'<div class="col-6 col-12-small">'+
-										'<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >'+
-										'<label for="highMentorCheck">�택</label>'+
-									'</div>';
-					$("#highMentorSection").html(code);
-					}
-				}
-			});
-	});
-	
-	$("#university").keyup(function() {
-	var uniName = $("#university").val();
-			$.ajax({
-				url: "/godinator/user/schoolCheck2?uniName=" + uniName,
-				method:"get",
-				success: function(data) {
-					console.log(data);
-					if(data !=null){
-					var code= 	
-					'<h3 id="contentPwd"><strong>��교</strong> 멘토 구분</h3>'+
-						'<div class="col-6 col-12-small">'+
-											'<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >'+
-											'<label for="uniMentorCheck">�택</label>'+
-										'</div>';
-					$("#uniMentorSection").html(code);
-					}
-				}
-			});
-	});
-	
 	$("#mentorRegisterBtn").click(function() {
-		/* if(($("#highSchool").val() == null) && ($("input[name='highMentorCheck']:checked").length >0)){
-			alert("고등�교률택�세);
-		}else if(($("#university").val() == null) && ($("input[name='uniMentorCheck']:checked").length >0)){
-			alert("��교률택�세);
-		} */
-		if($("input[name='highMentorCheck']:checked").length >0 || $("input[name='uniMentorCheck']:checked").length >0 ){
+		//alert($("#registerId").val());
+		var hcheckL = $("input[name='highMentorCheck']:checked").length;
+		var ucheckL = $("input[name='uniMentorCheck']:checked").length;
+			console.log(hcheckL);
+			console.log(ucheckL);
+		var high = $("#highSchool").val();
+		var uni = $("#university").val();
 		
-		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
-		
-		
-		if(hcheckL>0 && high == ""){//체크�는
-			alert("멘토 �청�해 고등�교륅력주세");
+		if(hcheckL>0 && high == ""){//체크했는데
+			alert("멘토 신청을 위해 고등학교를 입력해 주세요.");
 		}else if(ucheckL>0 && uni == ""){
-			alert("멘토 �청�해 ��교륅력주세");
+			alert("멘토 신청을 위해 대학교를 입력해 주세요.");
 		}else{
 			$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();	
 		}
 	});
-});
-		}else{//멘토�청 �람
-			alert($("#registerId").val());
-			location.href="/user/register_3?registerId="+$("#registerId").val();
-		}
-	});
-	
 });
 </script>
 <html>
@@ -98,38 +49,38 @@ $(document).ready(function() {
 								<div id="loginAll">
 									<header class="main">
 									
-										<h1>�원가/h1>
-										<h3 class="subtitle">�배�의 멘토가 �어주세</h3>
+										<h1>회원가입</h1>
+										<h3 class="subtitle">후배들의 멘토가 되어주세요!</h3>
 									</header>
-<br><br>
+									<br><br>
 									<!-- Content -->
 									<form id="schoolForm" name="schoolForm" method="post" action="">
 									<div>
-										<h3 id="contentId">출신 고등�교</h3>
+										<h3 id="contentId">출신 고등학교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
-										   <a href="#" class="button">�교 검/a>
+										   <a href="#" class="button">학교 검색</a>
 										   <br><br>
-										   <h5>고등�교 구분</h5>
+										   <h5>고등학교 구분</h5>
 										   <div id="h_category" class="custom-control-inline">
-													<select class="form-control" id="h_cate" name="h_cate">
-														<option value="�수목적고등�교">�수목적고등�교</option>
-														<option value="�반고등�교">�반고등�교</option>
-														<option value="�율고등�교">�율고등�교</option>
-														<option value="�성�고�학�>�성�고�학�/option>
+													<select class="form-control" id="hSchoolCate" name="hSchoolCate">
+														<option value="특수목적고등학교">특수목적고등학교</option>
+														<option value="일반고등학교">일반고등학교</option>
+														<option value="자율고등학교">자율고등학교</option>
+														<option value="특성화고등학교">특성화고등학교</option>
 													</select>
 										   </div>
 										<br><br><br><br>
-										<h3 id="contentPwd">출신 ��교</h3>
+										<h3 id="contentPwd">출신 대학교</h3>
 										   <input type="text" name="university" id="university" />
-										   <a href="#" class="button">�교 검/a>
+										   <a href="#" class="button">학교 검색</a>
 										   <br><br>
-										    <h5>��교 구분</h5>
+										    <h5>대학교 구분</h5>
 										   <div id="u_category" class="custom-control-inline">
-													<select class="form-control" id="u_cate" name="u_cate">
-														<option value="�문,�회">�문,�회</option>
-														<option value="�연,공학">�연,공학</option>
-														<option value="�학">�학</option>
-														<option value="�술,체육">�술,체육</option>
+													<select class="form-control" id="uSchoolCate" name="uSchoolCate">
+														<option value="인문,사회">인문,사회</option>
+														<option value="자연,공학">자연,공학</option>
+														<option value="의학">의학</option>
+														<option value="예술,체육">예술,체육</option>
 														<option value="교육">교육</option>
 													</select>
 										   </div>
@@ -138,30 +89,28 @@ $(document).ready(function() {
 									<hr>
 									<br><br>
 									<section id="highMentorSection">
-									<section id="uniMentorSection">
-										
-									</section>						
-										<label for="highMentorCheck">�택</label>
+										<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>
+								<div class="col-6 col-12-small">
+										<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >
+										<label for="highMentorCheck">선택</label>
 									</div>
 									</section>						
 										   <br>
 									<section id="uniMentorSection">
-										   
+										<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>
 						<div class="col-6 col-12-small">
 											<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >
-											<label for="uniMentorCheck">�택</label>
+											<label for="uniMentorCheck">선택</label>
 										</div>
 									</section>						
 										   <br>
 										   
-											
-										
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
 										<li>2/4</li>
-										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">�음�이지</a></li>
+										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>
@@ -272,3 +221,4 @@ $(document).ready(function() {
 
 	</body>
 </html>
+

@@ -11,7 +11,7 @@ $(document).ready(function() {
 			console.log(id.length);
 			cnt = 1;
 			$("#idresult").css("color", "gray");
-			$("#idresult").text("�이�는 5�이16�이�입�다.");
+			$("#idresult").text("아이디는 5자이상 16자이하입니다.");
 		} else {
 			$.ajax({
 				type : "GET",
@@ -22,10 +22,10 @@ $(document).ready(function() {
 					cnt = parseInt(data.idcount);
 					if(cnt == 0) {
 						$("#idresult").css("color", "steelblue");
-						$("#idresult").html("<strong>" + id + "</strong>�용 가�합�다.");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용 가능합니다.");
 					} else {
 						$("#idresult").css("color", "magenta");
-						$("#idresult").html("<strong>" + id + "</strong>�용중입�다.");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용중입니다.");
 					}
 				}
 			});
@@ -35,23 +35,21 @@ $(document).ready(function() {
 	$("#registerBtn").click(function() {
 		
 		if($("#userId").val() == "") {
-			alert("�이�� �력�세);
+			alert("아이디를 입력하세요");
 			return;
 		} else if($("#userName").val() == "") {
-			alert("�름�력�세);
+			alert("이름을 입력하세요");
 			return;
 		} else if($("#pass").val() == "") {
-			alert("비�번호륅력�세);
+			alert("비밀번호를 입력하세요");
 			return;
 		} else if($("#pass").val() != $("#passcheck").val()) {
-			alert("비�번호륕인�세);
+			alert("비밀번호를 확인하세요");
 			return;
 		} else if(cnt != 0) {
-			alert("�이중복 �인�세);
+			alert("아이디 중복 확인을 하세요");
 			return;
-		}else if($("#userCate").val()=="�택�세){
-			alert("�원구분�택 �세);
-			return;
+		}else if($("#userCate").val()=="선택하세요"){
 		}else {
 			$("#memberform").attr("action", "/godinator/user/register").submit();
 		}
@@ -59,24 +57,24 @@ $(document).ready(function() {
 
 	/*  $("#zipcodeSearchBtn").click(function() {
 		//alert($("#demo-category").val())
-		  url:"/godinator/zipcode/zipSearch", //Controller�출        
+		  url:"/godinator/zipcode/zipSearch", //Controller호출        
 		  type:"post",
-		  data:$("#zipform").serialize(), // �청변�정 
-		  dataType:"json",             // �이결과 JSON
-		  success:function(jsonStr){  // jsonStr : 주소 검결과 JSON �이         
+		  data:$("#zipform").serialize(), // 요청변수 설정 
+		  dataType:"json",             // 데이터 결과 JSON
+		  success:function(jsonStr){  // jsonStr : 주소 검색 결과 JSON 데이터          
 			  $("#list").html("");  
 			  var errCode = jsonStr.results.common.errorCode;  
 			  var errDesc = jsonStr.results.common.errorMessage;           
-				  if(errCode!= ��{
+				  if(errCode!= ＂0＂){
 					  alert(errCode+"="+errDesc);
 					  }else{             
 					  if(xmlStr!= null){                 
-						  makeListJson(jsonStr); // JSON�이HTML�태�변        
+						  makeListJson(jsonStr); // JSON데이터 HTML형태로 변환         
 						  }
 					  }        
 				  },
 		  error: function(xhr,status, error){
-			  alert("�러발생"); // AJAX �출 �러        
+			  alert("에러발생"); // AJAX 호출 에러        
 			  } 
 				
 	});  */
@@ -84,7 +82,7 @@ $(document).ready(function() {
 function makeListJson(jsonStr){
 	var htmlStr = "";
 	htmlStr += "<table>";
-	// jquery르용JSON 결과 �이�싱
+	// jquery를 이용한 JSON 결과 데이터 파싱
 	$(jsonStr.results.juso).each(function(){
 		htmlStr += "<tr>";
 		htmlStr += "<td>"+this.roadAddr+"</td>";
@@ -97,7 +95,7 @@ function makeListJson(jsonStr){
 		htmlStr += "<td>"+this.rnMgtSn+"</td>";
 		htmlStr += "<td>"+this.bdMgtSn+"</td>";
 		htmlStr += "<td>"+this.detBdNmList+"</td>";
-		/** API �비�공�� �� (2017.02) **/
+		/** API 서비스 제공항목 확대 (2017.02) **/
 		htmlStr += "<td>"+this.bdNm+"</td>";
 		htmlStr += "<td>"+this.bdKdcd+"</td>";
 		htmlStr += "<td>"+this.siNm+"</td>";
@@ -115,7 +113,7 @@ function makeListJson(jsonStr){
 		htmlStr += "</tr>";
 	});
 	htmlStr += "</table>";
-	// 결과 HTMLFORM결과 출력 DIV�입
+	// 결과 HTML을 FORM의 결과 출력 DIV에 삽입
 	$("#list").html(htmlStr);
 }	
 });
@@ -146,32 +144,32 @@ function makeListJson(jsonStr){
 								<div id="loginAll">
 									<header class="main">
 									
-										<h1>�원가/h1>
-										<h4 class="subtitle">기본 �적�항�력�주�요!</h4>
+										<h1>회원가입</h1>
+										<h4 class="subtitle">기본 인적사항을 입력해주세요!</h4>
 									</header>
 							<br><br>
 									<!-- Content -->
 									<form id="memberform" name="memberform" method="post" action="">
 									<div>
-										<h3 id="contentId">�름</h3>
+										<h3 id="contentId">이름</h3>
 										   <input type="text" name="userName" id="userName" />
 										   <br>
 									
-										<h3 id="contentPwd">�이/h3>
+										<h3 id="contentPwd">아이디</h3>
 										   <input type="text" name="userId" id="userId" />
 										   <div id="idresult"></div>
 										   <br>
 									
-										<h3 id="contentPwd">비�번호</h3>
+										<h3 id="contentPwd">비밀번호</h3>
 										   <input type="text" name="pass" id="pass" />
 										   <br>
 									
-										<h3 id="contentPwd">비�번호 �인</h3>
+										<h3 id="contentPwd">비밀번호 확인</h3>
 										   <input type="text" name="passcheck" id="passcheck" />
 										   <div id="pwdCheck"></div>
 										   <br>
 										
-										<label for="email">�메/label><br>
+										<label for="email">이메일</label><br>
 									<div id="email" class="custom-control-inline">
 									<input type="text" class="form-control" id=email name="email" placeholder="" size="25"> @
 									<select class="form-control" id="emailDomain" name="emailDomain">
@@ -183,14 +181,14 @@ function makeListJson(jsonStr){
 									</select>
 									</div>
 										   <br>
-										<h5 id="contentPwd">�증번호</h5> <!-- sns로그�시 �증불필-->
+										<h5 id="contentPwd">인증번호</h5> <!-- sns로그인시 인증불필요 -->
 										   <input type="text" name="loginPwd" id="loginPwd" />
-										   <a class="button" id="emailCheckBtn">�메�증</a>
+										   <a class="button" id="emailCheckBtn">이메일 인증</a>
 										   <div id="emailCheck"></div>
 										   <br>
 										
 										<div class="form-group" align="left">
-											<label for="tel">�화번호</label>
+											<label for="tel">전화번호</label>
 											<div id="tel" class="custom-control-inline">
 											<select class="form-control" id="phone1" name="phone1">
 												<option value="010">010</option>
@@ -208,18 +206,18 @@ function makeListJson(jsonStr){
 										
 										   <br> <br>
 									     
-										<h3 id="contentPwd">�편번호</h3>
+										<h3 id="contentPwd">우편번호</h3>
 										   <input type="text" name="zipcode" id="zipcode"/>
-										   <a href="#" class="button" id="zipcodeSearchBtn">�편번호검/a>
+										   <a href="#" class="button" id="zipcodeSearchBtn">우편번호검색</a>
 										   
-									<form name="zipform" id="zipform" method="post">    <!-- �청 변�정 (검�결과형�정, json) -->     
-									<input type="hidden" name="currentPage" value="1"/>				<!-- �청 변�정 (�재 �이지. currentPage : n > 0) -->
-									  <input type="hidden" name="countPerPage" value="10"/>				<!-- �청 변�정 (�이지출력 개수. countPerPage 범위 : 0 < n <= 100) -->
-									  <input type="hidden" name="resultType" value="json"/> 			<!-- �청 변�정 (검�결과형�정, json) --> 
-									  <input type="hidden" name="confmKey" value="TESTJUSOGOKR"/>		<!-- �청 변�정 (�인 -->  
-									  <input type="text"   name="keyword" value=""/>					<!-- �청 변�정 (�워 -->
+									<form name="zipform" id="zipform" method="post">    <!-- 요청 변수 설정 (검색결과형식 설정, json) -->     
+									<input type="hidden" name="currentPage" value="1"/>				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
+									  <input type="hidden" name="countPerPage" value="10"/>				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
+									  <input type="hidden" name="resultType" value="json"/> 			<!-- 요청 변수 설정 (검색결과형식 설정, json) --> 
+									  <input type="hidden" name="confmKey" value="TESTJUSOGOKR"/>		<!-- 요청 변수 설정 (승인키) -->  
+									  <input type="text"   name="keyword" value=""/>					<!-- 요청 변수 설정 (키워드) -->
 									</form> 
- 	   								<div id="list"> <!-- 검결과 리스출력 �역 -->
+ 	   								<div id="list"> <!-- 검색 결과 리스트 출력 영역 -->
  	   								 </div>
 										   <br>
 										   <br>
@@ -227,22 +225,22 @@ function makeListJson(jsonStr){
 										   <input type="text" name="address" id="address" />
 										   <br>
 									
-										<h3 id="contentPwd">�세주소</h3>
+										<h3 id="contentPwd">상세주소</h3>
 										   <input type="text" name="addressDetail" id="addressDetail" />
 									<br><br>
 									
-										<h3 id="userCate_h3">�원구분</h3>
+										<h3 id="userCate_h3">회원구분</h3>
 										<select class="form-control" id="userCate" name="userCate">
-												<option value="�택�세>�택�세/option>
-												<option value="�생">�생</option>
-												<option value="���>���/option>
+												<option value="선택하세요">선택하세요</option>
+												<option value="학생">학생</option>
+												<option value="학부모">학부모</option>
 											</select>
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
 										<li>1/4</li>
-										<li><a href="#" class="button primary" id="registerBtn">�음�이지</a></li>
+										<li><a href="#" class="button primary" id="registerBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>

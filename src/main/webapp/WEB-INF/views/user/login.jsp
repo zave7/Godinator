@@ -37,25 +37,25 @@
 							<!-- Content -->
 								<div id="loginAll">
 									<header class="main">
-										<h1>로그/h1>
+										<h1>로그인</h1>
 									</header>
 
 									<!-- Content -->
 									<form id="loginForm" name="loginForm">
 									<div>
-										<h2 id="contentId">�이/h2>
-										   <input type="text" name="loginId" id="loginId" value="" placeholder="�이�� �력�세 />
+										<h2 id="contentId">아이디</h2>
+										   <input type="text" name="loginId" id="loginId" value="" placeholder="아이디를 입력하세요" />
 									</div>
 										   <br>
 									<div> 
-										<h2 id="contentPwd">비�번호</h2>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" placeholder="비�번호륅력�세 />
+										<h2 id="contentPwd">비밀번호</h2>
+										   <input type="text" name="loginPwd" id="loginPwd" value="" placeholder="비밀번호를 입력하세요" />
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
-										<li><a href="#" class="button primary">로그/a></li>
-										<li><a href="#" class="button" id="moveRegister">�원가/a></li>
+										<li><a href="#" class="button primary">로그인</a></li>
+										<li><a href="#" class="button" id="moveRegister">회원가입</a></li>
 									</ul>
 									<br>
 									<ul class="snslogin">
@@ -123,15 +123,15 @@
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="/godinator/resources/images/pic07.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="/godinator/resources/images/pic08.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="/godinator/resources/images/pic09.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 									</div>
@@ -165,11 +165,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="/godinator/resources/assets/js/jquery.min.js"></script>
-			<script src="/godinator/resources/assets/js/browser.min.js"></script>
-			<script src="/godinator/resources/assets/js/breakpoints.min.js"></script>
-			<script src="/godinator/resources/assets/js/util.js"></script>
-			<script src="/godinator/resources/assets/js/main.js"></script>
+			<script src="godinator/assets/js/jquery.min.js"></script>
+			<script src="godinator/assets/js/browser.min.js"></script>
+			<script src="godinator/assets/js/breakpoints.min.js"></script>
+			<script src="godinator/assets/js/util.js"></script>
+			<script src="godinator/assets/js/main.js"></script>
 
 	</body>
 </html>
