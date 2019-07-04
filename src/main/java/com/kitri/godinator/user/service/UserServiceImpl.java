@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int register(MemberDto memberDto) {
 		//System.out.println("register service");
-<<<<<<< HEAD
+
 		String userCate = memberDto.getUserCate();
 		String cate="";
 		if(userCate.equals("학부모")) {
@@ -84,23 +84,7 @@ public class UserServiceImpl implements UserService{
 		}else {
 			cnt++;//2
 			return cnt; //2가 리턴되면 성공 
-=======
-		return sqlSession.getMapper(UserDao.class).register(memberDto);
-	}
 
-	@Override
-	public int mentorRegister(Map<String, String> map) {
-		System.out.println("mentorregister service");
-		String id = map.get("registerId");
-		String high = map.get("highSchool");
-		String uni = map.get("university");
-		if(high !=null) {
-			return sqlSession.getMapper(UserDao.class).highMentorRegister(id);//mentor R, cate h
-		}else if(uni !=null) {
-			return sqlSession.getMapper(UserDao.class).uniMentorRegister(id);//mentor R, cate u
-		}else {
-			return sqlSession.getMapper(UserDao.class).mentorRegister(id);//mentor N, cate null			
->>>>>>> branch 'register' of https://github.com/Parkmirae/Godinator.git
 		}
 		
 	}
