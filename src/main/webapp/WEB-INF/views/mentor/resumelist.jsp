@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/mentor/temp/tempheader.jsp" %><%-- html ~ fontawesome(jquery) --%>
+<%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
 <style type="text/css">
 	.far, .fas {
 		vertical-align: center;
@@ -24,7 +24,6 @@
 		});
 	});
 </script>
-<%@ include file="/WEB-INF/views/mentor/temp/temptitle.jsp" %><%-- /head ~ div(main, inner) ~ /header --%>
 		<%-- Content --%>
 		<section>
 			<header class="main">
@@ -110,6 +109,4 @@
 
 
 		</section>
-	</div> <%-- inner end --%>
-</div> <%-- main end --%>
-<%@ include file="/WEB-INF/views/mentor/temp/tempfooter.jsp" %><%-- sidebar ~ /html --%>
+<%@ include file="/WEB-INF/views/template/sidebar.jsp" %><%-- div(inner end) ~ /html --%>

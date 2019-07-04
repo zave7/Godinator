@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/mentor/temp/tempheader.jsp" %><%-- html ~ fontawesome(jquery) --%>
+<%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
 <style type="text/css">
 	.far, .fas {font-size: 1.5em;}
 	i {vertical-align: center;}
@@ -12,7 +12,7 @@ $(function(){
 	
 	// 웹소켓 접속
 	$('.chatBtn').click(function(){
-		window.open("/template/onlinementor.jsp", "_blank", "width=600, height=700, left=500, top=20");
+		window.open("${root}/mentor/onlinementor", "_blank", "width=600, height=700, left=500, top=20");
 		return false;
 	});
 	// 쪽지 작성
@@ -27,7 +27,6 @@ $(function(){
 	});
 });
 </script>
-<%@ include file="/WEB-INF/views/mentor/temp/temptitle.jsp" %><%-- /head ~ div(main, inner) ~ /header --%>
 
 		<%-- Content --%>
 		<section>
@@ -160,6 +159,4 @@ $(function(){
 				</table>
 			</div>
 		</section>
-	</div> <%-- inner end --%>
-</div> <%-- main end --%>
-<%@ include file="/WEB-INF/views/mentor/temp/tempfooter.jsp" %><%-- sidebar ~ /html --%>
+<%@ include file="/WEB-INF/views/template/sidebar.jsp" %><%-- div(inner end) ~ /html --%>

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE HTML>
 <!--
 	Editorial by HTML5 UP
@@ -10,7 +12,7 @@
 		<title>Elements - Editorial by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="${root}/css/main.css" />
 		<%-- font-awesome --%>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -20,6 +22,9 @@
 				font-size: 1.3em;
 			}
 		</style>
+		<script>
+		
+		</script>
 	</head>
 <body style="padding: 0; margin: 0;">
 	<div id="wrapper" style="padding: 0;">
@@ -56,11 +61,11 @@
 		</div>
 	</div>
 	<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
+		<script src="${root}/js/jquery.min.js"></script>
+		<script src="${root}/js/browser.min.js"></script>
+		<script src="${root}/js/breakpoints.min.js"></script>
+		<script src="${root}/js/util.js"></script>
+		<script src="${root}/js/main.js"></script>
 
 </body>
 </html>

@@ -7,4 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mentor")
 public class MentorController {
 
+	@RequestMapping("/findmentor")
+	public String findMentor() {
+		return "mentor/findmentor";
+	}
+	
+	@RequestMapping("/onlinementor")
+	public String connChat() {
+		return "mentor/onlinementor";
+	}
+	
+	@RequestMapping("/chat")
+	public String startChat() {
+		return "mentor/chat";
+	}
+	
 }
