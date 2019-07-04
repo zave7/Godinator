@@ -1,314 +1,349 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="common.jsp"%>
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Generic - Editorial by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/morris.css">
-		<style>
-			h2.schooldetail {
-				text-align: center;
-			}
-			section span>img {
-				max-width: 100%;
-				height: inherit;
-			}
-			p>span.adis:hover {
-				cursor: pointer;
-				color: black;
-				font-weight: bold;
-			}
-			p.adis {
-				vertical-align: middle !important;
-			}
-			div.textarea {
-				border: 1px solid red;
-				margin: 1% auto;
-			}
-			ul.school-detail {
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-				
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>학교 상세 정보</strong></a>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
-								</header>
-
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h2 class="schooldetail">대덕소프트웨어마이스터고등학교</h2>
-									</header>
-										<div class="row">
-											<div class="col-8 col-12-small">
-												<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
-											</div>
-											<div class="col-4 col-12-small">
-												<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-											</div>
-										</div>
-
-
-									<hr class="major" />
-
-									<div class="row">
-					                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<h2>항목별 학교 평가 지수</h2>
-					                    <!-- ============================================================== -->
-					                    <!--line chart  -->
-					                    <!-- ============================================================== -->
-					                            <div class="card">
-					                                <div class="card-body dateLineChart">
-					                                    <div id="morris_line"></div>
-					                                </div>
-					                            </div>
-					                        </div>
-					                    <!-- ============================================================== -->
-					                    <!--end line chart  -->
-					                    <!-- ============================================================== -->
-					            	</div>
-
-									<hr class="major" />
-									
-									<div class="row">
-										<h2>학교 위치</h2>
-										<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
-										<p>대전 어딘가</p>
-									</div>
-									<hr class="major" />
-
-									<h2>학교 장단점</h2>
-									<div class="row">
-										<div class="col-1 col-12-small">
-										</div>
-										<div class="col-3 col-12-small">
-											<p id="adis"><span class="adis" style="color: black; font-weight: bold;">공감 비율 순</span>&#9475;<span class="adis">공감 순</span>&#9475;<span class="adis">최신순</span></p>
-										</div>
-										<div class="col-5 col-12-small">
-										
-										</div>
-										<div class="col-3 col-12-small">
-												<a href="" class="button primary" id="advantages">장점</a>
-												<a href="" class="button" id="disadvantages">단점</a>
-										</div>
-									</div>
-									<hr/>
-									<div class="adis-contents">
-										<div class="adis-content">
-											<div class="row">
-												<div class="col-8 col-12-small">
-													<span class="id">&nbsp;&nbsp;<strong>sdfi****</strong></span>
-												</div>
-												<div class="col-4 col-12-small">
-													<a href="#" class="button btn-success small">공감:1165</a>
-													<a href="#" class="button primary small">비공감:78</a>
-													<a href="#" class="button primary small">신고</a>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-1 col-12-small">
-												</div>
-												<div class="col-10 col-12-small">
-													<div class="textarea">
-														<p>최신식 기숙사!!</p>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-12 col-12-small">
-													<span>2019-06-21 11:23</span>
-												</div>
-											</div>
-											<hr/>
-										</div>
-										<div class="adis-content">
-											<div class="row">
-												<div class="col-8 col-12-small">
-													<span class="id">&nbsp;&nbsp;<strong>rrdf****</strong></span>
-												</div>
-												<div class="col-4 col-12-small">
-													<a href="#" class="button btn-success small">공감:833</a>
-													<a href="#" class="button primary small">비공감:93</a>
-													<a href="#" class="button primary small">신고</a>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-1 col-12-small">
-												</div>
-												<div class="col-10 col-12-small">
-													<div class="textarea">
-														<p>가장 중요한건 한 학년에 삼성 30명 합격했어요!!</p>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-12 col-12-small">
-													<span>2019-06-21 11:23</span>
-												</div>
-											</div>
-											<hr/>
-										</div>
-										<div class="adis-content">
-											<div class="row">
-												<div class="col-8 col-12-small">
-													<span class="id">&nbsp;&nbsp;<strong>zave****</strong></span>
-												</div>
-												<div class="col-4 col-12-small">
-													<a href="#" class="button btn-success small">공감:420</a>
-													<a href="#" class="button primary small">비공감:55</a>
-													<a href="#" class="button primary small">신고</a>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-1 col-12-small">
-												</div>
-												<div class="col-10 col-12-small">
-													<div class="textarea">
-														<p>이 학교는 정말 깨끗해요</p>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-12 col-12-small">
-													<span>2019-06-21 11:23</span>
-												</div>
-											</div>
-											<hr/>
-										</div>
-									</div>
-									<ul class="pagination school-detail">
-										<li><span class="button disabled">Prev</span></li>
-										<li><a href="#" class="page active">1</a></li>
-										<li><a href="#" class="page">2</a></li>
-										<li><a href="#" class="page">3</a></li>
-										<li><a href="#" class="page">4</a></li>
-										<li><a href="#" class="page">5</a></li>
-										<li><span>&hellip;</span></li>
-										<li><a href="#" class="page">62</a></li>
-										<li><a href="#" class="button">Next</a></li>
-									</ul>
-
-								</section>
-
-						</div>
-					</div>
-					
-					<%@ include file="sidebar.jsp" %>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
-					</div>
-				
-
+<%@ include file="../template/header.jsp" %>
+<c:set var="schoolDto" value="${requestScope.schoolDto}"/>
+<c:set var="imgUrl" value="${requestScope.imgUrl}"/>
+<c:set var="schoolCate" value="${requestScope.schoolCate}"/>
+<c:set var="schoolCode" value="${requestScope.schoolCode}"/>
+<c:set var="cateAvg" value="${requestScope.cateAvg}"/>
+	<!-- Content -->
+	<section>
+		<header class="main">
+			<h2 class="schooldetail">${schoolDto.schoolName}</h2>
+		</header>
+			<div class="row">
+				<div class="col-8 col-12-small">
+					<span class="image main"><img src="${imgUrl}" alt="" /></span>
+				</div>
+				<div class="col-4 col-12-small">
+					<h3>학교정보</h3>
+					<fieldset> 
+						<legend>관할 교육청</legend> 
+						<label>${schoolDto.eduOffice}</label>
+					</fieldset>
+					<fieldset> 
+						<legend>대표 전화 / 팩스</legend> 
+						<label>${schoolDto.phone} / ${schoolDto.fax}</label>
+					</fieldset>
+					<fieldset> 
+						<legend>홈페이지</legend> 
+						<label>${schoolDto.homePage}</label>
+					</fieldset>
+				</div>
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+
+		<hr class="major" />
+
+		<div class="row">
+            		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+							<h2>항목별 학교 평가 지수</h2>
+                  <!-- ============================================================== -->
+                  <!--line chart  -->
+                  <!-- ============================================================== -->
+                          <div class="card">
+                              <div class="card-body">
+                                  <div id="curve_chart"></div>
+                              </div>
+                          </div>
+            		</div>
+                  <!-- ============================================================== -->
+                  <!--end line chart  -->
+                  <!-- ============================================================== -->
+          	</div>
+
+		<hr class="major" />
+		
+		<div class="row">
+			<h2>학교 위치</h2>
+			<div id="schooldetail-map">
+			</div>
 			
-			<!-- 모리스 chart -->
-			<script src="assets/js/raphael.min.js"></script>
-		    <script src="assets/js/morris.js"></script>
-		    <!-- <script src="assets/js/Morrisjs.js"></script> -->
-			<script>
-				$(document).ready(function() {
-						if ($('#morris_line').length) {
-				            // Use Morris.Area instead of Morris.Line
-				            Morris.Line({
-				                element: 'morris_line',
-				                behaveLikeLine: true,
-				                data: [
-				                    { y: '시설', a: 10, b: 20 },
-				                    { y: '학업분위기', a: 65, b: 45 },
-				                    { y: '교직원(교육, 인성)', a: 50, b: 40 },
-				                    { y: '진로교육', a: 75, b: 65 },
-				                    { y: '학생 복지', a: 50, b: 40 },
-				                ],
-				                xkey: 'y',
-				                ykeys: ['a'],
-				                labels: ['마이스터 평균', '학교 평균'],
-				                   lineColors: ['#5969ff', '#ff407b'],
-				                     resize: true,
-				                        gridTextSize: '14px'
-				            });
+			<p>대전 어딘가</p>
+		</div>
+		<hr class="major" />
+
+		<h2>학교 장단점</h2>
+		<div class="row">
+			<div class="col-1 col-12-small">
+			</div>
+			<div class="col-3 col-12-small">
+				<p id="adis"><span class="adis" style="color: black; font-weight: bold;" data-type="r">공감 비율 순</span>&#9475;<span class="adis" data-type="m">순공감 순</span>&#9475;<span class="adis" data-type="l">최신순</span></p>
+				</div>
+				<div class="col-5 col-12-small">
 				
-				        }
-						//$('#subChart span.subDate').text(dataValues[0].y);
-					$("span.adis").click(function() {
-						$(this).css("color", "black").css("font-weight", "bold").siblings().css("color", "gray").css("font-weight", "normal");
-					});
+				</div>
+				<div class="col-3 col-12-small" id="adDiv">
+						<a class="button primary" data-adDiv="a">장점</a>
+						<a class="button" data-adDiv="d">단점</a>
+				</div>
+			</div>
+			<hr/>
+			<div class="adis-contents">
+				<div class="adis-content">
+					<div class="row">
+						<div class="col-8 col-12-small">
+							<span class="id">&nbsp;&nbsp;<strong>sdfi****</strong></span>
+						</div>
+						<div class="col-4 col-12-small">
+							<a href="#" class="button btn-success small">공감:1165</a>
+							<a href="#" class="button primary small">비공감:78</a>
+							<a href="#" class="button primary small">신고</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-1 col-12-small">
+						</div>
+						<div class="col-10 col-12-small">
+							<div class="textarea">
+								<p>최신식 기숙사!!</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-12-small">
+							<span>2019-06-21 11:23</span>
+						</div>
+					</div>
+					<hr/>
+				</div>
+			</div>
+			<ul class="pagination school-detail" id="pros-cons">
+			</ul>
+
+		</section>
+		
+		
+		<!-- 구글차트 -->
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	    <script type="text/javascript">
+	      google.charts.load('current', {'packages':['corechart']});
+	      google.charts.setOnLoadCallback(drawChart);
+	      
+	      function drawChart() {
+	        var data = google.visualization.arrayToDataTable([
+	        	  ['학교 구분', '일반고 평균', '신림고등학교'],
+		          ['시설', ${cateAvg.EVAL1AVG}, ${schoolDto.eval1Avg}],
+		          ['학업 분위기', ${cateAvg.EVAL1AVG}, ${schoolDto.eval2Avg}],
+		          ['교직원(교육, 인성)', ${cateAvg.EVAL1AVG}, ${schoolDto.eval3Avg}],
+		          ['진로 교육', ${cateAvg.EVAL1AVG}, ${schoolDto.eval4Avg}],
+		          ['?', ${cateAvg.EVAL1AVG}, ${schoolDto.eval5Avg}],
+		          ['취업률/진학률', ${cateAvg.EVAL1AVG}, ${schoolDto.eval6Avg}]
+	        ]);
+	
+	        var options = {
+	          title: '10점 만점!!',
+	          curveType: 'function',
+	          legend: { position: 'bottom' }
+	        };
+	
+	        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+	
+	        chart.draw(data, options);
+	      }
+	    </script>
+		<script>
+		$(document).ready(function() {
+			
+			var schoolCate = "${requestScope.schoolCate}";
+			var schoolCode = "${requestScope.schoolCode}";
+			var searchType = "r";
+			var adDiv = 'a';
+			//$('#subChart span.subDate').text(dataValues[0].y);
+			$("span.adis").click(function() {
+				$(this).css("color", "black").css("font-weight", "bold").siblings().css("color", "gray").css("font-weight", "normal");
+			});
+			
+			if ($('#morris_line').length) {
+				console.log("차트차트");
+	            // Use Morris.Area instead of Morris.Line
+	            Morris.Line({
+	                element: 'morris_line',
+	                behaveLikeLine: true,
+	                data: [
+	                    { y: '시설', a: 10, b: 20 },
+	                    { y: '학업분위기', a: 65, b: 45 },
+	                    { y: '교직원(교육, 인성)', a: 50, b: 40 },
+	                    { y: '진로교육', a: 75, b: 65 },
+	                    { y: '학생 복지', a: 50, b: 40 },
+	                ],
+	                xkey: 'y',
+	                ykeys: ['a'],
+	                labels: ['마이스터 평균', '학교 평균'],
+	                   lineColors: ['#5969ff', '#ff407b'],
+	                     resize: true,
+	                        gridTextSize: '14px'
+	            });
+	        }
+			
+			function getEvals(adDivVal, searchType, currpg) {
+				$.ajax({
+					url : "${root}/schoolinfo/schooleval",
+					type : "GET",
+					contentType : "application/json;charset=utf-8",
+					dataType : "JSON",
+					data : "schoolCate="+schoolCate+"&schoolCode="+schoolCode+"&adDiv="+adDivVal+"&searchType="+searchType+"&currpg="+currpg,
+					success : function(result) {
+						var evals = result.evals;
+						var evalsCnt = evals.length;
+						var content = "";
+						for(var i=0; i<evalsCnt; i ++) {
+							content += '<div class="adis-content"><div class="row"><div class="col-8 col-12-small">';
+							content += '	<span class="id">&nbsp;&nbsp;<strong>'+evals[i].userId+'</strong></span></div>';
+							content += '	<div class="col-4 col-12-small menu" data-seq="'+evals[i].adNo+'">';
+							content += '		<a class="button btn-success small sympathy">공감:<span>'+evals[i].upvote+'</span></a>';
+							content += '		<a class="button primary small uncensored">비공감:<span>'+evals[i].downvote+'</span></a>';
+							content += '		<a class="button primary small">신고</a>';
+							content += '	</div></div><div class="row"><div class="col-1 col-12-small"></div>';
+							content += '	<div class="col-10 col-12-small"><div class="textarea">';
+							content += '			<p>'+evals[i].content+'</p>';
+							content += '		</div></div></div><div class="row"><div class="col-12 col-12-small">';
+							content += '		<span>'+evals[i].regitDate+'</span></div></div><hr/></div>';
+						}
+						$("div.adis-contents").empty();
+						$("div.adis-contents").append(content);
+						
+						//공감 비공감 눌렀을때
+						$("div.adis-contents a.sympathy, a.uncensored").click(function() {
+							console.log($(this).text());
+							var $this = this;
+							var adNo = $(this).parent().attr("data-seq");
+							var $parent = $(this).parent();
+							console.log("data-seq : "+adNo);
+							var upDown;
+							if($(this).index() == 0) {
+								upDown = "u";
+							} else {
+								upDown = "d";
+							}
+							var param = JSON.stringify({
+								"schoolCate" : schoolCate,
+								"schoolCode" : schoolCode,
+								"adNo" : adNo,
+								"upDown" : upDown
+							});
+							$.ajax({
+								url : "${root}/schoolinfo/poscon",
+								type : "PATCH",
+								contentType : "application/json;charset=utf-8",
+								dataType : "json",
+								data : param,
+								success : function(result) {
+									// s, d, e
+									console.log(result.msg);
+									if(result.msg == "s") {
+										$($parent).children().eq(0).find("span").text(result.upvote);
+										$($parent).children().eq(1).find("span").text(result.downvote);
+										if(upDown == "u") {
+											//$(this).css("border", "u");
+											$($this).css("border", "3px solid yellow !important");
+											console.log($($this).find("span").first().text());
+										} else {
+											//$(this).attr("data-state", "d");
+											$($this).css("border", "3px solid blue !important");
+											console.log($($this).find("span").first().text());
+										}
+									} else if(result.msg == "d") {
+										//$(this).removeAttr("data-state");
+											$($this).css("border", "none");
+											$($this).find("span").text(Number($($this).find("span").text())-1);
+											console.log($($this).find("span").first().text());
+									} else {
+										alert(result.msg);
+									}
+								},
+								error : function() {
+									alert("에러가 발생했습니다! 다시시도해주세요");
+								}
+							});
+							return false;
+						});
+						
+						//페이징 처리
+						var pagination = "";
+						var pageBean = result.pageBean;
+						var startPage = pageBean.startPage;
+						var endPage= pageBean.endPage;
+						if(pageBean.startPage != 1) {
+							pagination += '<li><a class="page eval" data-pg="'+1+'">'+1+'</a></li>';
+							pagination += '<li><span>&hellip;</span></li>';
+						}
+						for(var i=startPage; i<=endPage; i++) {
+							if(pageBean.currentPage == i)
+								pagination += '<li><a class="page active" data-pg="'+i+'">'+i+'</a></li>';
+							else
+								pagination += '<li><a class="page eval" data-pg="'+i+'">'+i+'</a></li>';
+						}						
+						if(pageBean.endPage != pageBean.totalPage) {
+							pagination += '<li><span>&hellip;</span></li>';
+							pagination += '<li><a class="page eval" data-pg="'+pageBean.totalPage+'">'+pageBean.totalPage+'</a></li>';
+						}
+						$("#pros-cons").empty();
+						$("#pros-cons").append(pagination);
+						
+						var prevFlag = "";
+						var nextFlag = "";
+						if(!pageBean.isPrev)
+							prevFlag = " disabled";
+						if(!pageBean.isNext)	
+							nextFlag = " disabled";
+						var prevAndNext = "";
+						$("#pros-cons").prepend('<li><span class="button'+prevFlag+' eval" data-pg="'+(pageBean.startPage-1)+'">Prev</span></li>');
+						$("#pros-cons").append('<li><span class="button'+nextFlag+' eval" data-pg="'+(pageBean.endPage+1)+'">Next</span></li>');
+						$("ul#pros-cons>li .eval").click(function() {
+							var currpg = $(this).attr("data-pg");
+							getEvals(adDiv, searchType, currpg);
+						});
+						
+					},
+					error : function() {
+						
+					}
 				});
-			</script>
-	</body>
-</html>
+			}
+			getEvals('a', 'r', '1');
+			
+			$("span.adis").click(function() {
+				searchType = $(this).attr("data-type");
+				getEvals(adDiv, searchType, 1);
+				return false;
+			});
+			$("#adDiv>a").click(function() {
+				adDiv = $(this).attr("data-adDiv");
+				getEvals(adDiv, searchType, 1);
+			});
+		});
+		</script>
+		<!-- 지도 -->
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3eff8dc3c024272148b81baa4f00552"></script>
+		<script>
+		function map() {
+			setTimeout(function() {
+				console.log("지도 함수 호출");
+				var mapContainer = document.getElementById('schooldetail-map'), // 지도를 표시할 div 
+				mapOption = { 
+				    center: new kakao.maps.LatLng(${schoolDto.latitude}, ${schoolDto.longitude}), // 지도의 중심좌표
+				    level: 3 // 지도의 확대 레벨
+				};
+				
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				
+				//마커가 표시될 위치입니다 
+				var markerPosition  = new kakao.maps.LatLng(${schoolDto.latitude}, ${schoolDto.longitude}); 
+				
+				//마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+					position: markerPosition
+				});
+				
+				//마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+				
+				//아래 코드는 지도 위의 마커를 제거하는 코드입니다
+				//marker.setMap(null); 
+				console.log("지도 함수 종료");
+			}, 3000);
+		}
+		map();
+		</script>
+<%@ include file="../template/sidebar.jsp" %>

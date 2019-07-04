@@ -1,8 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.schoolinfo.dao.SchoolInfoDao">
+  	<select id="getEvalsBySchoolCode" parameterType="map" resultType="evalSchoolDto">
+  		
+  		SELECT *
+  		FROM	(SELECT rownum r, a.*
+  		
+  				FROM 	(SELECT ad_no adNo, ad_div adDiv, substr(user_id, 1, 4) || '****' userId, school_cate schoolCate, school_code schoolCode, content, upvote, downvote, regit_date regitDate
+  						FROM eval_school
+  						WHERE school_cate = #{schoolCate}
+  						AND school_code = #{schoolCode}
+  						AND ad_div = #{adDiv}
+  						AND state = 'a'
+  						<if test='searchType == "r"'>
+  							ORDER BY upvote/(downvote+1) DESC) a
+  						</if>
+  						<if test='searchType == "m"'>
+  							ORDER BY upvote DESC) a
+  						</if>
+  						<if test='searchType == "l"'>
+  							ORDER BY ad_no DESC) a
+  						</if>
+  		<![CDATA[
+  				WHERE rownum <= #{endRow}) 
+  		WHERE r >= #{startRow}
+  		]]>
+  	</select>
+  	<select id="getCountEvals" resultType="int">
+  		SELECT count(*)
+  		FROM eval_school
+  		WHERE school_cate = #{schoolCate}
+  		AND school_code = #{schoolCode}
+  		AND ad_div = #{adDiv}
+  		AND state = 'a'
+  	</select>
+  	<select id="getUpDownByUser" parameterType="map" resultType="string">
+  		SELECT updown
+  		FROM eval_ud_log
+  		WHERE ad_no = #{adNo}
+  		AND user_id = #{userId}
+  	</select>
+  	<insert id="insertEvalLogUpDown" parameterType="map">
+		INSERT into eval_ud_log (user_id, ad_no, updown) values (#{userId},#{adNo},#{upDown})
+  	</insert>
+  	<update id="plusEvalVote" parameterType="map">
+  		UPDATE eval_school
+  		SET 
+  		<if test='upDown == "u"'>
+  			upvote = upvote + 1
+  		</if>
+  		<if test='upDown == "d"'>
+  			downvote = downvote + 1
+  		</if>
+  		WHERE ad_no = #{adNo}
+  		AND user_id = #{userId}
+  	</update>
+  	<update id="minusEvalVote" parameterType="map">
+  		UPDATE eval_school
+  		SET 
+  		<if test='upDown == "u"'>
+  			upvote = upvote - 1
+  		</if>
+  		<if test='upDown == "d"'>
+  			downvote = downvote - 1
+  		</if>
+  		WHERE ad_no = #{adNo}
+  		AND user_id = #{userId}
+  	</update>
+  	<delete id="deleteEvalUpDown" parameterType="map">
+  		DELETE eval_ud_log 
+		WHERE ad_no = #{adNo}
+		AND user_id = #{userId}
+  	</delete>
+  	<select id="getEvalUpDown" parameterType="map" resultType="map">
+  		SELECT upvote, downvote
+  		FROM eval_school
+  		WHERE ad_no = #{adNo}
+  	</select>
+  	<select id="getHEvalCateAvg" parameterType="map" resultType="map">
+  		select 	avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, 
+  				avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
+		from h_school 
+		WHERE school_cate1 =    (SELECT school_cate1 
+		                        FROM h_school 
+		                        WHERE school_code = #{schoolCode})
+  	</select>
+  	<select id="getUEvalCateAvg" parameterType="map" resultType="map">
+  		select 	avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, 
+  				avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
+		from u_school 
+		WHERE type =    (SELECT type 
+		                        FROM u_school 
+		                        WHERE code = #{schoolCode})
+  	</select>
   </mapper>

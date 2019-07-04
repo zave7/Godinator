@@ -1,0 +1,323 @@
+﻿desc member;
+insert into member (user_id, user_name, pass, user_cate)
+values ('testid', 'testname', 'test' , 's');
+
+desc eval_school;
+insert into eval_school (ad_no, ad_div, user_id, school_cate, school_code, content, upvote, downvote, state)
+values (ad_seq.nextVal, 'a', 'testid','h','S010000484','신림고등학교 테스트'||ad_seq.currval,0,0,'a');
+
+select school_code, school_name from h_school;
+rollback;
+commit;
+
+MERGE INTO TB_SCORE S
+
+    USING TMP_SCORE T
+
+       ON (S.COURSE_ID = T.COURSE_ID AND S.STUDENT_ID = T.STUDENT_ID)
+
+    WHEN MATCHED THEN
+
+        UPDATE SET S.SCORE = T.SCORE
+
+    WHEN NOT MATCHED THEN
+
+        INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE) 
+
+        VALUES (T.COURSE_ID, T.STUDENT_ID, T.SCORE)
+
+MERGE INTO TB_SCORE S
+
+    USING DUAL
+
+       ON (S.COURSE_ID = 'C1' AND S.STUDENT_ID = 'S1')
+
+    WHEN MATCHED THEN
+
+        UPDATE SET S.SCORE = 20
+
+    WHEN NOT MATCHED THEN
+
+        INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE)
+
+        VALUES ('C1', 'S1', 20);
+
+----
+
+select * from eval_school;
+insert into eval_school (ad_no, ad_div, user_id, school_cate, school_code, content, upvote, downvote, state)
+values (ad_seq.nextVal, 'a', 'testid','h','S010000484','신림고등학교 테스트'||ad_seq.currval,0,7,'a');
+
+commit;
+
+commit;
+SELECT *
+FROM	(SELECT rownum r, a.*
+  		
+  		FROM 	(SELECT ad_no adNo, ad_div adDiv, user_id userId, school_cate schoolCate, school_code schoolCode, content, upvote, downvote, regit_date regitDate
+  				FROM eval_school
+  				WHERE school_cate = 'h'
+  				AND school_code = 'S010000484'
+  				AND ad_div = 'a'
+  				AND state = 'a'
+  				ORDER BY ad_no DESC) a
+  		WHERE rownum <= 7)
+WHERE r >= 1;
+SELECT *
+FROM	(SELECT rownum r, a.*
+  		
+  		FROM 	(SELECT ad_no adNo, ad_div adDiv, user_id userId, school_cate schoolCate, school_code schoolCode, content, upvote, downvote, regit_date regitDate
+  				FROM eval_school
+  				WHERE school_cate = 'h'
+  				AND school_code = 'S010000484'
+  				AND ad_div = 'a'
+  				AND state = 'a'
+  				ORDER BY upvote/(downvote+1) DESC) a
+  		WHERE rownum <= 7)
+WHERE r >= 1;        
+SELECT *
+FROM	(SELECT rownum r, a.*
+  		
+  		FROM 	(SELECT ad_no adNo, ad_div adDiv, user_id userId, school_cate schoolCate, school_code schoolCode, content, upvote, downvote, regit_date regitDate
+  				FROM eval_school
+  				WHERE school_cate = 'h'
+  				AND school_code = 'S010000484'
+  				AND ad_div = 'a'
+  				AND state = 'a'
+  				ORDER BY upvote DESC) a
+  		WHERE rownum <= 7)
+WHERE r >= 1; 
+        
+DESC godinator;
+        
+SELECT count(*)
+FROM eval_school
+WHERE school_cate = 'h'
+AND school_code = 'S010000484'
+AND ad_div = 'a'
+AND state = 'a';
+
+select * from eval_school;
+select * from eval_ud_log;
+MERGE INTO TB_SCORE S
+    USING TMP_SCORE T
+       ON (S.COURSE_ID = T.COURSE_ID AND S.STUDENT_ID = T.STUDENT_ID)
+    WHEN MATCHED THEN
+        UPDATE SET S.SCORE = T.SCORE
+    WHEN NOT MATCHED THEN
+        INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE) 
+        VALUES (T.COURSE_ID, T.STUDENT_ID, T.SCORE);
+        
+-- 공감 비공감
+merge INTO eval_ud_log
+using dual
+on (user_id = 'testid' AND ad_no = 5)
+when matched then 
+update set updown = null
+when not matched then
+insert (user_id, ad_no, updown) values ('testid',5, null);
+
+-- 장단점 공감 비공감 업데이트
+update eval_school 
+set upvote = upvote+(-1)
+WHERE ad_no = 5;
+commit;
+
+------------
+
+
+
+
+
+
+
+select * from eval_school;
+delete eval_school;
+select * from member;
+insert into member (user_id, user_name, pass, user_cate)
+values ('testid', 'testname', 'test', 's');
+
+COMMIT;
+
+select * from h_school WHERE school_code = 'S010000484';
+SELECT *
+  		FROM eval_ud_log
+  		WHERE ad_no = 51
+  		AND user_id = 'testid';
+        desc eval_ud_log;
+DELETE eval_ud_log;
+commit;
+
+
+MERGE INTO eval_ud_log
+		USING dual
+		ON (user_id = 'testid' AND ad_no = 81)
+		WHEN MATCHED THEN 
+		UPDATE SET updown = 'u'
+		WHEN NOT MATCHED THEN
+		INSERT (user_id, ad_no, updown) values ('testid',50,'u');
+        
+        
+        DELETE eval_ud_log 
+		WHERE ad_no = 81;
+        
+        update eval_ud_log set updown = 'u' WHERE ad_no = 50;
+        
+create or replace trigger eval_trigger
+
+AFTER INSERT OR UPDATE ON eval_ud_log OR DELETE ON ad_no
+
+for each row
+
+         BEGIN
+
+    CASE
+
+    WHEN INSERTING THEN
+
+        DBMS_OUTPUT.PUT_LINE('Inserting...');
+
+    WHEN UPDATING('updown') THEN
+
+        DBMS_OUTPUT.PUT_LINE('Updating sal...');
+
+    WHEN DELETING THEN
+
+        DBMS_OUTPUT.PUT_LINE('Deleting...');
+
+END CASE;
+END;
+SET SERVEROUTPUT ON;
+
+        
+CREATE OR REPLACE TRIGGER TRIG_DEL_EMP_INFO
+AFTER DELETE ON TB_LS_EMP867
+FOR EACH ROW
+
+BEGIN 
+
+INSERT INTO TB_LS_EMP867_DELETE
+
+VALUES (:OLD.EMP_NO, :OLD.DEPT_NO, :OLD.SAL, TO_CHAR(SYSDATE ,'YYYYMMDDHH24MISS') );
+END;
+------------------------- 성공 트리거
+
+
+
+select * from eval_school WHERE ad_no = 50;
+
+select * from eval_ud_log WHERE ad_no = 50;
+
+insert into eval_ud_log values('testid', 50, 'u');
+update eval_school set upvote = 0, downvote = 0;
+commit;
+
+update eval_ud_log set updown = 'u' WHERE ad_no = 50;
+
+DROP TRIGGER eval_trigger;
+create or replace trigger eval_trigger
+AFTER update on eval_ud_log
+FOR EACH ROW
+begin
+	if:new.updown = 'u' THEN
+	update eval_school set upvote = upvote +1 WHERE ad_no = :old.ad_no;
+    END if;
+end;
+
+------------------------------- 트리거 보류
+
+DROP TRIGGER eval_trigger_insert;
+CREATE TRIGGER eval_trigger_insert
+BEFORE INSERT on eval_ud_log FOR EACH ROW
+BEGIN
+    DBMS_OUTPUT.ENABLE;
+    IF:NEW.updown = 'u' THEN
+        UPDATE eval_school SET upvote = upvote+1 WHERE ad_no = :OLD.ad_no;
+    END IF;
+    IF:NEW.updown = 'd' THEN
+        UPDATE eval_school SET downvote = downvote+1 WHERE ad_no = :OLD.ad_no;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('INSERT');
+END;
+
+DROP TRIGGER eval_trigger_delete;
+CREATE OR REPLACE TRIGGER eval_trigger_delete
+BEFORE DELETE on eval_ud_log FOR EACH ROW
+BEGIN
+    DBMS_OUTPUT.ENABLE;
+    if:old.updown = 'u' THEN
+        update eval_school set upvote = upvote -1 WHERE ad_no = :OLD.ad_no;
+    END if;
+    
+    if:old.updown = 'd' THEN
+        update eval_school set downvote = downvote -1 WHERE ad_no = :OLD.ad_no;
+    END if;
+    DBMS_OUTPUT.PUT_LINE('INSERT');
+END;
+
+-------- 9일
+
+update h_school 
+set eval1_avg = 1.1, eval2_avg = 6.1, eval3_avg = 7.1, eval4_avg = 4.1, eval5_avg = 9.1, eval6_avg = 7.1, eval_cnt = 90
+WHERE school_code = 'S010000484';
+update h_school 
+set eval1_avg = 9.1, eval2_avg = 9.1, eval3_avg = 8.1, eval4_avg = 7.1, eval5_avg = 9.8, eval6_avg = 1.1, eval_cnt = 240
+WHERE school_code = 'S010000370';
+commit;
+select * from h_school WHERE school_code = 'S010000484';
+
+-- 해당 학교 평균
+select avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
+from h_school 
+WHERE school_code = 'S010000484';
+-- 해당 분류 학교 평균
+select avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
+from h_school 
+WHERE school_cate1 =    (SELECT school_cate1 
+                        FROM h_school 
+                        WHERE school_code = 'S010000484');
+
+select distinct substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) region from h_school order by region;
+select distinct substr(address, 1, instr(address, ' ', 3, 1) -1 ) region from u_school order by region;
+
+select substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) region from h_school;
+
+-- 고등학교 조건 검색 쿼리
+SELECT  school_name schoolName, school_code schoolCode, esttype estType, 
+        substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) region, 
+        mw_cate mwCate, edu_office eduOffice,
+        home_page homePage
+FROM h_school
+WHERE school_cate1 = '일반고등학교'
+AND substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) = '서울특별시'
+AND esttype = '국립'
+AND mw_cate = '남녀공학'
+ORDER BY schoolName;
+-- 대학교 조건 검색 쿼리
+SELECT  name, code, esttype estType, 
+        substr(address, 1, instr(address, ' ', 3, 1) -1 ) region, 
+        link
+FROM u_school
+WHERE type = '대학교'
+AND substr(address, 1, instr(address, ' ', 3, 1) -1 ) = '서울특별시'
+AND esttype = '사립'
+ORDER BY name;
+
+select distinct esttype from h_school;
+select distinct esttype from u_school;
+
+select * from h_school;
+select * from u_school;
+desc h_school;
+desc u_school;
+
+desc search_log;
+select * from search_log;
+MERGE INTO search_log
+    USING dual
+       ON (user_id = 'testid' AND school_code = 'S010000484')
+    WHEN MATCHED THEN
+        UPDATE SET search_cnt = search_cnt + 1
+    WHEN NOT MATCHED THEN
+        INSERT (school_code, user_id, school_cate, search_cnt, search_date) 
+        VALUES ('S010000484','testid','h',1,sysdate);

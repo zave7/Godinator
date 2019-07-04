@@ -25,3 +25,23 @@ div.textarea {
 ul.school-detail {
 	text-align: center;
 }
+div.schooldetail-map {
+	height: 100%;	
+	width: 100%;	
+}
+div#schooldetail-map {
+	width: 500px;
+	height: 500px;
+}
+ul#pros-cons>li .eval:hover	{
+	cursor: pointer !important;
+}
+ul#pros-cons>li .active:hover {
+	cursor: default !important;
+}
+div.adis-contents a[data-state="u"] {
+	border: 3px solid yellow !important;
+}
+div.adis-contents a[data-state="d"] {
+	border: 3px solid blue !important;
+}

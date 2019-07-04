@@ -32,8 +32,10 @@ div.adis-content {
 	margin: 0 2em;
 }
 
-p.simpleInfo {
-	margin: 0 2em;
+p.search-simpleInfo {
+	margin: 0 2px;
+	margin-left: 3em;
+	padding: 2px;
 }
 
 span.school-name {
@@ -49,17 +51,40 @@ span.location {
 	color: black;
 }
 
-span.url:hover {
-	cursor: pointer;
-	text-decoration: underline;
+a.url:hover {
+	cursor: pointer !important;
+	color: gray !important;
+	text-decoration: underline !important;
+}
+a.url {
+	color: gray !important;
+	text-decoration: none !important;
+	border-bottom: none !important;
 }
 
 div.search-condition select:hover {
 	border-color: #f56a6a;
 	box-shadow: 0 0 0 1px #f56a6a;
+	border-bottom: none !important;
 }
 
 input:hover {
 	border-color: #f56a6a;
 	box-shadow: 0 0 0 1px #f56a6a;
+}
+div#hotschool span {
+	color: gray;
+}
+div#hotschool span:hover {
+	font-weight: bold;
+	color: black;
+	cursor: pointer; 
+}
+b.up {
+	font-size: 65%;
+}
+h3.searchschool-h3 {
+	margin-bottom: 2px;
+	margin-left: 1%;
+	display: inline-block;
 }

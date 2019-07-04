@@ -39,20 +39,22 @@ public class SchoolNewsController {
 	@Autowired
 	private SchoolNewsService schoolNewsService;
 	
+	//뉴스 검색 뷰 
 	@RequestMapping(value = "/viewnews", method = RequestMethod.GET)
 	public String viewNewsPage() {
 		System.out.println("viewnews");
 		return "schoolinfo/schoolnews";
 	}
-
+	
+	//학교 이름 검색
 	@RequestMapping(value = "/selectschool", method = RequestMethod.GET)
 	@ResponseBody
 	public String searchSchoolName(@RequestParam Map<String, String> parameter) {
 		System.out.println(parameter.get("schoolCate") + " " + parameter.get("keyword"));
 		JsonObject schoolNames = new JsonObject();
 		JsonArray jsonArray = new JsonArray();
-		String schoolCate = parameter.get("schoolCate");
-		if(schoolCate != null && "hscool".equals(schoolCate)) {
+		String schoolCate = (String) parameter.get("schoolCate");
+		if(schoolCate != null && "h".equals(schoolCate)) {
 			List<HSchoolDto> list = schoolInfoCommonService.selectHSchoolName(parameter);
 				for(Object h : list) {
 					if(h != null) {
@@ -65,7 +67,7 @@ public class SchoolNewsController {
 					}
 				}	
 			schoolNames.add("schoolNames", jsonArray);
-		} else if(schoolCate != null && "uscool".equals(schoolCate)) {
+		} else if(schoolCate != null && "u".equals(schoolCate)) {
 			List<USchoolDto> list = schoolInfoCommonService.selectUSchoolName(parameter);
 				for(Object h : list) {
 					if(h != null) {
@@ -87,6 +89,7 @@ public class SchoolNewsController {
 			return "false";
 	}
 	
+	//구글, 네이버 크롤링
 	@RequestMapping(value = "/searchnews", method = RequestMethod.POST)
 	@ResponseBody
 	public String searchNews(@RequestBody Map<String, String> parameter) {
@@ -123,8 +126,8 @@ public class SchoolNewsController {
 		return jsonObject.toString();
 	}
 
-	public String googleNews(String encodeKeyWord, List<SchoolNewsDto> list, String nextUrl) {
-		System.out.println("google search");
+	private String googleNews(String encodeKeyWord, List<SchoolNewsDto> list, String nextUrl) {
+		System.out.println("google search nextUrl : " + nextUrl);
 		String prefix = "https://www.google.com/search?q=";
 		String suffix = "&tbm=nws&tbas=0&source=lnt&sa=X&ved=0ahUKEwjS9d3zko7jAhXHUrwKHcX2AgYQpwUIHg&biw=1920&bih=937&dpr=1";
 		String requestUrl = "";
@@ -181,8 +184,8 @@ public class SchoolNewsController {
 		return "";
 	}
 
-	public String naverNews(String encodeKeyWord, List<SchoolNewsDto> list, String nextUrl) {
-		System.out.println("naver search");
+	private String naverNews(String encodeKeyWord, List<SchoolNewsDto> list, String nextUrl) {
+		System.out.println("naver search nextUrl : " + nextUrl);
 		String prefix = "https://search.naver.com/search.naver?where=news&sm=tab_jum&query=";
 		String suffix = "";
 		String requestUrl = "";

@@ -5,4 +5,147 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.schoolinfo.dao.SearchSchoolDao">
+  
+  	<select id="getHSchoolsGroupByType" parameterType="map" resultType="hschoolDto">
+  		SELECT *
+        FROM    (SELECT rownum r, h.*
+                FROM    (SELECT  	school_name schoolName, school_code schoolCode, school_cate1 schoolCate1, esttype estType, 
+						        	substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) address, 
+							        mw_cate mwCate, edu_office eduOffice,
+							        home_page homePage
+						FROM h_school
+						<trim prefix="WHERE" prefixOverrides="AND">
+							<if test='schoolType != "all"'>
+								AND school_cate1 = #{schoolType}
+							</if>
+							<if test='region != "all"'>
+								AND substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) = #{region}
+							</if>
+							<if test='estType != "all"'>
+								AND esttype = #{estType}
+							</if>
+							<if test='mwCate != "all"'>
+								AND mw_cate = #{mwCate}
+							</if>
+							<if test='keyword != null'>
+								<if test='keyword != ""'>
+									AND school_name LIKE '%'||#{keyword}||'%'
+								</if>
+							</if>
+						</trim>
+						ORDER BY schoolName) h
+		<![CDATA[
+                WHERE rownum <= #{endRow})
+        WHERE r >= #{startRow}
+        ]]>
+  	</select>
+  	<select id="getUSchoolsGroupByType" parameterType="map" resultType="uschoolDto">
+  		SELECT *
+        FROM    (SELECT rownum r, u.*
+                FROM    (SELECT  	name, code, type, esttype estType, 
+				        			substr(address, 1, instr(address, ' ', 3, 1) -1 ) region, link
+						FROM u_school
+						<trim prefix="WHERE" prefixOverrides="AND">
+							<if test='schoolType != "all"'>
+								AND type = #{schoolType}
+							</if>
+							<if test='region != "all"'>
+								AND substr(address, 1, instr(address, ' ', 3, 1) -1 ) = #{region}
+							</if>
+							<if test='estType != "all"'>
+								AND esttype = #{estType}
+							</if>
+							<if test='keyword != null'>
+								<if test='keyword != ""'>
+									AND name LIKE '%'||#{keyword}||'%'
+								</if>
+							</if>
+						</trim>
+						ORDER BY name) u
+		<![CDATA[
+                WHERE rownum <= #{endRow})
+        WHERE r >= #{startRow}
+        ]]>
+  	</select>
+  	<select id="getHSchoolList" resultType="hSchoolDto">
+  	<![CDATA[
+  		SELECT *
+		FROM    (SELECT *
+		        FROM (select school_name schoolName, school_code schoolCode, school_cate1 schoolCate1, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from h_school WHERE school_cate1 ='자율고등학교')
+		        WHERE rk <= 5
+		        union
+		        SELECT *
+		        FROM (select school_name schoolName, school_code schoolCode, school_cate1 schoolCate1, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from h_school WHERE school_cate1 ='특수목적고등학교')
+		        WHERE rk <= 5
+		        union
+		        SELECT *
+		        FROM (select school_name schoolName, school_code schoolCode, school_cate1 schoolCate1, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from h_school WHERE school_cate1 ='특성화고등학교')
+		        WHERE rk <= 5
+                union
+		        SELECT *
+		        FROM (select school_name schoolName, school_code schoolCode, school_cate1 schoolCate1, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from h_school WHERE school_cate1 ='일반고등학교')
+		        WHERE rk <= 5)
+		ORDER BY schoolCate1
+		]]>
+  	</select>
+  	<select id="getUSchoolList" resultType="uSchoolDto">
+  		<![CDATA[
+  		SELECT *
+		FROM    (SELECT *
+		        FROM (select name, code, type, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from u_school WHERE type ='대학교')
+		        WHERE rk <= 5
+		        union
+		        SELECT *
+		        FROM (select name, code, type, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from u_school WHERE type ='전문대학(2년제)')
+		        WHERE rk <= 5
+		        union
+		        SELECT *
+		        FROM (select name, code, type, eval_cnt evalCnt, rank() OVER (ORDER BY eval_cnt DESC) rk from u_school WHERE type ='사이버대학(대학)')
+		        WHERE rk <= 5)
+		ORDER BY type
+		]]>
+  	</select>
+  	<select id="getCountHSchoolsByCondition" resultType="int">
+  		SELECT count(*)
+		FROM h_school
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test='schoolType != "all"'>
+				AND school_cate1 = #{schoolType}
+			</if>
+			<if test='region != "all"'>
+				AND substr(edu_office, 1, instr(edu_office, '교육청', 3, 1) -1 ) = #{region}
+			</if>
+			<if test='estType != "all"'>
+				AND esttype = #{estType}
+			</if>
+			<if test='mwCate != "all"'>
+				AND mw_cate = #{mwCate}
+			</if>
+			<if test='keyword != null'>
+				<if test='keyword != ""'>
+					AND school_name LIKE '%'||#{keyword}||'%'
+				</if>
+			</if>
+		</trim>
+  	</select>
+  	<select id="getCountUSchoolsByCondition" resultType="int">
+  		SELECT count(*)
+		FROM u_school
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test='schoolType != "all"'>
+				AND type = #{schoolType}
+			</if>
+			<if test='region != "all"'>
+				AND substr(address, 1, instr(address, ' ', 3, 1) -1 ) = #{region}
+			</if>
+			<if test='estType != "all"'>
+				AND esttype = #{estType}
+			</if>
+			<if test='keyword != null'>
+				<if test='keyword != ""'>
+					AND name LIKE '%'||#{keyword}||'%'
+				</if>
+			</if>
+		</trim>
+  	</select>
   </mapper>
