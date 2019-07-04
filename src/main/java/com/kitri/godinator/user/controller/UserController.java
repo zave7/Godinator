@@ -37,7 +37,7 @@ public class UserController {
 		int cnt = userService.register(memberDto);
 		if(cnt !=0) {
 			model.addAttribute("registerInfo", memberDto);
-			return "/user/register_2";
+			return "user/register_2";
 		}else {
 			return "";
 		}
@@ -61,7 +61,7 @@ public class UserController {
 		int cnt = userService.mentorRegister(map);
 		if(cnt !=0) {
 			model.addAttribute("registerId", registerId);
-			return "/user/register_3";
+			return "user/register_3";
 		}else {
 			return "";
 		}
@@ -100,17 +100,21 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/schoolCheck1", method = RequestMethod.GET)
-	public @ResponseBody String schoolCheck1(@RequestParam ("highName") String highName) {
-		
-		return highName;
-		
-	}
-	
-	@RequestMapping(value="/schoolCheck2", method = RequestMethod.GET)
-	public @ResponseBody String schoolCheck2(@RequestParam ("uniName") String uniName) {
-		
-		return uniName;
-				
-	}
+	/*
+	 * @RequestMapping(value="/schoolCheck1", method = RequestMethod.GET)
+	 * public @ResponseBody String schoolCheck1(@RequestParam ("highName") String
+	 * highName) {
+	 * 
+	 * return highName;
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping(value="/schoolCheck2", method = RequestMethod.GET)
+	 * public @ResponseBody String schoolCheck2(@RequestParam ("uniName") String
+	 * uniName) {
+	 * 
+	 * return uniName;
+	 * 
+	 * }
+	 */
 }

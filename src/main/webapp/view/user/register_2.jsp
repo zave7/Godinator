@@ -54,6 +54,9 @@ $(document).ready(function() {
 		
 		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
 		
+			
+	});
+});
 		}else{//ë©˜í†  ì²­ ¬ëŒ
 			alert($("#registerId").val());
 			location.href="/user/register_3?registerId="+$("#registerId").val();
@@ -131,11 +134,16 @@ $(document).ready(function() {
 									<section id="uniMentorSection">
 										
 									</section>						
-										
+										<label for="highMentorCheck"> íƒ</label>
+									</div>
 									</section>						
 										   <br>
 									<section id="uniMentorSection">
 										   
+						<div class="col-6 col-12-small">
+											<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >
+											<label for="uniMentorCheck"> íƒ</label>
+										</div>
 									</section>						
 										   <br>
 										   
