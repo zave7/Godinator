@@ -54,7 +54,14 @@ $(document).ready(function() {
 		
 		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
 		
-			
+		
+		if(hcheckL>0 && high == ""){//체크�는
+			alert("멘토 �청�해 고등�교륅력주세");
+		}else if(ucheckL>0 && uni == ""){
+			alert("멘토 �청�해 ��교륅력주세");
+		}else{
+			$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();	
+		}
 	});
 });
 		}else{//멘토�청 �람

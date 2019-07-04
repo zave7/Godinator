@@ -29,6 +29,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int register(MemberDto memberDto) {
 		//System.out.println("register service");
+		String userCate = memberDto.getUserCate();
+		String cate="";
+		if(userCate.equals("학부모")) {
+			cate="p";
+			memberDto.setUserCate(cate);
+		}else {
+			cate="s";
+			memberDto.setUserCate(cate);
+		}
+		
+		System.out.println(memberDto.getUserCate());
+		
 		return sqlSession.getMapper(UserDao.class).register(memberDto);
 	}
 

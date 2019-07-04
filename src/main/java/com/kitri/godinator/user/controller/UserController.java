@@ -33,7 +33,6 @@ public class UserController {
 	public String register(MemberDto memberDto, Model model) {
 		//System.out.println("register controller");
 		
-		
 		int cnt = userService.register(memberDto);
 		if(cnt !=0) {
 			model.addAttribute("registerInfo", memberDto);
@@ -49,9 +48,13 @@ public class UserController {
 			@RequestParam("registerId") String registerId,
 			@RequestParam("highSchool") String highSchool,
 			@RequestParam("university") String university,
+			@RequestParam("uniMentorCheck") String ucheck,
+			@RequestParam("highMentorCheck") String hcheck,
 			Model model) {
 		System.out.println("mentorregister controller");
-		System.out.println("가입 id" + registerId);
+		//System.out.println("가입 id" + registerId);
+		System.out.println("mcheck : " + ucheck);
+		System.out.println("hcheck : " + hcheck);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("registerId", registerId);
@@ -100,21 +103,5 @@ public class UserController {
 		
 	}
 	
-	/*
-	 * @RequestMapping(value="/schoolCheck1", method = RequestMethod.GET)
-	 * public @ResponseBody String schoolCheck1(@RequestParam ("highName") String
-	 * highName) {
-	 * 
-	 * return highName;
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping(value="/schoolCheck2", method = RequestMethod.GET)
-	 * public @ResponseBody String schoolCheck2(@RequestParam ("uniName") String
-	 * uniName) {
-	 * 
-	 * return uniName;
-	 * 
-	 * }
-	 */
+	
 }

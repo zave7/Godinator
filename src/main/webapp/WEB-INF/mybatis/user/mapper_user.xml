@@ -13,9 +13,9 @@
   	
   	<insert id="register" parameterType="memberDto">
   		insert into member
-  		(user_id, user_name, pass, email, email_domain, phone1, phone2, phone3, zipcode, address, address_detail, user_cate, join_date)
+  		(user_id, user_name, pass, email, email_domain, phone1, phone2, phone3, zipcode, address, address_detail, user_cate, withdraw, join_date)
   		values(#{userId}, #{userName}, #{pass}, #{email}, #{emailDomain}, #{phone1},
-  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail}, 'm', sysdate)
+  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail},#{userCate},'N', sysdate)
   	</insert>
   	
   	<insert id="mentorRegister" parameterType="map">

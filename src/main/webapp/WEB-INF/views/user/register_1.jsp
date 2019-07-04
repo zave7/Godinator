@@ -49,7 +49,10 @@ $(document).ready(function() {
 		} else if(cnt != 0) {
 			alert("„μ΄μ¤‘λ³µ •μΈμ„Έ);
 			return;
-		} else {
+		}else if($("#userCate").val()==" νƒμ„Έ){
+			alert("μ›κµ¬λ¶„ νƒ μ„Έ);
+			return;
+		}else {
 			$("#memberform").attr("action", "/godinator/user/register").submit();
 		}
 	});
@@ -226,6 +229,14 @@ function makeListJson(jsonStr){
 									
 										<h3 id="contentPwd">μ„Έμ£Όμ†</h3>
 										   <input type="text" name="addressDetail" id="addressDetail" />
+									<br><br>
+									
+										<h3 id="userCate_h3">μ›κµ¬λ¶„</h3>
+										<select class="form-control" id="userCate" name="userCate">
+												<option value=" νƒμ„Έ> νƒμ„Έ/option>
+												<option value="™μƒ">™μƒ</option>
+												<option value="™λλª>™λλª/option>
+											</select>
 									</div>
 									</form>
 										   <br>
