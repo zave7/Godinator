@@ -5,54 +5,12 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#highSchool").keyup(function() {
-	var highName = $("#highSchool").val();
-			$.ajax({
-				url: "/godinator/user/schoolCheck1?highName=" + highName,
-				method:"get",
-				success: function(data) {
-					console.log(data);
-					if(data !=null){
-					var code= '<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>'+
-								'<div class="col-6 col-12-small">'+
-										'<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >'+
-										'<label for="highMentorCheck">선택</label>'+
-									'</div>';
-					$("#highMentorSection").html(code);
-					}
-				}
-			});
-	});
-	
-	$("#university").keyup(function() {
-	var uniName = $("#university").val();
-			$.ajax({
-				url: "/godinator/user/schoolCheck2?uniName=" + uniName,
-				method:"get",
-				success: function(data) {
-					console.log(data);
-					if(data !=null){
-					var code= 	
-					'<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>'+
-						'<div class="col-6 col-12-small">'+
-											'<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >'+
-											'<label for="uniMentorCheck">선택</label>'+
-										'</div>';
-					$("#uniMentorSection").html(code);
-					}
-				}
-			});
-	});
-	
 	$("#mentorRegisterBtn").click(function() {
+		alert($("#registerId").val());
 		$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();
 		
-		}else{//멘토신청 안 한 사람
-			alert($("#registerId").val());
-			location.href="/user/register_3?registerId="+$("#registerId").val();
-		}
+			
 	});
-	
 });
 </script>
 <html>
@@ -121,11 +79,19 @@ $(document).ready(function() {
 									<hr>
 									<br><br>
 									<section id="highMentorSection">
-										
+										<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>
+								<div class="col-6 col-12-small">
+										<input type="checkbox" id="highMentorCheck" name="highMentorCheck" >
+										<label for="highMentorCheck">선택</label>
+									</div>
 									</section>						
 										   <br>
 									<section id="uniMentorSection">
-										
+										<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>
+						<div class="col-6 col-12-small">
+											<input type="checkbox" id="uniMentorCheck" name="uniMentorCheck" >
+											<label for="uniMentorCheck">선택</label>
+										</div>
 									</section>						
 										   <br>
 										   
