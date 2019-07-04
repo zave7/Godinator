@@ -33,7 +33,6 @@ $(document).ready(function() {
 	});
 	
 	$("#registerBtn").click(function() {
-		
 		if($("#userId").val() == "") {
 			alert("아이디를 입력하세요");
 			return;
@@ -49,7 +48,10 @@ $(document).ready(function() {
 		} else if(cnt != 0) {
 			alert("아이디 중복 확인을 하세요");
 			return;
-		} else {
+		}else if($("#userCate").val() =="선택하세요"){
+			alert("회원구분을 선택하세요");
+			return;
+		}else {
 			$("#memberform").attr("action", "/godinator/user/register").submit();
 		}
 	});
@@ -226,6 +228,14 @@ function makeListJson(jsonStr){
 									
 										<h3 id="contentPwd">상세주소</h3>
 										   <input type="text" name="addressDetail" id="addressDetail" />
+										   
+										   <br><br>
+										   <h3 id="contentPwd">회원구분</h3>
+										   <select class="form-control" id=userCate name="userCate">
+												<option value="선택하세요">선택하세요</option>
+												<option value="s">학생</option>
+												<option value="p">학부모</option>
+											</select> 
 									</div>
 									</form>
 										   <br>

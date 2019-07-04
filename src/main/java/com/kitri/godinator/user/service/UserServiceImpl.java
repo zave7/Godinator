@@ -30,15 +30,15 @@ public class UserServiceImpl implements UserService{
 	public int register(MemberDto memberDto) {
 		//System.out.println("register service");
 
-		String userCate = memberDto.getUserCate();
-		String cate="";
-		if(userCate.equals("학부모")) {
-			cate="p";
-			memberDto.setUserCate(cate);
-		}else {
-			cate="s";
-			memberDto.setUserCate(cate);
-		}
+//		String userCate = memberDto.getUserCate();
+//		String cate="";
+//		if(userCate.equals("학부모")) {
+//			cate="p";
+//			memberDto.setUserCate(cate);
+//		}else {
+//			cate="s";
+//			memberDto.setUserCate(cate);
+//		}
 		
 		System.out.println(memberDto.getUserCate());
 		
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int mentorRegister(Map<String, String> map) {
 		System.out.println("mentorregister service");
-		int cnt = 0;
+		//int cnt = 0;
 		String id = map.get("registerId");
 		String highName = map.get("highSchool");
 		String uniName = map.get("university");
@@ -65,26 +65,25 @@ public class UserServiceImpl implements UserService{
 //		6)그 외(학교이름도 없고 선택도 안되어 있음) >> ?
 		
 		
-		if(highName != "" || uniName != "") {//member에 학교코드, 카테고리추가 (update) --고등학교
-			sqlSession.getMapper(UserDao.class).updateMember(id, highName, uniName);
-			cnt++; 
-		}else {
-			cnt++; //1	
+		if(highName != "") {//member에 학교코드, 카테고리추가 (update) --고등학교
+			 sqlSession.getMapper(UserDao.class).updateMemberh(map);//id, uniName
+			//cnt++; 
 		}
 		
+		if(uniName != ""){
+			 sqlSession.getMapper(UserDao.class).updateMemberu(map);//id, highName
+			//cnt++; //1	
+		}
 		
+			
 		if(hcheck != ""){
-			sqlSession.getMapper(UserDao.class).insertMentorh(id);	
-			cnt++; 
-			return cnt;
+			return sqlSession.getMapper(UserDao.class).insertMentorh(id);	//R, h
+			
 		}else if(ucheck != ""){
-			sqlSession.getMapper(UserDao.class).insertMentoru(id);		
-			cnt++;
-			return cnt;
+			return sqlSession.getMapper(UserDao.class).insertMentoru(id);  //R, u		
+			
 		}else {
-			cnt++;//2
-			return cnt; //2가 리턴되면 성공 
-
+			return sqlSession.getMapper(UserDao.class).insertMentor(id);  //N, ""		
 		}
 		
 	}

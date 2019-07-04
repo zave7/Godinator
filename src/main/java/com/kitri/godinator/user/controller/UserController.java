@@ -65,11 +65,11 @@ public class UserController {
 		map.put("uSchoolCate", uSchoolCate);//고등학교 멘토 체크 유무
 	
 		int cnt = userService.mentorRegister(map);
-		if(cnt ==2) {
+		if(cnt >0 ) {
 			model.addAttribute("registerId", registerId);
 			return "user/register_3";
 		}else {
-			return "";
+			return "error";
 		}
 		
 	}

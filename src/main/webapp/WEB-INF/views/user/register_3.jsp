@@ -1,6 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#userId").keyup(function() {
+		var id = $("#userId").val();
+		if(id.length < 5 || id.length > 16) {
+			console.log(id.length);
+			cnt = 1;
+			$("#idresult").css("color", "gray");
+			$("#idresult").text("아이디는 5자이상 16자이하입니다.");
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "/godinator/user/idcheck",
+				dataType : "json",
+				data : {"checkid" : id},
+				success : function(data) {
+					cnt = parseInt(data.idcount);
+					if(cnt == 0) {
+						$("#idresult").css("color", "steelblue");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용 가능합니다.");
+					} else {
+						$("#idresult").css("color", "magenta");
+						$("#idresult").html("<strong>" + id + "</strong>는 사용중입니다.");
+					}
+				}
+			});
+		}
+	});
+	
+	$("#registerPreferenceBtn").click(function() {
+		//alert($("#registerId").val());
+		var hcheckL = $("input[name='highMentorCheck']:checked").length;
+		var ucheckL = $("input[name='uniMentorCheck']:checked").length;
+			console.log(hcheckL);
+			console.log(ucheckL);
+		var high = $("#highSchool").val();
+		var uni = $("#university").val();
+		
+		if(hcheckL>0 && high == ""){//체크했는데
+			alert("멘토 신청을 위해 고등학교를 입력해 주세요.");
+		}else if(ucheckL>0 && uni == ""){
+			alert("멘토 신청을 위해 대학교를 입력해 주세요.");
+		}else{
+			$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();	
+		}
+	});
+});
+</script>
 <html>
 	<head>
 		<title>register_3.jsp</title>
@@ -38,69 +87,69 @@
 									<div class="preference">
 										<h2 class="schoolName">고등학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH1">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 										   <br>
 										   <h3 id="contentId">우선순위2</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH2">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 										<br>
 										<h3 id="contentId">우선순위3</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH3">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위4</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH4">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위5</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH5">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위6</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceH6">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 									</div>
@@ -109,69 +158,69 @@
 									<div class="preference">
 										<h2 class="schoolName">대학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceU1">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 										   <br>
 										   <h3 id="contentId">우선순위2</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceU2">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 										<br>
 										<h3 id="contentId">우선순위3</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceU3">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위4</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceU4">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위5</h3>
-										  <select name="demo-category" id="demo-category">
-												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+										  <select name="demo-category" id="preferenceU5">
+											<option value="">우선순위를 선택해주세요</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 											<h3 id="contentId">우선순위6</h3>
-										  <select name="demo-category" id="demo-category">
+										  <select name="demo-category" id="preferenceU6">
 												<option value="">우선순위를 선택해주세요</option>
-												<option value="1">시설</option>
-												<option value="1">학업분위기</option>
-												<option value="1">교직원(교육,인성)</option>
-												<option value="1">진로교육</option>
-												<option value="1">취업/진학률</option>
-												<option value="1">동아리 활성화</option>
+												<option value="시설">시설</option>
+												<option value="학업분위기">학업분위기</option>
+												<option value="교직원(교육,인성)">교직원(교육,인성)</option>
+												<option value="진로교육">진로교육</option>
+												<option value="취업/진학률">취업/진학률</option>
+												<option value="동아리 활성화">동아리 활성화</option>
 											</select>
 											<br>
 									</div>
@@ -179,7 +228,7 @@
 										   <br>
 									<ul class="actions">
 										<li>3/4</li>
-										<li><a href="#" class="button primary">다음페이지</a></li>
+										<li><a href="#" class="button primary" id="registerPreferenceBtn">다음페이지</a></li>
 									</ul>
 									
 								
