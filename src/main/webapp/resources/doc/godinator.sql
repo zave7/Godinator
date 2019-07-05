@@ -491,7 +491,7 @@ CREATE TABLE mentor (
 	mentor CHAR(1) DEFAULT 'n', /* 멘토 */
 	aprvl_date DATE, /* 승인일자 */
 	cate CHAR(1) /* 구분 */
-	online CHAR(1) DEFAULT '0', /* 접속구분 */
+	onchat CHAR(1) DEFAULT '0', /* 접속구분 */
 );
 
 /* 좋아요 */
