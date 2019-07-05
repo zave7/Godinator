@@ -1,4 +1,4 @@
-ALTER TABLE reply
+﻿ALTER TABLE reply
 	DROP
 		CONSTRAINT FK_board_TO_reply
 		CASCADE;
@@ -491,6 +491,7 @@ CREATE TABLE mentor (
 	mentor CHAR(1) DEFAULT 'n', /* 멘토 */
 	aprvl_date DATE, /* 승인일자 */
 	cate CHAR(1) /* 구분 */
+	online CHAR(1) DEFAULT '0', /* 접속구분 */
 );
 
 /* 좋아요 */
@@ -575,6 +576,7 @@ CREATE TABLE eval_school (
 	upvote number, /* 공감 */
 	downvote number, /* 비공감 */
 	state CHAR(1) /* 상태 */
+	regit_date date default sysdate /* 작성일 */
 );
 
 ALTER TABLE eval_school
