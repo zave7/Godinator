@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <% session.setAttribute("userInfo", "temp"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,4 +15,4 @@
 	<a href="${pageContext.request.contextPath}/resume/editlist"><li>editlist.jsp</li></a>
 </ul>
 </body>
-</html>.
+</html>

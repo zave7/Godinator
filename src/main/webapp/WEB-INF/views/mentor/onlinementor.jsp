@@ -19,21 +19,49 @@
 </style>
 <script>
 $(function(){
-	$('.mentor').click(function(){
-		location.href="${root}/mentor/chat";
-		return false;
-	});
-	
 	
 	var wsocket;
 	connect();
+
+	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
 		wsocket = new WebSocket("ws://localhost:80/godinator/chat");
+		getOnlineMentors();
 	}
 	
+	<%-- 접속중 멘토 목록 --%>
+	function getOnlineMentors(){
+		$.ajax({
+			url: '${root}/mentor/list',
+			type : 'GET',
+			contentType : 'application/json; charset=UTF-8',
+			dataType : 'json',
+			success: function(response){
+				var mentor = response.list;
+				var list;
+				list += '<tr class="mentor" data-id="' + mentor[i] + '">';
+				list += '	<td>1</td>';
+				list += '	<td>' + mentor[i] + '</td>';
+				list += '	<td>ㅇㅇ고등학교</td>';
+				list += '	<td>특목고</td>';
+				list += '	<td>ㅇㅇ대학교</td>';
+				list += '	<td>이공계</td>';
+				list += '</tr>';
+				$('#mentorList').append(list);
+			}
+		});
+	}
+
+	<%-- 채팅창으로 전환 --%>
+	$('.mentor').click(function(){
+		var $mentor = $(this).attr('data-id');
+		alert("선택한 멘토:" + $mentor);
+		$('#selectedMentor').val($mentor);
+		location.href="${root}/mentor/chat";
+		return false;
+	});
 });
 </script>
-<% session.setAttribute("userName", "temp"); %>
 </head>
 <body style="padding: 0; margin: 0;">
 	<div id="wrapper" style="padding: 0;">
@@ -83,169 +111,10 @@ $(function(){
 					</div>
 				</div>
 				<%-- 멘토 목록 --%>
+				<input type="hidden" id="selectedMentor" name="selectedMentor">
 				<div style="height: 300px; overflow-y: auto; border: thin solid;">
 					<table class="alt" style="text-align: center;">
-						<tbody>
-							<tr class="mentor">
-								<td>1</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>2</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>3</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>4</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>1</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>2</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>3</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>4</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>1</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>2</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>3</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>4</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>2</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>3</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>4</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>1</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>2</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>3</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
-							<tr class="mentor">
-								<td>4</td>
-								<td>userID</td>
-								<td>ㅇㅇ고등학교</td>
-								<td>특목고</td>
-								<td>ㅇㅇ대학교</td>
-								<td>이공계</td>
-							</tr>
+						<tbody id="mentorList">
 						</tbody>
 					</table>
 				</div>
