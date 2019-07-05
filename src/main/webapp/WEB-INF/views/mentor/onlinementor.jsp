@@ -25,8 +25,7 @@ $(function(){
 
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
-		wsocket = new WebSocket("ws://localhost:80/godinator/chat");
-		getOnlineMentors();
+		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
 	}
 	
 	<%-- 접속중 멘토 목록 --%>
@@ -57,7 +56,7 @@ $(function(){
 		var $mentor = $(this).attr('data-id');
 		alert("선택한 멘토:" + $mentor);
 		$('#selectedMentor').val($mentor);
-		location.href="${root}/mentor/chat";
+		location.href="${root}/";
 		return false;
 	});
 });

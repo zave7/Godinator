@@ -6,21 +6,43 @@
 </style>
 <script>
 $(function(){
-	// 마우스 커서 변경
+	<%-- 마우스 커서 변경 --%>
 	$('.msgBtn').css('cursor', 'pointer');
 	$('.editBtn').css('cursor', 'pointer');
 	
-	// 웹소켓 접속
+	<%-- 웹소켓 접속 --%>
 	$('.chatBtn').click(function(){
-		window.open("${root}/mentor/onlinementor", "_blank", "width=600, height=700, left=500, top=20");
+		<%-- 알림창: 멘토|멘티 >>> 멘토인경우 >>> 고등학교|대학교 --%>
+		<%-- 각각 경우에 따라 session에 "cate"라는 이름으로 m|h|u 입력 --%>
+		<%-- 멘티: 멘티용 채팅창, 멘토: 멘토용 채팅창으로 이동시킴 --%>
+		if(confirm("멘티로 입장하시겠습니까?")) {
+			window.open("${root}/mentor/onlinementor", "_blank", "width=600, height=700, left=500, top=20");
+			
+		} else {
+			if(confirm("고등학교 멘토로 입장하시겠습니까?")) {
+				<%-- ajax로 자격확인 >> 자격 있는 경우에만 session & 창 띄우기 --%>
+				alert("고등학교 멘토로 입장합니다.");
+				
+			} else{
+				<%-- ajax로 자격확인 >> 자격 있는 경우에만 session & 창 띄우기 --%>
+				alert("대학교 멘토로 입장합니다.");
+			}
+		}
 		return false;
 	});
-	// 쪽지 작성
+	
+	<%-- 멘토 자격 확인 --%>
+	function checkMentor(cate){
+		
+		return result;
+	}
+	
+	<%-- 쪽지 작성 --%>
 	$('.msgBtn').click(function(){
 		window.open("/template/writemsg.jsp", "_blank", "width=600, height=700, left=500, top=20");
 		return false;
 	});
-	// 자소서 첨삭 신청
+	<%-- 자소서 첨삭 신청 --%>
 	$('.editBtn').click(function(){
 		location.href="/template/writeresume.jsp";
 		return false;
