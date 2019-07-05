@@ -25,6 +25,7 @@
 					<value>/WEB-INF/mybatis/mentor/mapper_mentor.xml</value>
 					<value>/WEB-INF/mybatis/mentor/mapper_msg.xml</value>
 					<value>/WEB-INF/mybatis/mentor/mapper_resume.xml</value>
+					<value>/WEB-INF/mybatis/mentor/mapper_chat.xml</value>
 					<value>/WEB-INF/mybatis/admin/mapper_statistics.xml</value>
 					<value>/WEB-INF/mybatis/admin/mapper_member.xml</value>
 					<value>/WEB-INF/mybatis/admin/mapper_school.xml</value>
@@ -41,7 +42,6 @@
 					<value>/WEB-INF/mybatis/common/mapper_board_common.xml</value>
 					<value>/WEB-INF/mybatis/common/mapper_mentor_common.xml</value>
 					<value>/WEB-INF/mybatis/common/mapper_user_common.xml</value>
-
 				</list>
 			</property> 
 		</bean>
