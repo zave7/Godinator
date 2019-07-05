@@ -67,6 +67,8 @@ public class UserController {
 		int cnt = userService.mentorRegister(map);
 		if(cnt >0 ) {
 			model.addAttribute("registerId", registerId);
+			model.addAttribute("highSchool", highSchool);
+			model.addAttribute("university", university);
 			return "user/register_3";
 		}else {
 			return "error";

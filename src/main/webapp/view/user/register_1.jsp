@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$("#userId").keyup(function() {
 		var id = $("#userId").val();
 		if(id.length < 5 || id.length > 16) {
-			console.log(id.length);
+			//console.log(id.length);
 			cnt = 1;
 			$("#idresult").css("color", "gray");
 			$("#idresult").text("아이디는 5자이상 16자이하입니다.");
