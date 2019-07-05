@@ -198,6 +198,12 @@ ALTER TABLE msg
 		PRIMARY KEY
 		CASCADE
 		KEEP INDEX;
+		
+ALTER TABLE onchat
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
 
 DROP INDEX PK_category;
 
@@ -341,6 +347,10 @@ DROP TABLE search_log
 
 /* 쪽지 */
 DROP TABLE msg 
+	CASCADE CONSTRAINTS;
+
+/* 채팅접속 */
+DROP TABLE onchat 
 	CASCADE CONSTRAINTS;
 
 /* 카테고리 */
@@ -491,7 +501,6 @@ CREATE TABLE mentor (
 	mentor CHAR(1) DEFAULT 'n', /* 멘토 */
 	aprvl_date DATE, /* 승인일자 */
 	cate CHAR(1) /* 구분 */
-	onchat CHAR(1) DEFAULT '0', /* 접속구분 */
 );
 
 /* 좋아요 */
@@ -575,7 +584,7 @@ CREATE TABLE eval_school (
 	content clob, /* 내용 */
 	upvote number, /* 공감 */
 	downvote number, /* 비공감 */
-	state CHAR(1) /* 상태 */
+	state CHAR(1), /* 상태 */
 	regit_date date default sysdate /* 작성일 */
 );
 
@@ -661,7 +670,20 @@ ALTER TABLE search_log
 			school_code,
 			user_id
 		);
+		
+/* 채팅접속 */
+CREATE TABLE onchat (
+	user_id varchar2(10) NOT NULL, /* 회원ID */
+	oncate char(1) /* 접속구분 */
+);
 
+ALTER TABLE onchat
+	ADD
+		CONSTRAINT PK_onchat
+		PRIMARY KEY (
+			user_id
+		);
+		
 /* 쪽지 */
 CREATE TABLE msg (
 	msg_no number NOT NULL, /* 일련번호 */
