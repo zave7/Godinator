@@ -1,51 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
-<style type="text/css">
+<style>
 	.far, .fas {font-size: 1.5em;}
 	i {vertical-align: center;}
+	 /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */                          
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+	
 </style>
 <script>
 $(function(){
-	<%-- 마우스 커서 변경 --%>
-	$('.msgBtn').css('cursor', 'pointer');
-	$('.editBtn').css('cursor', 'pointer');
-	
-	<%-- 웹소켓 접속 --%>
+	function connect(){
+		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
+	}
+	<%-- #### 채팅 #### --%>
+	<%-- 채팅 권한 선택 modal --%>
 	$('.chatBtn').click(function(){
-		<%-- 알림창: 멘토|멘티 >>> 멘토인경우 >>> 고등학교|대학교 --%>
-		<%-- 각각 경우에 따라 session에 "cate"라는 이름으로 m|h|u 입력 --%>
-		<%-- 멘티: 멘티용 채팅창, 멘토: 멘토용 채팅창으로 이동시킴 --%>
-		if(confirm("멘티로 입장하시겠습니까?")) {
-			window.open("${root}/mentor/onlinementor", "_blank", "width=600, height=700, left=500, top=20");
-			
-		} else {
-			if(confirm("고등학교 멘토로 입장하시겠습니까?")) {
-				<%-- ajax로 자격확인 >> 자격 있는 경우에만 session & 창 띄우기 --%>
-				alert("고등학교 멘토로 입장합니다.");
-				
-			} else{
-				<%-- ajax로 자격확인 >> 자격 있는 경우에만 session & 창 띄우기 --%>
-				alert("대학교 멘토로 입장합니다.");
-			}
-		}
+		$('#myModal').css("display", "block");
 		return false;
 	});
 	
-	<%-- 멘토 자격 확인 --%>
-	function checkMentor(cate){
-		
-		return result;
+	<%-- 각각 경우에 따라 session에 "cate"라는 이름으로 m|h|u 입력 --%>
+	<%-- 멘티: 멘티용 채팅창, 멘토: 멘토용 채팅창으로 이동시킴 --%>
+	$('.auth').click(function(){
+		var cate = $(this).attr('data-cate');
+		var cateStr = $(this).text();
+		checkAuth(cate, cateStr);
+	});
+	
+	<%-- 채팅 권한 확인 --%>
+	function checkAuth(cate, cateStr){
+		<%-- ajax로 자격확인 >> 자격 있는 경우에만 session & 창 띄우기 --%>
+		$.ajax({
+			url: '${root}/chat/checkAuth',
+			data: 'cate=' + cate,
+			success: function(response){
+				if(response == '1') {
+					alert(cateStr + '로 입장합니다.');
+					if(cate == 'm') {
+						window.open("${root}/chat/connmentee", "_blank", "width=600, height=700, left=500, top=20");
+					} else {
+						window.open("${root}/chat/connmentor", "_blank", "width=600, height=700, left=500, top=20");
+					}
+				}
+			}
+		});
 	}
 	
+	
+	<%-- #### 쪽지 #### --%>
 	<%-- 쪽지 작성 --%>
 	$('.msgBtn').click(function(){
 		window.open("/template/writemsg.jsp", "_blank", "width=600, height=700, left=500, top=20");
 		return false;
 	});
+	
+	<%-- #### 자소서 #### --%>
 	<%-- 자소서 첨삭 신청 --%>
 	$('.editBtn').click(function(){
 		location.href="/template/writeresume.jsp";
 		return false;
+	});
+	
+	
+	
+	<%-- #### 기타 화면상 기능 #### --%>
+	<%-- 마우스 커서 변경 --%>
+	$('.msgBtn').css('cursor', 'pointer');
+	$('.editBtn').css('cursor', 'pointer');
+	
+	<%-- 모달창 종료 --%>
+	$('#close').click(function(){
+		$('#myModal').css("display", "none");
+	});
+	$(document).click(function(){
+		$('#myModal').css("display", "none");
 	});
 });
 </script>
@@ -181,4 +242,19 @@ $(function(){
 				</table>
 			</div>
 		</section>
+		<div id="myModal" class="modal">
+	 
+	      <!-- Modal content -->
+	      <div class="modal-content">
+	        <div class="close">&times;</div>                                                               
+	        <p>채팅 입장 권한을 선택하세요.</p>
+	        <div style="text-align: center;">
+	        	<button class="auth" data-cate="m">멘티</button>
+	        	<button class="auth" data-cate="h">고등학교 멘토</button>
+	        	<button class="auth" data-cate="u">대학교 멘토</button>
+	        </div>
+	      </div>
+	 
+	    </div>
+		
 <%@ include file="/WEB-INF/views/template/sidebar.jsp" %><%-- div(inner end) ~ /html --%>
