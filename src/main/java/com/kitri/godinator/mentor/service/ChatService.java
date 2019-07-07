@@ -8,6 +8,7 @@ import com.kitri.godinator.model.MemberDto;
 public interface ChatService {
 
 	int checkAuth(String id, String cate);
-	List<MemberDto> getOnMentor(Map<String, String> params);
+	String getOnMentor(Map<String, String> params);
+	int checkOnline(String mentor);
 
 }

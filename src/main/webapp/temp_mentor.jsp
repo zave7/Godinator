@@ -10,6 +10,7 @@
 <body>
 <ul>
 	<a href="${pageContext.request.contextPath}/mentor/findmentor"><li>findmentor.jsp</li></a>
+	<a href="${pageContext.request.contextPath}/mentor/temp"><li>findmentor.jsp</li></a>
 	<a href="${pageContext.request.contextPath}/msg/msgbox"><li>msgbox.jsp</li></a>
 	<a href="${pageContext.request.contextPath}/resume/resumelist"><li>resumelist.jsp</li></a>
 	<a href="${pageContext.request.contextPath}/resume/editlist"><li>editlist.jsp</li></a>

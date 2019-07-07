@@ -8,24 +8,30 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Elements - Editorial by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${root}/css/main.css" />
-		<%-- font-awesome --%>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-		<style type="text/css">
-			.far, .fas {
-				vertical-align: center;
-				font-size: 1.3em;
-			}
-		</style>
-		<script>
-		
-		</script>
-	</head>
+<head>
+<title>Elements - Editorial by HTML5 UP</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="${root}/css/main.css" />
+<%-- font-awesome --%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<style type="text/css">
+	.far, .fas {
+		vertical-align: center;
+		font-size: 1.3em;
+	}
+</style>
+<script>
+	var wsocket;
+	connect();
+	
+	<%-- 웹소켓 통신 연결 --%>
+	function connect(){
+		wsocket = new WebSocket("ws://localhost:80/godinator/startchat");
+	}
+</script>
+</head>
 <body style="padding: 0; margin: 0;">
 	<div id="wrapper" style="padding: 0;">
 		<!-- Main -->
@@ -43,7 +49,7 @@
 					<%-- 쪽지 --%>
 					<div class="col-12" >
 						<div class="box" style="height: 300px; overflow-y: auto;">
-							<p>채팅내용<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
+							<p>채팅내용
 						</div>
 					</div>
 					<div class="row gtr-uniform">

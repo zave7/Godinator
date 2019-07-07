@@ -42,9 +42,6 @@
 </style>
 <script>
 $(function(){
-	function connect(){
-		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
-	}
 	<%-- #### 채팅 #### --%>
 	<%-- 채팅 권한 선택 modal --%>
 	$('.chatBtn').click(function(){

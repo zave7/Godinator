@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.kitri.godinator.mentor.dao.ChatDao;
 import com.kitri.godinator.model.MemberDto;
@@ -44,8 +46,18 @@ public class ChatServiceImpl implements ChatService {
 
 	// #### 접속중인 멘토 목록 ####
 	@Override
-	public List<MemberDto> getOnMentor(Map<String, String> params) {
-		return sqlSession.getMapper(ChatDao.class).selOnMentor(params);
+	public String getOnMentor(Map<String, String> params) {
+		List<MemberDto> list = sqlSession.getMapper(ChatDao.class).selOnMentor(params);
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		return json;
+	}
+
+	// #### 선택한 멘토가 접속중인지 확인 ####
+	@Override
+	public int checkOnline(String mentor) {
+		return sqlSession.getMapper(ChatDao.class).checkOnline(mentor);
 	}
 
 }

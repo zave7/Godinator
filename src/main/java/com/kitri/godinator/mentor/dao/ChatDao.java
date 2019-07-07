@@ -12,5 +12,6 @@ public interface ChatDao {
 	int insertOnChat(OnChatDto onChatDto);
 	void deleteOnChat(String id);
 	List<MemberDto> selOnMentor(Map<String, String> params);
+	int checkOnline(String mentor);
 
 }

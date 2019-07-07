@@ -17,6 +17,41 @@
 		vertical-align: center;
 		font-size: 1.3em;
 	}
+	/* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */                          
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 </style>
 <script>
 $(function(){
@@ -27,7 +62,33 @@ $(function(){
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
 		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
+		wsocket.onmessage = onMessage;
 	}
+	
+	<%-- 멘티에게 채팅요청 온 경우 --%>
+	function onMessage(evt) {
+		var data = evt.data;
+		var msg = data.split('##');
+		$('#mentee').val(msg[1]);
+		if(msg[0] == "ask") {
+			$('#myModal').find('p').empty();
+			$('#myModal').find('p').text(msg[1] + '님의 채팅 요청을 수락하시겠습니까?');
+			$('#myModal').css("display", "block");
+		}
+	}
+	
+	<%-- 채팅요청 응답 처리 --%>
+	$(document).on('click', '.answer', function(){
+		var a = $(this).attr('data-cate');
+		alert('answer##' + $('#mentee').val() + '##' + a);
+		wsocket.send('answer##' + $('#mentee').val() + '##' + a);
+		$('#myModal').css("display", "none");
+		if(a == 'y') {
+			$('#chatForm').submit();
+			/* wsocket.close(); */
+		}
+		return false;
+	});
 	
 	<%-- 채팅장 종료 --%>
 	$(window).bind("beforeunload", function(){
@@ -35,8 +96,6 @@ $(function(){
 			wsocket.close();
 		}
 	})
-	
-	<%-- 채팅창으로 전환 --%>
 	
 });
 </script>
@@ -58,6 +117,22 @@ $(function(){
 			</div>
 		</div>
 	</div>
+	<form action="${root}/chat/startchat" id="chatForm">
+		<input type="hidden" id="mentee" name="mentee">
+	</form>
+	<div id="myModal" class="modal">
+	 
+	      <!-- Modal content -->
+	      <div class="modal-content">
+	        <div class="close">&times;</div>                                                               
+	        <p></p>
+	        <div style="text-align: center;">
+	        	<button class="answer" data-cate="n">거절</button>
+	        	<button class="answer" data-cate="y">수락</button>
+	        </div>
+	      </div>
+	 
+	    </div>
 	<!-- Scripts -->
 	<script src="${root}/js/jquery.min.js"></script>
 	<script src="${root}/js/browser.min.js"></script>

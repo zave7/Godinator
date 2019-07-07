@@ -23,56 +23,105 @@ $(function(){
 	
 	var wsocket;
 	connect();
+	getOnlineMentors();
 
 	<%-- 채팅장 종료 --%>
 	$(window).bind("beforeunload", function(){
 		wsocket.close();
 	})
 
-	<%-- 채팅창으로 전환 --%>
-	$('.mentor').click(function(){
-		wsocket.close();
-		var $mentor = $(this).attr('data-id');
-		alert("선택한 멘토:" + $mentor);
-		$('#selectedMentor').val($mentor);
-		location.href="${root}/";
+	<%-- 채팅 신청 --%>
+	$(document).on('click', '.mentor', function(){
+		var mentor = $(this).attr('data-id');
+		alert(mentor);
+		$('#mentor').val(mentor);
+		<%-- 선택한 멘토에게 수락요청 --%>
+		$.ajax({
+			url: "${root}/chat/askChat",
+			data: 'mentor=' + mentor,
+			async: false,
+			success: function(response) {
+				if(response != 0) {
+					wsocket.send('ask##' + '${sessionScope.userInfo.userId}');
+				}
+			}
+		});
 		return false;
-	});
-	
+	});	
+		
 	<%-- #### function #### --%>
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
 		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
+		wsocket.onmessage = onMessage;
+		wsocket.onclose = onClose;
+		
+	}
+	
+	<%-- 웹소켓 통신 연결 --%>
+	function onMessage(evt) {
+		var data = evt.data;
+		var msg = data.split('##');
+		if(msg[0] == 'answer' && msg[2] == 'y') {
+			alert($('#mentor').val() + '님과의 채팅을 시작합니다.');
+			$('#chatForm').submit();
+			wsocket.close();
+		} else {
+			alert('채팅 요청이 거절되었습니다.');
+		}
 	}
 
+	function onClose() {
+		
+	}
+	
+	<%-- 학교 분류 변경시 --%>
 	$('#school-cate1').change(function(){
+		if($(this).val() == '1') {
+			$('#hcate2').css('display', '');
+			$('#ucate2').css('display', 'none');
+		} else {
+			$('#hcate2').css('display', 'none');
+			$('#ucate2').css('display', '');
+		}
+		getOnlineMentors();
+	});
+	$('#hcate2, #ucate2').change(function(){
 		getOnlineMentors();
 	});
 	
 	<%-- 접속중 멘토 목록 --%>
 	function getOnlineMentors(){
 		var cate1 = $('#school-cate1 option:selected').val();
-		var cate2 = $('#school-cate2 option:selected').val();
+		var cate2 = (cate1 == '1') ? $('#hcate2 option:selected').val() : $('#ucate2 option:selected').val();
+		console.log(cate2);
 		var cate3 = $('#school-cate3 option:selected').val();
 		var search = $('#searchMentor').val().trim();
-		var param =  'cate1=' + cate1 + '&cate2=' + cate2 + '&cate3=' + cate3 + '&search='+ search;
+		var param =  {'cate1': cate1, 'cate2': cate2, 'cate3': cate3, 'search': search};
+		console.log(param);
 		$.ajax({
 			url: '${root}/chat/list',
 			type: 'GET',
 			data: param,
 			success: function(response){
-				
-				/* var mentor = response.list;
-				var list;
-				list += '<tr class="mentor" data-id="' + mentor[i] + '">';
-				list += '	<td>1</td>';
-				list += '	<td>' + mentor[i] + '</td>';
-				list += '	<td>ㅇㅇ고등학교</td>';
-				list += '	<td>특목고</td>';
-				list += '	<td>ㅇㅇ대학교</td>';
-				list += '	<td>이공계</td>';
-				list += '</tr>';
-				$('#mentorList').append(list); */
+				var list = JSON.parse(response);
+				var cnt = list.length;
+				var mentorlist = '';
+				for(var i=0;i<cnt;i++) {
+					var mentor = list[i];
+					mentorlist += '<tr class="mentor" data-id="' + mentor.userId + '">';
+					mentorlist += '	<td>' + (i+1) + '</td>';
+					mentorlist += '	<td>' + mentor.userId + '</td>';
+					if(cate1 == '1') {
+						mentorlist += '	<td>' + mentor.hSchoolCode + '</td>';
+						mentorlist += '	<td>' + mentor.hSchoolCate + '</td>';
+					} else {
+						mentorlist += '	<td>' + mentor.uSchoolCode + '</td>';
+						mentorlist += '	<td>' + mentor.uSchoolCate + '</td>';
+					}
+					mentorlist += '</tr>';
+				}
+				$('#mentorList').empty().append(mentorlist);
 			}
 		});
 	}
@@ -106,8 +155,8 @@ $(function(){
 						<div class="col-6" style="padding-left: 0.5em; float: right;">
 							 <select name="school-cate3" id="school-cate3">
 								<option value="0">- 검색조건 -</option>
-								<option value="ID">ID</option>
-								<option value="모교">모교</option>
+								<option value="id">ID</option>
+								<option value="schoolName">학교명</option>
 							</select>
 						</div>
 						<div style="clear: both;">
@@ -123,13 +172,27 @@ $(function(){
 						</select>
 					</div>
 					<div class="col-2" style="width: 10em; padding-left: 0; margin-left: 1em;"> 
-						 <select name="school-cate2" id="school-cate2">
+						 <select name="hcate2" id="hcate2">
 							<option value="0">- 전체 -</option>
+							<option value="특수목적고등학교">특수목적고등학교</option>
+							<option value="일반고등학교">일반고등학교</option>
+							<option value="자율고등학교">자율고등학교</option>
+							<option value="특성화고등학교">특성화고등학교</option>
+						</select>
+						 <select name="ucate2" id="ucate2" style="display: none;">
+							<option value="0">- 전체 -</option>
+							<option value="인문·사회">인문·사회</option>
+							<option value="자연·공학">자연·공학</option>
+							<option value="의학">의학</option>
+							<option value="예술·체육">예술·체육</option>
+							<option value="교육">교육</option>
 						</select>
 					</div>
 				</div>
 				<%-- 멘토 목록 --%>
-				<input type="hidden" id="selectedMentor" name="selectedMentor">
+				<form action="${root}/chat/startchat" id="chatForm">
+					<input type="hidden" id="mentor" name="mentor">
+				</form>
 				<div style="height: 300px; overflow-y: auto; border: thin solid;">
 					<table class="alt" style="text-align: center;">
 						<tbody id="mentorList">

@@ -53,11 +53,29 @@ public class ChatController{
 		return "mentor/connmentor";
 	}
 	
+	// #### 온라인 멘토 목록 가져오기 ####
 	@RequestMapping("/list")
-	public List<MemberDto> delete(@RequestParam Map<String, String> params) {
+	public @ResponseBody String delete(@RequestParam Map<String, String> params) {
 		return chatService.getOnMentor(params);
 	}
 	
+	// #### 멘토에게 채팅 신청 ####
+	@RequestMapping("/askChat")
+	public @ResponseBody int askChat(@RequestParam String mentor, HttpSession session) {
+		int result = chatService.checkOnline(mentor);
+		System.out.println(mentor);
+		if(result != 0) {
+			session.setAttribute("mentor", mentor);
+		}
+		return result;
+	}
 	
+	@RequestMapping("/startchat")
+	public String mvStartChat(@RequestParam Map<String, String> params, HttpSession session) {
+		if(params.get("mentee") != null) {
+			session.setAttribute("mentee", params.get("mentee"));
+		}
+		return "mentor/chat";
+	}
 
 }

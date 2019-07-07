@@ -21,11 +21,11 @@ public class ConnChatHandler extends TextWebSocketHandler{
 	
 	private Map<String, WebSocketSession> connUser = new ConcurrentHashMap<String, WebSocketSession>();
 	private Map<String, Object> httpSession;
-	
+	private int a = 0;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		
+		System.out.println(++a);
 		// 웹소켓 세션에서 HttpSession의 id 얻어옴
 		httpSession = session.getAttributes();
 		MemberDto memberDto = (MemberDto) httpSession.get("userInfo"); 
@@ -42,12 +42,27 @@ public class ConnChatHandler extends TextWebSocketHandler{
 			// 접속중인 유저 목록에 추가
 			connUser.put(id, session);
 			System.out.println("웹소켓 접속 성공!!!");
+			System.out.println(connUser.get(id));
 		}
 		
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		String[] msg = message.getPayload().split("##");
+		httpSession = session.getAttributes();
+		System.out.println(msg[0]);
+		if("ask".equals(msg[0])) {
+			String mentor = (String) httpSession.get("mentor");
+			System.out.println(mentor);
+			WebSocketSession ws = connUser.get(mentor);
+			
+			ws.sendMessage(message);
+		} else if("answer".equals(msg[0])) {
+			String mentee = (String) httpSession.get("mentee");
+			WebSocketSession ws = connUser.get(mentee);
+			ws.sendMessage(message);
+		}
 	}
 
 	@Override
