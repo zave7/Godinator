@@ -5,11 +5,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.kitri.godinator.admin.dao.SchoolDao">
-	<select id="">
-	select '고등학교', school_cate1, school_name, address || ' ' || address_detail 
+	<select id="viewMember" resultType="HSchoolDto">
+	select '고등학교', school_cate1, school_name, phone, address || ' ' || address_detail 
 	from h_school
-	UNION
-	select '대학교', type, name, address
-	from u_school
+	</select>
+	
+	<select id="searchSchool" parameterType="map" resultType="HSchoolDto">
+	SELECT school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
+	FROM h_school
+	WHERE school_name LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="searchRegion" parameterType="map" resultType="HSchoolDto">
+	SELECT school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
+	FROM h_school
+	WHERE address LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="viewAll" resultType="HSchoolDto">
+	SELECT school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
+	FROM h_school
+	where school_name LIKE '%'||'세화'||'%'
 	</select>
 </mapper>
