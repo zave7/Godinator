@@ -71,6 +71,10 @@ $(function(){
 					} else {
 						window.open("${root}/chat/connmentor", "_blank", "width=600, height=700, left=500, top=20");
 					}
+				} else if(response == '2') {
+					alert('채팅창이 이미 실행중입니다.');
+				} else {
+					alert(cateStr + ' 권한이 없습니다. 다시 시도해주세요.');
 				}
 			}
 		});

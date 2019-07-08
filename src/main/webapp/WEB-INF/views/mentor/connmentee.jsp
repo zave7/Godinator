@@ -33,7 +33,6 @@ $(function(){
 	<%-- 채팅 신청 --%>
 	$(document).on('click', '.mentor', function(){
 		var mentor = $(this).attr('data-id');
-		alert(mentor);
 		$('#mentor').val(mentor);
 		<%-- 선택한 멘토에게 수락요청 --%>
 		$.ajax({
@@ -42,38 +41,37 @@ $(function(){
 			async: false,
 			success: function(response) {
 				if(response != 0) {
-					wsocket.send('ask##' + '${sessionScope.userInfo.userId}');
+					wsocket.send('ask#!#!#' + mentor);
+					alert('멘토에게 채팅 요청을 전송하였습니다.')
 				}
 			}
 		});
 		return false;
 	});	
-		
+	
+	
 	<%-- #### function #### --%>
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
 		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
 		wsocket.onmessage = onMessage;
-		wsocket.onclose = onClose;
 		
 	}
 	
-	<%-- 웹소켓 통신 연결 --%>
+	<%-- 웹소켓 응답 처리 --%>
 	function onMessage(evt) {
 		var data = evt.data;
-		var msg = data.split('##');
+		var msg = data.split('#!#!#');
 		if(msg[0] == 'answer' && msg[2] == 'y') {
-			alert($('#mentor').val() + '님과의 채팅을 시작합니다.');
+			alert(msg[3] + '님과의 채팅을 시작합니다.');
 			$('#chatForm').submit();
-			wsocket.close();
-		} else {
+		} else if(msg[0] == 'disconn' || msg[0] == 'conn'){ 
+			getOnlineMentors();
+		}else {
 			alert('채팅 요청이 거절되었습니다.');
 		}
 	}
 
-	function onClose() {
-		
-	}
 	
 	<%-- 학교 분류 변경시 --%>
 	$('#school-cate1').change(function(){

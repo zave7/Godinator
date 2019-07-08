@@ -52,9 +52,15 @@
   </if>
   </select>
   
-  <select id="checkOnline" parameterType="String" resultType="int">
+  <select id="checkOnlineMentor" parameterType="String" resultType="int">
   SELECT count(user_id)
   FROM onchat
   WHERE user_id = #{mentor} and oncate != 'm'
+  </select>
+
+  <select id="checkOnlineUser" parameterType="String" resultType="int">
+  SELECT count(user_id)
+  FROM onchat
+  WHERE user_id = #{userID}
   </select>
   </mapper>

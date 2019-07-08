@@ -9,6 +9,7 @@ public interface ChatService {
 
 	int checkAuth(String id, String cate);
 	String getOnMentor(Map<String, String> params);
-	int checkOnline(String mentor);
+	int checkOnlineMentor(String mentor);
+	int checkOnlineUser(String userID);
 
 }

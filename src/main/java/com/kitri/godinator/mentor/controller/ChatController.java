@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kitri.godinator.mentor.service.ChatService;
 import com.kitri.godinator.model.MemberDto;
@@ -33,9 +34,9 @@ public class ChatController{
 		String id = memberDto.getUserId();
 		String cate = params.get("cate");
 		int result = chatService.checkAuth(id, cate);
-		
 		// 자격이 있는 경우, session에 chatcate추가 (m|h|u)
 		if(result == 1) {
+			result = chatService.checkOnlineUser(id);
 			session.setAttribute("oncate", cate);
 		}
 		return result+"";
@@ -62,18 +63,22 @@ public class ChatController{
 	// #### 멘토에게 채팅 신청 ####
 	@RequestMapping("/askChat")
 	public @ResponseBody int askChat(@RequestParam String mentor, HttpSession session) {
-		int result = chatService.checkOnline(mentor);
-		System.out.println(mentor);
-		if(result != 0) {
-			session.setAttribute("mentor", mentor);
-		}
+		int result = chatService.checkOnlineMentor(mentor);
 		return result;
 	}
 	
 	@RequestMapping("/startchat")
-	public String mvStartChat(@RequestParam Map<String, String> params, HttpSession session) {
-		if(params.get("mentee") != null) {
-			session.setAttribute("mentee", params.get("mentee"));
+	public String mvStartChat(@RequestParam Map<String, String> params, HttpSession session, Model model) {
+		String mentor = params.get("mentor");
+		String mentee = params.get("mentee");
+		
+		// 대화 상대방 ID 전달
+		if(mentor != null) {
+			model.addAttribute("mentor", mentor);
+			session.setAttribute("other", mentor);
+		} else if(mentee != null) {
+			model.addAttribute("mentee", mentee);
+			session.setAttribute("other", mentee);
 		}
 		return "mentor/chat";
 	}

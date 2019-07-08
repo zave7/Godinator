@@ -20,48 +20,64 @@ public class ConnChatHandler extends TextWebSocketHandler{
 	private SqlSession sqlSession;
 	
 	private Map<String, WebSocketSession> connUser = new ConcurrentHashMap<String, WebSocketSession>();
+	private Map<String, WebSocketSession> connMentee = new ConcurrentHashMap<String, WebSocketSession>();
 	private Map<String, Object> httpSession;
-	private int a = 0;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(++a);
 		// 웹소켓 세션에서 HttpSession의 id 얻어옴
 		httpSession = session.getAttributes();
 		MemberDto memberDto = (MemberDto) httpSession.get("userInfo"); 
 		String id = memberDto.getUserId();
+		String oncate = (String) httpSession.get("oncate");
 		// 접속 유저 목록에 없는 id인 경우
 		if(connUser.get(id) == null) {
 			
 			// DB에 insert
 			OnChatDto onChatDto = new OnChatDto(); 
 			onChatDto.setUserId(id);
-			onChatDto.setOncate((String) httpSession.get("oncate"));
+			onChatDto.setOncate(oncate);
 			int result = sqlSession.getMapper(ChatDao.class).insertOnChat(onChatDto);
 			
 			// 접속중인 유저 목록에 추가
 			connUser.put(id, session);
-			System.out.println("웹소켓 접속 성공!!!");
-			System.out.println(connUser.get(id));
+			if("m".equals(oncate)) {
+				connMentee.put(id, session);
+			}
+			
+			if(!"m".equals(oncate)) {
+//				System.out.println(id + " 접속권한: " + oncate);
+				TextMessage msg = new TextMessage("conn#!#!#");
+				handleTextMessage(session, msg);
+			}
+//			System.out.println("ConnChat 웹소켓 접속 성공!!!");
+//			System.out.println("connUser에 추가 완료!!! " + connUser.get(id));	// 접속한 id로 connUser에 추가 완료
 		}
 		
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String[] msg = message.getPayload().split("##");
+		String[] msg = message.getPayload().split("#!#!#");
 		httpSession = session.getAttributes();
-		System.out.println(msg[0]);
-		if("ask".equals(msg[0])) {
-			String mentor = (String) httpSession.get("mentor");
-			System.out.println(mentor);
+		if("ask".equals(msg[0])) { // message: ask#!#!#mentorID
+			String mentor = msg[1];
+			String mine = ((MemberDto) httpSession.get("userInfo")).getUserId();
 			WebSocketSession ws = connUser.get(mentor);
+			ws.sendMessage(new TextMessage(message.getPayload() + "#!#!#" + mine)); // message: ask#!#!#mentorID#!#!#menteeID
 			
-			ws.sendMessage(message);
-		} else if("answer".equals(msg[0])) {
-			String mentee = (String) httpSession.get("mentee");
+		} else if("answer".equals(msg[0])) { // message: answer#!#!#menteeID#!#!#y|n
+			String mentee = msg[1];
+			String mine = ((MemberDto) httpSession.get("userInfo")).getUserId();
 			WebSocketSession ws = connUser.get(mentee);
-			ws.sendMessage(message);
+			ws.sendMessage(new TextMessage(message.getPayload() + "#!#!#" + mine)); // message: answer#!#!#menteeID#!#!#y|n#!#!#mentorID
+			
+		} else if("disconn".equals(msg[0]) || "conn".equals(msg[0])) {
+			if(connMentee.values() != null) {
+				for(WebSocketSession ws : connMentee.values()) {
+					ws.sendMessage(message);
+				}
+			}
 		}
 	}
 
@@ -74,11 +90,23 @@ public class ConnChatHandler extends TextWebSocketHandler{
 		httpSession = session.getAttributes();
 		MemberDto memberDto = (MemberDto) httpSession.get("userInfo"); 
 		String id = memberDto.getUserId();
+		String oncate = (String) httpSession.get("oncate"); 
 		
 		// DB & 접속 유저 목록에서 삭제
 		sqlSession.getMapper(ChatDao.class).deleteOnChat(id);
 		connUser.remove(id);
-		System.out.println("웹소켓 접속 종료!!!");
+//		System.out.println("ConnChat 웹소켓 접속 종료!!!");
+//		if(connUser.get(id) == null) {
+//			System.out.println("connUser에서 제거 완료!!!");
+//		}
+		
+		if(!"m".equals(oncate)) {
+//			System.out.println(id + " 접속권한: " + oncate);
+			TextMessage msg = new TextMessage("disconn#!#!#");
+			handleTextMessage(session, msg);
+		} else {
+			connMentee.remove(id);
+		}
 	}
 
 	

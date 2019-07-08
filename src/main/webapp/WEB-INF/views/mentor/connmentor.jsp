@@ -63,39 +63,37 @@ $(function(){
 	function connect(){
 		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
 		wsocket.onmessage = onMessage;
+		wsocket.onclose = onClose;
 	}
 	
 	<%-- 멘티에게 채팅요청 온 경우 --%>
 	function onMessage(evt) {
 		var data = evt.data;
-		var msg = data.split('##');
-		$('#mentee').val(msg[1]);
+		var msg = data.split('#!#!#');
+		$('#mentee').val(msg[2]);
 		if(msg[0] == "ask") {
 			$('#myModal').find('p').empty();
-			$('#myModal').find('p').text(msg[1] + '님의 채팅 요청을 수락하시겠습니까?');
+			$('#myModal').find('p').text(msg[2] + '님의 채팅 요청을 수락하시겠습니까?');
 			$('#myModal').css("display", "block");
 		}
 	}
 	
 	<%-- 채팅요청 응답 처리 --%>
 	$(document).on('click', '.answer', function(){
-		var a = $(this).attr('data-cate');
-		alert('answer##' + $('#mentee').val() + '##' + a);
-		wsocket.send('answer##' + $('#mentee').val() + '##' + a);
+		var a = $(this).attr('data-cate'); <%-- 수락:y, 거절:n --%>
+		wsocket.send('answer#!#!#' + $('#mentee').val() + '#!#!#' + a);
 		$('#myModal').css("display", "none");
 		if(a == 'y') {
 			$('#chatForm').submit();
-			/* wsocket.close(); */
 		}
 		return false;
 	});
 	
-	<%-- 채팅장 종료 --%>
-	$(window).bind("beforeunload", function(){
-		if(confirm("채팅을 종료하시겠습니까?")) {
-			wsocket.close();
-		}
-	})
+	<%-- 웹소켓 종료 --%>
+	function onClose(evt) {
+		alert('채팅 접속이 종료되었습니다.');
+		window.close();
+	}
 	
 });
 </script>
