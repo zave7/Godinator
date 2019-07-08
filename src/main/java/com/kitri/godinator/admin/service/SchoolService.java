@@ -11,5 +11,5 @@ import com.kitri.godinator.model.HSchoolDto;
 public interface SchoolService {
    public List<HSchoolDto> searchSchool(Map<String, String> parameter);
    public List<HSchoolDto> searchRegion(Map<String, String> parameter);
-   public List<HSchoolDto> viewAll();
+   public List<HSchoolDto> viewAll(String keyword);
 }

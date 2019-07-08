@@ -22,9 +22,8 @@
 	WHERE address LIKE '%'||#{keyword}||'%'
 	</select>
 	
-	<select id="viewAll" resultType="HSchoolDto">
+	<select id="viewAll" parameterType="String" resultType="HSchoolDto">
 	SELECT school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
 	FROM h_school
-	where school_name LIKE '%'||'세화'||'%'
 	</select>
 </mapper>

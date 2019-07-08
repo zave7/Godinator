@@ -36,89 +36,120 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-       //console.log('${allList});
-       //console.log($.type('${hlist}')); // list가 아니라 String이라는데..?
-       console.log('뭐시기3dd');
-       
-       
-       $("#name").keydown(function(e) {
-              var $category = $("#category").val();
-              var $keyword = $(this).val();
-              
-              if($keyword.trim().length != 0) {
-                     $.ajax({
-                           url : "${root}/school/list",
-                           type : "GET",
-                           contentType : "application/json;charset=UTF-8",
-                           data : "category="+$category+"&keyword="+$keyword,
-                           dataType : "json",
-                           success : function(data) {
-                                  //alert('result란??' + result) > object로  뜨는디..?
-                                		  
-                                console.log('성공!! '+data);
-                                		  
-                                  var member = $(data).find("member");
-                                  for(var i=0;i<'${list}'.length;i++) {
-                                  var id = $(member[i]).find("id").text();
-                                  var name = $(member[i]).find("name").text();
-                                  var email = $(member[i]).find("email").text();
-                                  var tel = $(member[i]).find("tel").text();
-                                  var address =  $(member[i]).find("address").text();
-                                  var joindate =  $(member[i]).find("joindate").text();
-                                  
-                                  var tr = $("<tr>").attr("class",  "table-active");
-                                  var td1 = $("<td>").html(id);
-                                  var td2 = $("<td>").html(name);
-                                  var td3 = $("<td>").html(email);
-                                  var td4 = $("<td>").html(tel);
-                                  var td5 = $("<td>").html(address);
-                                  var td6 = $("<td>").html(joindate);
-              
-                                  tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
-                                  $("#mlist").append(tr);
-                                  
-                           }
-                                  },
-                                  error : function() {
-                                	  console.log('실패');
-                           }
-                     });
-              } else {
-                     
-              }
-       });
+	
+	allList(); // 실행되자마자 전체 개수 조회할수도 있게해!
+	
+	$('tr.table-active').click(function() {
+		//var a = $(this).text();
+		alert('클릭했슈!');	
+	});
+	
+    $("#name").keyup(function(e) {
+           var $category = $("#category").val();
+           var $keyword = $(this).val();
+            
+           if($keyword.trim().length != 0) {
+                  $.ajax({
+                        url : "${root}/school/list",
+                        type : "GET",
+                        contentType : "application/json;charset=UTF-8",
+                        data : "category="+$category+"&keyword="+$keyword,
+                        dataType : "json",
+                        success : function(data) {
+                               //alert('result란??' + result) > object로  뜨는디..?
+                             console.log(data + "/받는거 성공");
+                             if(data.schoolNames != null){
+                                for(var i=0;i<data.schoolNames.length;i++){
+                                     var schoolCate = data.schoolNames[i].schoolCate1;
+                                     var schoolName = data.schoolNames[i].schoolName;
+                                     var phone = data.schoolNames[i].phone;
+                                     var address = data.schoolNames[i].schoolAddress;
+                                     //console.log(schoolCate + '/'+schoolName);
+                                      
+                                     var tr = $("<tr>").attr("class", "table-active");
+                     	    		 var td1 = $("<td>").html(schoolCate);
+                        			 var td2 = $("<td>").html(schoolName);
+                        			 var td3 = $("<td>").html(phone);
+                        			 var td4 = $("<td>").html(address);
+                        			 var td5 = $("<td>").html('0');
+                        			 var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
+                        			 
+                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+                        			 $("#schoollist").append(tr);
+                        			 //$("#schoollist").remove();
+                        			 
+                        			 $("#modifyBtn").click(function() {
+                        			      console.log('1111111111modify를 눌렀는데 반응함?');
+                        			      location.href = "modify";
+                        			   });
+                                        
+                                  } // for문 끝
+                               } // if문 끝
+                                 
+                               },
+                         error : function() {
+                            //alert('검색이 실패하였습니다.');
+                        }});
+           } else {
+    }});
+    
+    function allList() {
+    	// 시작할 때 모든 학교 리스트 다 보도록
+    	 var keyword = "h_school";
+           
+    	 $.ajax({
+             url : "${root}/school/list",
+             type : "GET",
+             contentType : "application/json;charset=UTF-8",
+             data : "keyword="+keyword,
+             dataType : "json",
+             success : function(data) {
+                  console.log(data + "받는거 성공");
+                  if(data.schoolNames != null){
+                     for(var i=0;i<data.schoolNames.length;i++){
+                         var schoolCate = data.schoolNames[i].schoolCate1;
+                         var schoolName = data.schoolNames[i].schoolName;
+                         var phone = data.schoolNames[i].phone;
+                         var address = data.schoolNames[i].schoolAddress;
+                          //console.log(schoolCate + '/'+schoolName);
+                           
+                         var tr = $("<tr>").attr("class", "table-active");
+          	    		 var td1 = $("<td>").html(schoolCate);
+             			 var td2 = $("<td>").html(schoolName);
+             			 var td3 = $("<td>").html(phone);
+             			 var td4 = $("<td>").html(address);
+             			 var td5 = $("<td>").html('0');
+             			 var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
+             			 
+             			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+             			 $("#schoollist").append(tr);
+             			 
+          			   }); // modifyBtn event
+                    } // for문
+              } // if문
+                    
+                  $('tr.table-active').click(function() {
+              		var a = $(this);
+              		
+              		alert(a);	
+              		location.href = "modify";
+              	});
+                    }, // success function
+              error : function() {
+                 alert('검색이 실패하였습니다.');
+             }});
+    }
        
        
    $("#search").click(function() {
-       //$("#searchName").attr("method","GET").attr("action","${root}/school/view").submit();
       var search = $("#name").val();
-      //var changed = encodeURI(search)
-      //alert(changed);
-      /*
-      $.ajax({
-         url: '${root}/school/list/',
-         type: 'GET',
-         contentType : 'application/json;charset=UTF-8',
-            data : search
-      });
-      */
-      alert(search);
-      
-       //$("#searchName").attr("method","GET").attr("action","${root}/school/list").submit();
+      //alert(search);
    });
    
-   $("#modifyBtn").click(function() {
-          alert('수정버튼을 눌렀니');
-          location.href = "modify";
-   });
+   
 });
 </script>
-<!-- 여기 내 내용 width; 872.443 height; 110.653-->
-<!--
-   <section>
-   나중에 전체학교 수 등 정보 뿌리기
-   </section>
--->
+
 <form class="form-inline" id="searchName" action="" style="padding-top: 50px;  margin-bottom: 0px;">
    <div class="col-9 col-12-small">
       <div class="col-2 col-4-small" style="float: right;">
@@ -129,7 +160,7 @@ $(document).ready(function(){
           </div>
                
        <div class="col-3 col-5-small" style="margin: 0 1em 0 0.5em; float:  right;">
-          <input type="text" name="name" id="name" value="" placeholder="학교명을  입력하세요" />
+          <input type="text" name="name" id="name" value="" placeholder="학교명을 입력하세요" />
        </div>
        
        <div class="col-7 col-7-small" style="float: right;">
@@ -149,30 +180,14 @@ $(document).ready(function(){
                <th>학교명</th>
                <th>전화번호</th>
                <th>학교주소</th>
-               <th>현재 멘토수</th>
+               <th>총 멘토수</th>
                <th>비고</th>
             </tr>
          </thead>
-         <!-- 잠시 임시! -->
+         
          <tbody id="schoollist">
-            <tr>
-               <td>일반대학</td>
-               <td>University of Harvard</td>
-               <td>02-533-8097</td>
-               <td>Holyoke Center, 1350 Massachusetts Avenue, Boston</td>
-               <td>35</td>
-               <td><input type="button" data-toggle="modal"  data-target="#mapModal" class="button" id="modifyBtn" value="수정"></td>
-            </tr>
-            <tr>
-               <td>${schoolCate1}</td>
-               <td>${schoolName}</td>
-               <td>${phone}</td>
-               <td>${schoolAddress}</td>
-               <td>현재 멘토수</td>
-               <td><input type="button" data-toggle="modal"  data-target="#mapModal" class="button" id="modifyBtn" value="수정"></td>
-            </tr>
-    
          </tbody>
+         
       </table>
    </div>
 </section>

@@ -21,7 +21,7 @@ public class SchoolServiceImpl implements SchoolService{
 
    @Override
    public List<HSchoolDto> searchSchool(Map<String, String> parameter) {
-      System.out.println("   > SchoolServiceImpl 입성");
+      System.out.println("   > SchoolServiceImpl 입성 > searchSchool");
 	   return sqlSession.getMapper(SchoolDao.class).searchSchool(parameter);
    }
 
@@ -29,14 +29,16 @@ public class SchoolServiceImpl implements SchoolService{
 
 	@Override
 	public List<HSchoolDto> searchRegion(Map<String, String> parameter) {
+		System.out.println("   > SchoolServiceImpl 입성 > searchRegion");
 		return sqlSession.getMapper(SchoolDao.class).searchRegion(parameter);
 	}
 
 
 
 	@Override
-	public List<HSchoolDto> viewAll() {
-		return  sqlSession.getMapper(SchoolDao.class).viewAll();
+	public List<HSchoolDto> viewAll(String keyword) {
+		System.out.println("   > SchoolServiceImpl 입성 > viewAll");
+		return  sqlSession.getMapper(SchoolDao.class).viewAll(keyword);
 	}
 
 }
