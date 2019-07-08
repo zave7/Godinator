@@ -527,11 +527,13 @@ CREATE TABLE user_prefer (
 	h_eval3 number, /* 고등항목3 */
 	h_eval4 NUMBER, /* 고등항목4 */
 	h_eval5 number, /* 고등항목5 */
+	h_eval6 number, /* 고등항목6 */
 	u_eval1 number, /* 대학항목1 */
 	u_eval2 number, /* 대학항목2 */
 	u_eval3 number, /* 대학항목3 */
 	u_eval4 number, /* 대학항목4 */
 	u_eval5 number /* 대학항목5 */
+	u_eval6 number /* 대학항목6 */
 );
 
 ALTER TABLE user_prefer
