@@ -22,6 +22,7 @@ public class USchoolDto {
 	private int eval3Avg;			 // 평가항목3 평균
 	private int eval4Avg;			 // 평가항목4 평균
 	private int eval5Avg;			 // 평가항목5 평균
+	private int eval6Avg;			 // 평가항목6 평균
 	private int evalCnt;			 // 평가인원수
 
 }
