@@ -122,32 +122,12 @@ $(document).ready(function(){
              			 var td3 = $("<td>").html(phone);
              			 var td4 = $("<td>").html(address);
              			 var td5 = $("<td>").html('0');
-             			 var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
+             			 //var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
              			 
-             			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+             			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
              			 $("#schoollist").append(tr);
              			 
           			   } // for문 
-          			   /*
-		                  $('tr.table-active').click(function() {
-		              		var a = $(this).children(); //★★★★★ 자식값 얻어가기
-		              		
-		              		var schoolCate = a[0].childNodes[0].nodeValue;
-		              		var schoolName = a[1].childNodes[0].nodeValue;
-		              		var phone = a[2].childNodes[0].nodeValue;
-		              		var schoolAddress = a[3].childNodes[0].nodeValue;
-		              		var mento = a[4].childNodes[0].nodeValue;
-		              		
-		              		//console.log(schoolCate);	
-		              		//console.log(schoolName);	
-		              		//console.log(phone);	
-		              		//console.log(schoolAddress);	
-		              		//console.log(mento);	
-		              		
-		              		modify(schoolCate, schoolName, phone, schoolAddress, mento);
-		              		//location.href = "modify";
-		              	});
-          			   */
                     } // if문
               }, // success function
                     
@@ -165,13 +145,16 @@ $(document).ready(function(){
   		var phone = a[2].childNodes[0].nodeValue;
   		var schoolAddress = a[3].childNodes[0].nodeValue;
   		var mento = a[4].childNodes[0].nodeValue;
-  		console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento);
+  		console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento+'/');
   		
-  		$("#schoolCate").val("5");
+  		//$('input[name=schoolCate]').attr('value', a);
+  		$("#schoolCate").val(schoolCate);
   		$("#schoolName").val(schoolName);
   		$("#phone").val(phone);
   		$("#schoolAddress").val(schoolAddress);
   		$("#mento").val(mento);
+  		
+  		$("#hiddenInfo").attr("method","GET").attr("action","${root}/school/goModify").submit();
   		
   		//modify(schoolCate, schoolName, phone, schoolAddress, mento);
     });
@@ -236,7 +219,6 @@ $(document).ready(function(){
                <th>전화번호</th>
                <th>학교주소</th>
                <th>총 멘토수</th>
-               <th>비고</th>
             </tr>
          </thead>
          
@@ -246,11 +228,13 @@ $(document).ready(function(){
       </table>
    </div>
    <form id="hiddenInfo">
-	   	<input type="hidden" name="schoolCate" id="schoolCate" >
-	   	<input type="hidden" name="schoolName" id="schoolName" >
-	   	<input type="hidden" name="phone" id="phone" >
-	   	<input type="hidden" name="schoolAddress" id="schoolAddress" >
-	   	<input type="hidden" name="mento" id="mento" >
+	   	<input type="hidden" name="schoolCate" id="schoolCate" value="">
+	   	<input type="hidden" name="schoolName" id="schoolName" value="">
+	   	<input type="hidden" name="phone" id="phone" value="">
+	   	<input type="hidden" name="schoolAddress" id="schoolAddress" value="">
+	   	<input type="hidden" name="mento" id="mento" value="">
+	   	<input type="hidden" name="adress" id="adress" value="">
+	   	<input type="hidden" name="adressDetail" id="adressDetail" value="">
    </form>
 </section>
 <%@ include file="/WEB-INF/views/template/sidebar.jsp"%>

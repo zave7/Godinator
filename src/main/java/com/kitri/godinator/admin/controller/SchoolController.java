@@ -90,7 +90,9 @@ public class SchoolController {
                 }
             }    
         schoolNames.add("schoolNames", jsonArray);
+        
         return schoolNames.toString();
+        
         } else {
         	System.out.println("> 초기 페이지 init : " + keyword);
         	
@@ -103,29 +105,99 @@ public class SchoolController {
                     String phone = ((HSchoolDto)h).getPhone();
                     String schoolAddress = ((HSchoolDto)h).getAddress() + " "+ ((HSchoolDto)h).getAddressDetail();
                     
+                    
                     school.addProperty("schoolCate1", schoolCate1);
                     school.addProperty("schoolName", schoolName);
                     school.addProperty("phone", phone);
                     school.addProperty("schoolAddress", schoolAddress);
                     
                     jsonArray.add(school); // jsonArray는 model에 넣지 x
-                    System.out.println("(all) 검색된 school 결과 : " + school);
+                    //System.out.println("(all) 검색된 school 결과 : " + school);
                 }
             }    
         schoolNames.add("schoolNames", jsonArray);
         return schoolNames.toString();
-        }
+        } // else 끝
         
    }
    
    @RequestMapping(value = "/modify", method = RequestMethod.GET) // 검색할 때 들어오는건가
-   public String oh (@RequestParam Map<String, String> parameter, Model model) throws Exception {
-       return "admin/schoolmodify";
+   public String modify (@RequestParam Map<String, String> parameter, HSchoolDto dto) throws Exception {
+	   System.out.println("	> 학교정보 DB수정을 위한 Controller 입성 : " + parameter);
+	   
+	   String schoolCode = parameter.get("schoolCode");
+	   String schoolName = parameter.get("schoolName");
+	   String schoolCate = parameter.get("schoolCate");
+	   String homePage = parameter.get("homePage");
+	   String phone = parameter.get("phone");
+	   String zipcode = parameter.get("zipcode");
+	   String address = parameter.get("address");
+	   String addressDetail = parameter.get("addressDetail");
+	   
+	   // 이걸 dto에 넣어서 dto째로 갖고 다니기
+	   dto.setSchoolCode(schoolCode);
+	   dto.setSchoolName(schoolName);
+	   dto.setSchoolCate1(schoolCate);
+	   dto.setHomePage(homePage);
+	   dto.setPhone(phone);
+	   dto.setZipcode(zipcode);
+	   dto.setAddress(address);
+	   dto.setAddressDetail(addressDetail);
+	   
+	   schoolService.modifyInfo(dto);
+	   
+	   HSchoolDto h = new HSchoolDto();
+	   System.out.println("	> DB 수정 완료 :" + h);
+	   
+	   
+	   return "정보가 수정되었습니다.";
    }
    
    
    @RequestMapping(value = "/goModify", method = RequestMethod.GET) 
-   public void goModify (@RequestParam Map<String, String> parameter, Model model) throws Exception {
-	   System.out.println("> goModify" + parameter);
+   public String goModify (@RequestParam Map<String, String> parameter, Model model) throws Exception {
+	   String schoolCate = parameter.get("schoolCate");
+	   String schoolName = parameter.get("schoolName");
+	   String phone = parameter.get("phone");
+	   String schoolAddress = parameter.get("schoolAddress");
+	   //String mento = parameter.get("mento");
+	   
+	   // 더 필요한 정보 학교코드, address1,2, zipcode, email
+	   // schoolCode, address, addressDetail, homePage, zipcode
+	   List<HSchoolDto> hlist = schoolService.viewMoreInfo(schoolName);
+	   for(Object h : hlist) {
+           if(h != null) {
+               
+               String schoolCode = ((HSchoolDto)h).getSchoolCode();
+               String address = ((HSchoolDto)h).getAddress();
+               String addressDetail = ((HSchoolDto)h).getAddressDetail();
+               String homePage = ((HSchoolDto)h).getHomePage();
+               String zipcode = ((HSchoolDto)h).getZipcode();
+               
+               model.addAttribute("schoolCode", schoolCode);
+               model.addAttribute("address",address);
+               model.addAttribute("addressDetail",addressDetail);
+               model.addAttribute("homePage",homePage);
+               model.addAttribute("zipcode",zipcode);
+               
+               System.out.println("	> 학교수정으로 넘어가서 불러온 DB : " + model);
+           }
+       }    
+	   
+	   model.addAttribute("schoolCate",schoolCate);
+	   model.addAttribute("schoolName",schoolName);
+	   model.addAttribute("phone",phone);
+	   
+	   return "admin/schoolmodify";
+   }
+   
+   @RequestMapping(value = "/delete", method = RequestMethod.GET) // 검색할 때 들어오는건가
+   public String deleteInfo (@RequestParam Map<String, String> parameter, Model model) throws Exception {
+	   String schoolCode = parameter.get("schoolCode");
+	   System.out.println("	> 학교정보 DB삭제 위한 Controller 입성 : " + schoolCode);
+	   
+	   schoolService.deleteInfo(schoolCode);
+	   
+	   return "삭제가 완료되었습니다.";
    }
 }

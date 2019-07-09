@@ -41,4 +41,31 @@ public class SchoolServiceImpl implements SchoolService{
 		return  sqlSession.getMapper(SchoolDao.class).viewAll(keyword);
 	}
 
+
+
+	@Override
+	public List<HSchoolDto> viewMoreInfo(String schoolName) {
+		System.out.println("   > SchoolServiceImpl 입성 > viewMoreInfo");
+		return sqlSession.getMapper(SchoolDao.class).viewMoreInfo(schoolName);
+	}
+
+
+
+	@Override
+	public String modifyInfo (HSchoolDto dto) {
+		System.out.println("  	 > SchoolServiceImpl 입성 > modifyInfo");
+		sqlSession.getMapper(SchoolDao.class).modifyInfo(dto);
+		return "";
+	}
+
+
+
+	@Override
+	public String deleteInfo(String schoolCode) {
+		System.out.println("   > SchoolServiceImpl 입성 > deleteInfo");
+		sqlSession.getMapper(SchoolDao.class).deleteInfo(schoolCode);
+		
+		return"";
+	}
+
 }
