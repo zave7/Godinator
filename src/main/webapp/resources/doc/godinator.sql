@@ -385,6 +385,7 @@ CREATE TABLE u_school (
 	eval3_avg number, /* 평가항목3 평균 */
 	eval4_avg number, /* 평가항목4 평균 */
 	eval5_avg number, /* 평가항목5 평균 */
+	eval6_avg number, /* 평가항목6 평균 */
 	eval_cnt number /* 평가인원수 */
 );
 
@@ -566,6 +567,7 @@ CREATE TABLE h_school (
 	eval3_avg number, /* 평가항목3 평균 */
 	eval4_avg number, /* 평가항목4 평균 */
 	eval5_avg number, /* 평가항목5 평균 */
+	eval6_avg number, /* 평가항목6 평균 */
 	eval_cnt number /* 평가인원수 */
 );
 
