@@ -122,4 +122,10 @@ public class SchoolController {
    public String oh (@RequestParam Map<String, String> parameter, Model model) throws Exception {
        return "admin/schoolmodify";
    }
+   
+   
+   @RequestMapping(value = "/goModify", method = RequestMethod.GET) 
+   public void goModify (@RequestParam Map<String, String> parameter, Model model) throws Exception {
+	   System.out.println("> goModify" + parameter);
+   }
 }

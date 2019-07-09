@@ -34,6 +34,7 @@
    background-color: yellow;
 }
 </style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -91,7 +92,9 @@ $(document).ready(function(){
                             //alert('검색이 실패하였습니다.');
                         }});
            } else {
-    }});
+    		
+           }
+    }); // keyup끝
     
     function allList() {
     	// 시작할 때 모든 학교 리스트 다 보도록
@@ -124,30 +127,82 @@ $(document).ready(function(){
              			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
              			 $("#schoollist").append(tr);
              			 
-          			   }); // modifyBtn event
-                    } // for문
-              } // if문
+          			   } // for문 
+          			   /*
+		                  $('tr.table-active').click(function() {
+		              		var a = $(this).children(); //★★★★★ 자식값 얻어가기
+		              		
+		              		var schoolCate = a[0].childNodes[0].nodeValue;
+		              		var schoolName = a[1].childNodes[0].nodeValue;
+		              		var phone = a[2].childNodes[0].nodeValue;
+		              		var schoolAddress = a[3].childNodes[0].nodeValue;
+		              		var mento = a[4].childNodes[0].nodeValue;
+		              		
+		              		//console.log(schoolCate);	
+		              		//console.log(schoolName);	
+		              		//console.log(phone);	
+		              		//console.log(schoolAddress);	
+		              		//console.log(mento);	
+		              		
+		              		modify(schoolCate, schoolName, phone, schoolAddress, mento);
+		              		//location.href = "modify";
+		              	});
+          			   */
+                    } // if문
+              }, // success function
                     
-                  $('tr.table-active').click(function() {
-              		var a = $(this);
-              		
-              		alert(a);	
-              		location.href = "modify";
-              	});
-                    }, // success function
               error : function() {
                  alert('검색이 실패하였습니다.');
-             }});
+             }
+       });
+    } // allList끝  
+    
+    $(document).on('click', 'tr.table-active', function(){ // 동적으로 생성될때는 on으로 이거해!!
+    	var a = $(this).children(); //★★★★★ 자식값 얻어가기
+  		
+  		var schoolCate = a[0].childNodes[0].nodeValue;
+  		var schoolName = a[1].childNodes[0].nodeValue;
+  		var phone = a[2].childNodes[0].nodeValue;
+  		var schoolAddress = a[3].childNodes[0].nodeValue;
+  		var mento = a[4].childNodes[0].nodeValue;
+  		console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento);
+  		
+  		$("#schoolCate").val("5");
+  		$("#schoolName").val(schoolName);
+  		$("#phone").val(phone);
+  		$("#schoolAddress").val(schoolAddress);
+  		$("#mento").val(mento);
+  		
+  		//modify(schoolCate, schoolName, phone, schoolAddress, mento);
+    });
+    
+    function modify(schoolCate, schoolName, phone, schoolAddress, mento) {
+    	console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento);
+    	//location.href = "modify";
+    	/*
+    	$.ajax({
+            url : "${root}/school/goModify",
+            type : "GET",
+            contentType : "application/json;charset=UTF-8",
+            data : "schoolCate="+schoolCate+", schoolName="+schoolName+", phone="+phone+", schoolAddress="+schoolAddress+", mento="+mento,
+            dataType : "json",
+            success: function() {
+            	//location.href = "modify";
+            	console.log('옴뇸뇸' + data);
+            },
+            error : function() {
+            	alert('modify function에서 실패');
+            }
+      });
+    */
     }
-       
        
    $("#search").click(function() {
       var search = $("#name").val();
       //alert(search);
    });
    
-   
-});
+});   
 </script>
 
 <form class="form-inline" id="searchName" action="" style="padding-top: 50px;  margin-bottom: 0px;">
@@ -190,5 +245,12 @@ $(document).ready(function(){
          
       </table>
    </div>
+   <form id="hiddenInfo">
+	   	<input type="hidden" name="schoolCate" id="schoolCate" >
+	   	<input type="hidden" name="schoolName" id="schoolName" >
+	   	<input type="hidden" name="phone" id="phone" >
+	   	<input type="hidden" name="schoolAddress" id="schoolAddress" >
+	   	<input type="hidden" name="mento" id="mento" >
+   </form>
 </section>
 <%@ include file="/WEB-INF/views/template/sidebar.jsp"%>
