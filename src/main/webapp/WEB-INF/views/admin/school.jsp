@@ -40,53 +40,7 @@ $(document).ready(function(){
 	
 	allList(); // 실행되자마자 전체 개수 조회할수도 있게해!
 	
-    $("#name").keyup(function(e) { // 검색 시
-           var $category = $("#category").val();
-           var $keyword = $(this).val();
-            
-           if($keyword.trim().length != 0) {
-                  $.ajax({
-                        url : "${root}/school/searchlist",
-                        type : "GET",
-                        contentType : "application/json;charset=UTF-8",
-                        data : "category="+$category+"&keyword="+$keyword,
-                        dataType : "json",
-                        success : function(data) {
-                               //alert('result란??' + result) > object로  뜨는디..?
-                             console.log(data + "/받기 성공");
-                             if(data.schoolNames != null){
-                                for(var i=0;i<data.schoolNames.length;i++){
-                                     var schoolCate = data.schoolNames[i].schoolCate1;
-                                     var schoolName = data.schoolNames[i].schoolName;
-                                     var phone = data.schoolNames[i].phone;
-                                     var address = data.schoolNames[i].schoolAddress;
-                                     console.log(schoolCate + '/'+schoolName);
-                                     
-                                     var tr = $("<tr>").attr("class", "searchedSchool");
-                     	    		 var td1 = $("<td>").html(schoolCate);
-                        			 var td2 = $("<td>").html(schoolName);
-                        			 var td3 = $("<td>").html(phone);
-                        			 var td4 = $("<td>").html(address);
-                        			 var td5 = $("<td>").html('0');
-                        			 
-                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
-                        			 $("#schoollist").append(tr);
-                        			 //$("#schoollist").remove();
-                        			 
-                                        
-                                  } // for문 끝
-                               } // if문 끝
-                                 
-                               },
-                         error : function() {
-                            //alert('검색이 실패하였습니다.');
-                        }});
-           } else {
-    		
-           }
-    }); // keyup끝
-    
-    function allList() {
+	function allList() {
     	// 시작할 때 모든 학교 리스트 다 보도록
     	 var keyword = "h_school";
            
@@ -104,7 +58,7 @@ $(document).ready(function(){
                          var schoolName = data.schoolNames[i].schoolName;
                          var phone = data.schoolNames[i].phone;
                          var address = data.schoolNames[i].schoolAddress;
-                          //console.log(schoolCate + '/'+schoolName);
+                         //console.log(schoolCate + '/'+schoolName);
                            
                          var tr = $("<tr>").attr("class", "table-active");
           	    		 var td1 = $("<td>").html(schoolCate);
@@ -118,6 +72,9 @@ $(document).ready(function(){
              			 $("#schoollist").append(tr);
              			 
           			   } // for문 
+          			   
+          			   
+          			   
                     } // if문
               }, // success function
                     
@@ -126,8 +83,8 @@ $(document).ready(function(){
              }
        });
     } // allList끝  
-    
-    $(document).on('click', 'tr.table-active', function(){ // 동적으로 생성될때는 on으로 이거해!!
+	
+	$(document).on('click', 'tr.table-active', function(){ // 동적으로 생성될때는 on으로 이거해!!
     	var a = $(this).children(); //★★★★★ 자식값 얻어가기
   		
   		var schoolCate = a[0].childNodes[0].nodeValue;
@@ -146,8 +103,58 @@ $(document).ready(function(){
   		
   		$("#hiddenInfo").attr("method","GET").attr("action","${root}/school/goModify").submit();
   		
-  		//modify(schoolCate, schoolName, phone, schoolAddress, mento);
     });
+	
+    $("#name").keyup(function(e) { // 검색 시
+    	   reset();
+    
+           var $category = $("#category").val();
+           var $keyword = $(this).val();
+            
+           if($keyword.trim().length != 0) {
+                  $.ajax({
+                        url : "${root}/school/searchlist",
+                        type : "GET",
+                        contentType : "application/json;charset=UTF-8",
+                        data : "category="+$category+"&keyword="+$keyword,
+                        dataType : "json",
+                        success : function(data) {
+                             //console.log(data.schoolNames);
+                             if(data.schoolNames != null){
+                                for(var i=0;i<data.schoolNames.length;i++){
+                                     var schoolCate = data.schoolNames[i].schoolCate1;
+                                     var schoolName = data.schoolNames[i].schoolName;
+                                     var phone = data.schoolNames[i].phone;
+                                     var address = data.schoolNames[i].schoolAddress;
+                                     //console.log(schoolCate + '/'+schoolName);
+                                     
+                                     var tr = $("<tr>").attr("class", "table-active");
+                     	    		 var td1 = $("<td>").html(schoolCate);
+                        			 var td2 = $("<td>").html(schoolName);
+                        			 var td3 = $("<td>").html(phone);
+                        			 var td4 = $("<td>").html(address);
+                        			 var td5 = $("<td>").html('0');
+                        			 
+                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
+                        			 $("#schoollist").append(tr);
+                        			 //$("#schoollist").remove();
+                        			 
+                                  } // for문 끝
+                               } // if문 끝
+                                 
+                               },
+                         error : function() {
+                            //alert('검색이 실패하였습니다.');
+                        }});
+           } else {
+    		
+           }
+    }); // keyup끝
+    
+    function reset() {
+    	$("#schoollist").empty();
+    }
+    
    
 });   
 </script>

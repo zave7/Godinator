@@ -4,6 +4,5 @@
 <ul>
 	<a href="${pageContext.request.contextPath}/member/view"><li>member.jsp</li></a>
 	<a href="${pageContext.request.contextPath}/school/main"><li>school.jsp</li></a>
-	<a href="${pageContext.request.contextPath}/school/test"><li>test.jsp</li></a>
 </ul>
 <%@ include file="/WEB-INF/views/template/sidebar.jsp"%>

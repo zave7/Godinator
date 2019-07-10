@@ -33,7 +33,7 @@
 }
 
 #memberlist tr:hover {
-	background-color: purple;
+	background-color: lightgray;
 }
 
 </style>

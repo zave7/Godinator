@@ -17,15 +17,19 @@ import com.kitri.godinator.model.HSchoolDto;
 import com.kitri.godinator.model.MemberDto;
 
 @Controller
-@RequestMapping("member")
+@RequestMapping("/member")
 public class MemberController {
 	HSchoolDto HSchoolDto;
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping("view")
+	@RequestMapping("/view")
 	public String viewMember() {
 		return "admin/member";
+	}
+	@RequestMapping("/main")
+	public String goMain() {
+		return "admin/adminmain";
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET) // 검색할 때 들어오는건가
