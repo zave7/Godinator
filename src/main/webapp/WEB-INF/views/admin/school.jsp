@@ -40,49 +40,39 @@ $(document).ready(function(){
 	
 	allList(); // 실행되자마자 전체 개수 조회할수도 있게해!
 	
-	$('tr.table-active').click(function() {
-		//var a = $(this).text();
-		alert('클릭했슈!');	
-	});
-	
-    $("#name").keyup(function(e) {
+    $("#name").keyup(function(e) { // 검색 시
            var $category = $("#category").val();
            var $keyword = $(this).val();
             
            if($keyword.trim().length != 0) {
                   $.ajax({
-                        url : "${root}/school/list",
+                        url : "${root}/school/searchlist",
                         type : "GET",
                         contentType : "application/json;charset=UTF-8",
                         data : "category="+$category+"&keyword="+$keyword,
                         dataType : "json",
                         success : function(data) {
                                //alert('result란??' + result) > object로  뜨는디..?
-                             console.log(data + "/받는거 성공");
+                             console.log(data + "/받기 성공");
                              if(data.schoolNames != null){
                                 for(var i=0;i<data.schoolNames.length;i++){
                                      var schoolCate = data.schoolNames[i].schoolCate1;
                                      var schoolName = data.schoolNames[i].schoolName;
                                      var phone = data.schoolNames[i].phone;
                                      var address = data.schoolNames[i].schoolAddress;
-                                     //console.log(schoolCate + '/'+schoolName);
-                                      
-                                     var tr = $("<tr>").attr("class", "table-active");
+                                     console.log(schoolCate + '/'+schoolName);
+                                     
+                                     var tr = $("<tr>").attr("class", "searchedSchool");
                      	    		 var td1 = $("<td>").html(schoolCate);
                         			 var td2 = $("<td>").html(schoolName);
                         			 var td3 = $("<td>").html(phone);
                         			 var td4 = $("<td>").html(address);
                         			 var td5 = $("<td>").html('0');
-                        			 var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
                         			 
-                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
                         			 $("#schoollist").append(tr);
                         			 //$("#schoollist").remove();
                         			 
-                        			 $("#modifyBtn").click(function() {
-                        			      console.log('1111111111modify를 눌렀는데 반응함?');
-                        			      location.href = "modify";
-                        			   });
                                         
                                   } // for문 끝
                                } // if문 끝
@@ -158,32 +148,6 @@ $(document).ready(function(){
   		
   		//modify(schoolCate, schoolName, phone, schoolAddress, mento);
     });
-    
-    function modify(schoolCate, schoolName, phone, schoolAddress, mento) {
-    	console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento);
-    	//location.href = "modify";
-    	/*
-    	$.ajax({
-            url : "${root}/school/goModify",
-            type : "GET",
-            contentType : "application/json;charset=UTF-8",
-            data : "schoolCate="+schoolCate+", schoolName="+schoolName+", phone="+phone+", schoolAddress="+schoolAddress+", mento="+mento,
-            dataType : "json",
-            success: function() {
-            	//location.href = "modify";
-            	console.log('옴뇸뇸' + data);
-            },
-            error : function() {
-            	alert('modify function에서 실패');
-            }
-      });
-    */
-    }
-       
-   $("#search").click(function() {
-      var search = $("#name").val();
-      //alert(search);
-   });
    
 });   
 </script>
@@ -192,7 +156,7 @@ $(document).ready(function(){
    <div class="col-9 col-12-small">
       <div class="col-2 col-4-small" style="float: right;">
          <ul class="actions">
-            <li><a href="#" class="button primary icon"><i class="fas fa-search"  id="search"></i></a></li>
+            <li><a href="#" class="button primary icon" ><i class="fas fa-search"  id="search"></i></a></li>
             </ul>
            <div class="col-0 col-8-small" style="float: right;"></div>
           </div>

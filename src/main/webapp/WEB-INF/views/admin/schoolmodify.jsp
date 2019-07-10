@@ -41,11 +41,9 @@ $(document).ready(function() {
             data : "schoolCode="+schoolCode+"&schoolName="+schoolName+"&schoolCate="+schoolCate+"&homePage="+homePage // & 표시 유의할것!!!
             	  +"&phone="+phone+"&zipcode="+zipcode+"&address="+address+"&addressDetail="+addressDetail,
             dataType : "json",
-            success : function(data) {
-            	alert(data);
-            },
-             error : function() {
-                alert('수정이 실패하였습니다.');
+            error : function() {
+            	alert('해당하는 학교의 정보가 수정되었습니다.');
+                location.href = "main";
             }});
 		 
 	});
@@ -53,10 +51,11 @@ $(document).ready(function() {
 </script>
 
 <style>
-.control {
-	background-color: gray;
+#schoolCode {
+	background-color: lightgray;
 }
 </style>
+
 <section>
 <div class="container" align="center">
 	<div class="col-lg-6" align="center">

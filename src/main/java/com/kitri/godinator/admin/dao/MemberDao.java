@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 
 public interface MemberDao {
-	List<HSchoolDto> HSList();
+	List<MemberDto> viewAll(String keyword);
+	List<HSchoolDto> getHSchoolName(String hSchoolCode);
 }

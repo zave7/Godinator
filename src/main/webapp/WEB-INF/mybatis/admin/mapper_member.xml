@@ -5,4 +5,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.admin.dao.MemberDao">
+	  <select id="viewAll" parameterType="String" resultType="MemberDto">
+	  SELECT user_id userId, user_name userName, h_school_code hSchoolCode, u_school_code uSchoolCode, user_cate userCate, join_date joinDate
+      FROM member
+	  </select>
+	  
+	  <select id="getHSchoolName" parameterType="String" resultType="HSchoolDto">
+	  select school_name
+   	  from h_school
+      where school_code = #{hSchoolCode}
+	  </select>
   </mapper>

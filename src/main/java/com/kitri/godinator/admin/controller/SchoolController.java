@@ -34,6 +34,40 @@ public class SchoolController {
    
    @RequestMapping(value = "/list", method = RequestMethod.GET) // 검색할 때 들어오는건가
    @ResponseBody
+   public String allMember (@RequestParam Map<String, String> parameter) throws Exception {
+	   JsonObject schoolNames = new JsonObject();
+       JsonArray jsonArray = new JsonArray();
+	   
+	   String category = parameter.get("category");
+       String keyword = parameter.get("keyword");
+       
+       System.out.println("> 초기 페이지 init : " + keyword);
+       	
+       List<HSchoolDto> hlist = schoolService.viewAll(keyword);
+       for(Object h : hlist) {
+               if(h != null) {
+                   JsonObject school = new JsonObject();
+                   String schoolCate1 = ((HSchoolDto)h).getSchoolCate1();
+                   String schoolName = ((HSchoolDto)h).getSchoolName();
+                   String phone = ((HSchoolDto)h).getPhone();
+                   String schoolAddress = ((HSchoolDto)h).getAddress() + " "+ ((HSchoolDto)h).getAddressDetail();
+                   
+                   
+                   school.addProperty("schoolCate1", schoolCate1);
+                   school.addProperty("schoolName", schoolName);
+                   school.addProperty("phone", phone);
+                   school.addProperty("schoolAddress", schoolAddress);
+                   
+                   jsonArray.add(school); // jsonArray는 model에 넣지 x
+                   //System.out.println("(all) 검색된 school 결과 : " + school);
+               }
+           }    
+       schoolNames.add("schoolNames", jsonArray);
+       return schoolNames.toString();
+   }
+   
+   @RequestMapping(value = "/searchlist", method = RequestMethod.GET) // 검색할 때 들어오는건가
+   @ResponseBody
    public String searchMember (@RequestParam Map<String, String> parameter, Model model) throws Exception {
        System.out.println("> 파라미터 ok : " + parameter);
        //System.out.println("> 파라미터 ok : " + parameter.get("category") + "/" + parameter.get("keyword"));
@@ -60,7 +94,7 @@ public class SchoolController {
                         school.addProperty("schoolAddress", schoolAddress);
                         
                         jsonArray.add(school); // jsonArray는 model에 넣지 x
-                        System.out.println("1 검색된 school 결과 : " + school);
+                        System.out.println("> 검색된 school 결과(1) : " + school);
                     }
                 }    
             schoolNames.add("schoolNames", jsonArray);
@@ -83,7 +117,7 @@ public class SchoolController {
                     school.addProperty("schoolAddress", schoolAddress);
                     
                     jsonArray.add(school);
-                    System.out.println("2 검색된 school 결과 : " + school);
+                    System.out.println("> 검색된 school 결과(2) : " + school);
                     
 //                    model.addAttribute("list", school);
 //                    System.out.println("이건 모델이야 "+ model);
@@ -93,32 +127,8 @@ public class SchoolController {
         
         return schoolNames.toString();
         
-        } else {
-        	System.out.println("> 초기 페이지 init : " + keyword);
-        	
-        	 List<HSchoolDto> hlist = schoolService.viewAll(keyword);
-        	for(Object h : hlist) {
-                if(h != null) {
-                    JsonObject school = new JsonObject();
-                    String schoolCate1 = ((HSchoolDto)h).getSchoolCate1();
-                    String schoolName = ((HSchoolDto)h).getSchoolName();
-                    String phone = ((HSchoolDto)h).getPhone();
-                    String schoolAddress = ((HSchoolDto)h).getAddress() + " "+ ((HSchoolDto)h).getAddressDetail();
-                    
-                    
-                    school.addProperty("schoolCate1", schoolCate1);
-                    school.addProperty("schoolName", schoolName);
-                    school.addProperty("phone", phone);
-                    school.addProperty("schoolAddress", schoolAddress);
-                    
-                    jsonArray.add(school); // jsonArray는 model에 넣지 x
-                    //System.out.println("(all) 검색된 school 결과 : " + school);
-                }
-            }    
-        schoolNames.add("schoolNames", jsonArray);
-        return schoolNames.toString();
-        } // else 끝
-        
+        } 
+        return "";
    }
    
    @RequestMapping(value = "/modify", method = RequestMethod.GET) // 검색할 때 들어오는건가
@@ -149,8 +159,7 @@ public class SchoolController {
 	   HSchoolDto h = new HSchoolDto();
 	   System.out.println("	> DB 수정 완료 :" + h);
 	   
-	   
-	   return "정보가 수정되었습니다.";
+	   return "";
    }
    
    
@@ -191,7 +200,8 @@ public class SchoolController {
 	   return "admin/schoolmodify";
    }
    
-   @RequestMapping(value = "/delete", method = RequestMethod.GET) // 검색할 때 들어오는건가
+   // 학교삭제
+   @RequestMapping(value = "/delete", method = RequestMethod.GET)
    public String deleteInfo (@RequestParam Map<String, String> parameter, Model model) throws Exception {
 	   String schoolCode = parameter.get("schoolCode");
 	   System.out.println("	> 학교정보 DB삭제 위한 Controller 입성 : " + schoolCode);
