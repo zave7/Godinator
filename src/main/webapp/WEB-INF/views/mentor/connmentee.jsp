@@ -102,6 +102,7 @@ $(function(){
 			type: 'GET',
 			data: param,
 			success: function(response){
+				alert(response);
 				var list = JSON.parse(response);
 				var cnt = list.length;
 				var mentorlist = '';
@@ -119,7 +120,7 @@ $(function(){
 					}
 					mentorlist += '</tr>';
 				}
-				$('#mentorList').empty().append(mentorlist);
+				$('#mentorList').html(mentorlist);
 			}
 		});
 	}

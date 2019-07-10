@@ -5,4 +5,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.mentor.dao.ResumeDao">
+  
+  <select id="selSchool" parameterType="map" resultType="boardDto">
+  	<choose>
+  		<when test='cate1 == "h"'>
+  	SELECT school_code bSchoolCode, school_name bSchoolName, school_cate1 bSchoolCate2
+  	FROM h_school
+  	WHERE school_name LIKE '%'||#{srcName}||'%'
+	  		<if test='cate2 != "0"'>
+	  			AND school_cate1 = ${cate2}
+	  		</if>
+  		</when>
+  		<otherwise>
+  		
+  		</otherwise>
+  	</choose>
+  </select>
+  
   </mapper>

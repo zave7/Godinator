@@ -69,7 +69,7 @@ $(function(){
 			$('#sendmsg').attr("disabled","disabled");
 			$('#msg').attr("disabled","disabled");
 		} else if(msg[0] == 'stay') {
-			$('#chatcontent').append('상대방의 접속을 기다리는 중입니다...');
+			$('#chatcontent').append('상대방의 접속을 기다리는 중입니다...<br>');
 		} else if(msg[0] == 'conn') {
 			$('#chatcontent').append((msg[2] != '${other}') ? '<span style="color: blue;">' + msg[2] + '님이 접속하였습니다. </span><br>' : msg[2] + '님이 접속하였습니다.<br>');
 		}

@@ -80,6 +80,30 @@ $(function(){
 		});
 	}
 	
+	<%-- #### 멘토 목록 #### --%>
+	<%-- 학교 분류 변경시 --%>
+	$('#school-cate1').change(function(){
+		if($(this).val() == '1') {
+			$('#hcate2').css('display', '');
+			$('#ucate2').css('display', 'none');
+		} else {
+			$('#hcate2').css('display', 'none');
+			$('#ucate2').css('display', '');
+		}
+		<%-- getMentors() 추가 --%>
+	});
+	$('#hcate2, #ucate2').change(function(){
+		<%-- getMentors() 추가 --%>
+	});
+	
+	<%-- 새로고침 --%>
+	$('#refresh').click(function(){
+		$('#school-cate1').val('1').attr('selected', 'selected');
+		$('#school-cate1').trigger("change");
+		$('#school-cate2').val('0').attr('selected', 'selected');
+		$('#searchMentor').val('');
+		
+	});
 	
 	<%-- #### 쪽지 #### --%>
 	<%-- 쪽지 작성 --%>
@@ -91,11 +115,12 @@ $(function(){
 	<%-- #### 자소서 #### --%>
 	<%-- 자소서 첨삭 신청 --%>
 	$('.editBtn').click(function(){
-		location.href="/template/writeresume.jsp";
+		var mentor = $(this).parent('tr').attr('data-mentor');
+		location.href = "${root}/resume/write?mentor=" + mentor;
 		return false;
 	});
 	
-	
+	<%-- #### function #### --%>
 	
 	<%-- #### 기타 화면상 기능 #### --%>
 	<%-- 마우스 커서 변경 --%>
@@ -125,7 +150,7 @@ $(function(){
 					<div class="col-2 col-12-small" style="padding-left	: 0; float: right;">
 						<ul class="actions">
 							<li><a href="#" class="button primary icon"><i class="fas fa-search"></i></a></li>
-							<li><a href="#" class="button"><i class="fas fa-redo"></i></a></li>
+							<li><a href="#" class="button" id="refresh"><i class="fas fa-redo"></i></a></li>
 						</ul>
 					</div>
 					<div class="col-2" style="padding-left: 0.5em; width: 15em; padding-right: 1em; float: right;">
@@ -133,8 +158,9 @@ $(function(){
 					</div>
 					<div class="col-6" style="padding-left: 0.5em; float: right;">
 						 <select name="school-cate2" id="school-cate2">
-							<option value="0">ID</option>
-							<option value="1">모교</option>
+							<option value="0">- 검색조건 -</option>
+							<option value="id">ID</option>
+							<option value="schoolName">학교명</option>
 						</select>
 					</div>
 					<div class="col-2" style="float: right;">
@@ -150,16 +176,25 @@ $(function(){
 			<div class="row gtr-uniform" style="margin: 0 0 2em 0;">
 				<div class="col-2" style="padding-left: 0; width: 10em;">
 					 <select name="school-cate1" id="school-cate1" >
-						<option value="0">- 대분류 -</option>
 						<option value="1">고등학교</option>
 						<option value="2">대학교</option>
 					</select>
 				</div>
 				<div class="col-2" style="width: 10em; padding-left: 0; margin-left: 1em;"> 
-					 <select name="school-cate2" id="school-cate2">
-						<option value="0">- 소분류 -</option>
-						<option value="1">- 소분류 -</option>
-						<option value="2">- 소분류 -</option>
+					 <select name="hcate2" id="hcate2">
+						<option value="0">- 전체 -</option>
+						<option value="특수목적고등학교">특수목적고등학교</option>
+						<option value="일반고등학교">일반고등학교</option>
+						<option value="자율고등학교">자율고등학교</option>
+						<option value="특성화고등학교">특성화고등학교</option>
+					</select>
+					 <select name="ucate2" id="ucate2" style="display: none;">
+						<option value="0">- 전체 -</option>
+						<option value="인문·사회">인문·사회</option>
+						<option value="자연·공학">자연·공학</option>
+						<option value="의학">의학</option>
+						<option value="예술·체육">예술·체육</option>
+						<option value="교육">교육</option>
 					</select>
 				</div>
 			</div>
@@ -178,7 +213,7 @@ $(function(){
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr data-mentor="a12346">
 							<td>1</td>
 							<td>userID</td>
 							<td>ㅇㅇ고등학교</td>

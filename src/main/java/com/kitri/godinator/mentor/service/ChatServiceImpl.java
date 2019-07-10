@@ -50,7 +50,6 @@ public class ChatServiceImpl implements ChatService {
 		List<MemberDto> list = sqlSession.getMapper(ChatDao.class).selOnMentor(params);
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
-		
 		return json;
 	}
 

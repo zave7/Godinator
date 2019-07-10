@@ -19,28 +19,11 @@ public class MentorController {
 	}
 	
 	@RequestMapping("/temp1")
-	public String mvMentor1(HttpSession session) {
+	public String temp1(HttpSession session) {
 		MemberDto memberDto = new MemberDto();
 		memberDto.setUserId("a12346");
 		session.setAttribute("userInfo", memberDto);
 		return "mentor/findmentor";
 	}
-	
-	@RequestMapping("/temp2")
-	public String mvMentor2(HttpSession session) {
-		MemberDto memberDto = new MemberDto();
-		memberDto.setUserId("a12349");
-		session.setAttribute("userInfo", memberDto);
-		return "mentor/findmentor";
-	}
-	
-	@RequestMapping("/temp3")
-	public String mvMentor3(HttpSession session) {
-		MemberDto memberDto = new MemberDto();
-		memberDto.setUserId("a12348");
-		session.setAttribute("userInfo", memberDto);
-		return "mentor/findmentor";
-	}
-	
 	
 }

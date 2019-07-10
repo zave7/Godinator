@@ -14,12 +14,12 @@
 		
 		// 자소서 내용보기
 		$('.resumeBtn').click(function(){
-			location.href="/template/viewresume.jsp";
+			location.href="${root}/view/mentor/viewresume.jsp";
 			return false;
 		});
 		// 첨삭 내용보기
 		$('.editBtn').click(function(){
-			location.href="/template/viewedit.jsp";
+			location.href="${root}/view/mentor/viewedit.jsp";
 			return false;
 		});
 	});
