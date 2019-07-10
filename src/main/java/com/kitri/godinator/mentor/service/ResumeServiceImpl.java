@@ -18,8 +18,8 @@ public class ResumeServiceImpl implements ResumeService {
 	private SqlSession sqlSession;
 	
 	@Override
-	public String srchSchool(Map<String, String> srcName) {
-		List<BoardDto> list = sqlSession.getMapper(ResumeDao.class).selSchool(srcName);
+	public String srchSchool(Map<String, String> srcCnd) {
+		List<BoardDto> list = sqlSession.getMapper(ResumeDao.class).selSchool(srcCnd);
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		return json;

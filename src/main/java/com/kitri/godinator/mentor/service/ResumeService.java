@@ -7,6 +7,6 @@ import com.kitri.godinator.model.BoardDto;
 
 public interface ResumeService {
 
-	String srchSchool(Map<String, String> srcName);
+	String srchSchool(Map<String, String> srcCnd);
 
 }

@@ -7,6 +7,6 @@ import com.kitri.godinator.model.BoardDto;
 
 public interface ResumeDao {
 
-	List<BoardDto> selSchool(Map<String, String> srcName);
+	List<BoardDto> selSchool(Map<String, String> srcCnd);
 
 }

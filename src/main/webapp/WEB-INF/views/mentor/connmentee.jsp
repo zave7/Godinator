@@ -73,7 +73,7 @@ $(function(){
 	}
 
 	
-	<%-- 학교 분류 변경시 --%>
+	<%-- 접속 중 멘토 검색 --%>
 	$('#school-cate1').change(function(){
 		if($(this).val() == '1') {
 			$('#hcate2').css('display', '');
@@ -86,6 +86,15 @@ $(function(){
 	});
 	$('#hcate2, #ucate2').change(function(){
 		getOnlineMentors();
+	});
+	$('#search').click(function(){
+		getOnlineMentors();
+		return false;
+	});
+	$('#searchMentor').keypress(function(e) {
+		if (e.which == 13) {
+			getOnlineMentors();
+		}
 	});
 	
 	<%-- 접속중 멘토 목록 --%>
@@ -102,7 +111,6 @@ $(function(){
 			type: 'GET',
 			data: param,
 			success: function(response){
-				alert(response);
 				var list = JSON.parse(response);
 				var cnt = list.length;
 				var mentorlist = '';
@@ -120,6 +128,7 @@ $(function(){
 					}
 					mentorlist += '</tr>';
 				}
+				$('#searchMentor').val('');
 				$('#mentorList').html(mentorlist);
 			}
 		});
@@ -144,7 +153,7 @@ $(function(){
 					<div class="col-10 col-12-small">
 						<div class="col-2 col-12-small" style="padding-left	: 0; float: right;">
 							<ul class="actions">
-								<li><a href="#" class="button primary icon"><i class="fas fa-search"></i></a></li>
+								<li><a href="#" id="search" class="button primary icon"><i class="fas fa-search"></i></a></li>
 								<li><a href="#" class="button"><i class="fas fa-redo"></i></a></li>
 							</ul>
 						</div>
@@ -153,7 +162,6 @@ $(function(){
 						</div>
 						<div class="col-6" style="padding-left: 0.5em; float: right;">
 							 <select name="school-cate3" id="school-cate3">
-								<option value="0">- 검색조건 -</option>
 								<option value="id">ID</option>
 								<option value="schoolName">학교명</option>
 							</select>

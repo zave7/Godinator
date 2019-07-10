@@ -9,15 +9,35 @@
   <select id="selSchool" parameterType="map" resultType="boardDto">
   	<choose>
   		<when test='cate1 == "h"'>
-  	SELECT school_code bSchoolCode, school_name bSchoolName, school_cate1 bSchoolCate2
+  	SELECT 'h' bSchoolCate1, school_code bSchoolCode, school_name bSchoolName, school_cate1 bSchoolCate2
   	FROM h_school
   	WHERE school_name LIKE '%'||#{srcName}||'%'
 	  		<if test='cate2 != "0"'>
-	  			AND school_cate1 = ${cate2}
+	  			AND school_cate1 = #{cate2}
 	  		</if>
   		</when>
   		<otherwise>
-  		
+  	SELECT 'u' bSchoolCate1, code bSchoolCode, name bSchoolName,
+  				CASE 
+                WHEN type = '대학교' OR type = '교육대학' THEN '대학교'
+                WHEN type LIKE '%전문대학%' THEN '전문대학'
+                WHEN type LIKE '%사이버대학%' OR type LIKE '%원격대학%' OR type = '방송통신대학' THEN '사이버대학'
+                ELSE '기타'
+                END bSchoolCate2
+  	FROM u_school
+  	WHERE name LIKE '%'||#{srcName}||'%'
+	  		<if test='cate2 == "대학교"'>
+	  		AND (type = '대학교' OR type = '교육대학')
+	  		</if>
+	  		<if test='cate2 == "전문대학"'>
+	  		AND type LIKE '%전문대학%'
+	  		</if>
+	  		<if test='cate2 == "사이버대학"'>
+	  		AND (type LIKE '%사이버대학%' OR type LIKE '%원격대학%' OR type = '방송통신대학')
+	  		</if>
+	  		<if test='cate2 == "기타"'>
+	  		AND (type LIKE '%사내대학%' OR type = '전공대학' OR type = '각종대학(대학)' OR type = '기술대학' OR type = '산업대학' OR type = '기능대학')
+	  		</if>
   		</otherwise>
   	</choose>
   </select>

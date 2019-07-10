@@ -44,6 +44,8 @@
 </style>
 <script>
 $(function(){
+	var cate1;
+	var cate2;
 	<%-- 학교 분류 select 변경 이벤트 처리 --%>
 	$('#school-cate1').change(function(){
 		if($(this).val() == 'h') {
@@ -59,6 +61,8 @@ $(function(){
 	
 	<%-- 학교 검색창 활성화 --%>
 	$('#schoolName').click(function(){
+		cate1 = $('#school-cate1 option:selected').val();
+		cate2 = (cate1 == 'h') ? $('#hcate2 option:selected').val() : $('#ucate2 option:selected').val();
 		$('#myModal').css("display", "block");
 		return false;
 	});
@@ -70,8 +74,6 @@ $(function(){
 		} else {
 			var srcName = $(this).val().trim();
 			if(srcName != '') {
-				var cate1 = $('#school-cate1 option:selected').val();
-				var cate2 = (bSchoolCate1 == 'h') ? $('#hcate2 option:selected').val() : $('#ucate2 option:selected').val();
 				var param = JSON.stringify({'srcName' : srcName, 'cate1' : cate1, 'cate2' : cate2});
 				$.ajax({
 					url: '${root}/resume/srcschool',
@@ -84,7 +86,7 @@ $(function(){
 						var cnt = response.length;
 						for(var i=0;i<cnt;i++) {
 							var school = response[i];
-							list += '<tr class="school">';
+							list += '<tr class="school" data-code="' + school.bSchoolCode + '" data-name="' + school.bSchoolName + '" data-cate1="' + school.bSchoolCate1 + '" data-cate2="' + school.bSchoolCate2 + '" >';
 							list += '	<td>' + school.bSchoolName + '</td>';
 							list += '	<td>' + ((school.bSchoolCate2 != undefined) ? school.bSchoolCate2 : '') + '</td>';
 							list += '</tr>';
@@ -95,6 +97,53 @@ $(function(){
 			}
 		}
 		return false;
+	});
+	
+	<%-- #### 학교선택 #### --%>
+	$(document).on('click', '.school', function(){
+		var cate1 = $(this).attr('data-cate1');
+		var cate2 = ($(this).attr('data-cate2') != 'undefined') ? $(this).attr('data-cate2') : '0';
+		if(cate1 == 'h') {
+			$('#hcate2').val(cate2).prop("selected", true);
+		} else {
+			$('#ucate2').val(cate2).prop("selected", true);
+		}
+		$('#schoolName').val($(this).attr('data-name'));
+		$('#bSchoolName').val($(this).attr('data-name'));
+		$('#bSchoolCode').val($(this).attr('data-code'));
+		$('#bSchoolCate1').val($(this).attr('data-cate1'));
+		$('#bSchoolCate2').val(cate2);
+		modalClose();
+		return false;
+	});
+	
+	<%-- #### 저장 #### --%>
+	$('#saveBtn').click(function(){
+		if($('#schoolName').val() == ''){
+			alert('학교를 선택하세요.');
+		} else if($('#boardSubject').val() == ''){
+			alert('제목을 입력하세요.');
+		} else if($('#majorDiv').css('display') != "none" && $('#major option:selected').val() == '0'){
+			alert('전공을 선택하세요.');
+		} else if($('#boardContent').val() == ''){
+			alert('내용을 입력하세요.');
+		}  else {
+			var param = $('form').serialize();
+			$.ajax({
+				url: '${root}/resume/write',
+				type: 'POST',
+				data: param,
+				success: function(response) {
+					
+				}
+			});
+		}
+		return false;
+	});
+
+	<%-- #### 취소 #### --%>
+	$('#cancleBtn').click(function(){
+		
 	});
 	
 	<%-- #### function #### --%>
@@ -137,12 +186,11 @@ $(function(){
 			<!-- Form -->
 
 			<form method="post" action="#">
+				<input type="hidden" id="bSchoolName" name="bSchoolName">
 				<input type="hidden" id="bSchoolCode" name="bSchoolCode">
 				<input type="hidden" id="bSchoolCate1" name="bSchoolCate1">
 				<input type="hidden" id="bSchoolCate2" name="bSchoolCate2">
-				<input type="hidden" id="bUserId" name="bUserId">
-				<input type="hidden" id="userName" name="userName">
-				<input type="hidden" id="mentorId" name="mentorId">
+				<input type="hidden" id="mentorId" name="mentorId" value="${mentor}">
 				<div class="row gtr-uniform">
 					<%-- 학교정보 --%>
 					<div class="row gtr-uniform" style="margin: 0">
@@ -162,10 +210,10 @@ $(function(){
 							</select>
 							<select name="ucate2" id="ucate2" style="display: none;">
 								<option value="0">- 전체 -</option>
-								<option value="1">대학교</option>
-								<option value="2">전문대학</option>
-								<option value="3">사이버대학</option>
-								<option value="4">기타</option>
+								<option value="대학교">대학교</option>
+								<option value="전문대학">전문대학</option>
+								<option value="사이버대학">사이버대학</option>
+								<option value="기타">기타</option>
 							</select>
 						</div>
 						<div class="col-2" id="majorDiv" style="padding-left: 1em; width: 10em; display: none;">
@@ -188,17 +236,17 @@ $(function(){
 					</div>
 					<%-- 자소서 --%>
 					<div class="col-12">
-						<textarea name="subject" id="subject" placeholder="제목을 입력하세요" rows="1"></textarea>
+						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1"></textarea>
 					</div>
 					<div class="col-12">
-						<textarea name="content" id="content" placeholder="내용을 입력하세요" rows="20"></textarea>
+						<textarea name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>
 					</div>
 					<%-- 버튼 --%>
 					<div class="col-12">
 						<div style="float: right;">
 							<ul class="actions">
-								<li><input type="submit" value="저    장" class="primary" /></li>
-								<li><input type="reset" value="취    소" /></li>
+								<li><input type="submit" id="saveBtn" value="저    장" class="primary" /></li>
+								<li><input type="reset" id="cancleBtn" value="취    소" /></li>
 							</ul>
 						</div>
 					</div>

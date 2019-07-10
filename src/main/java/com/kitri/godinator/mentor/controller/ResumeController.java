@@ -26,7 +26,7 @@ public class ResumeController {
 
 //---------------------------------------------------------------------------------- 자소서 작성
 	// #### 자소서 작성 페이지 이동 ####
-	@RequestMapping("/write")
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String mvWrite(@RequestParam String mentor, Model model) {
 		model.addAttribute("mentor", mentor);
 		return "mentor/writeresume";
@@ -34,13 +34,19 @@ public class ResumeController {
 	
 	// #### 학교 검색 ####
 	@RequestMapping(value = "/srcschool", method = RequestMethod.POST, headers = {"Content-Type=application/json"})
-	public @ResponseBody String srchSchool(@RequestBody Map<String, String> srcName) {
-		String json = resumeService.srchSchool(srcName);
-		System.out.println(json);
+	public @ResponseBody String srchSchool(@RequestBody Map<String, String> srcCnd) {
+		String json = resumeService.srchSchool(srcCnd);
+//		System.out.println(json);
 		return json;
 	}
 	
-	
+	// #### 자소서 작성 ####
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String write(BoardDto boardDto, Model model) {
+		String result = "";
+//		System.out.println(boardDto.getbSchoolName());
+		return result;
+	}
 	
 	
 	@RequestMapping("/resumelist")
