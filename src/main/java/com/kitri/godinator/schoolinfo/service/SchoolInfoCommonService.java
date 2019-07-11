@@ -10,4 +10,6 @@ public interface SchoolInfoCommonService {
 
 	public List<HSchoolDto> selectHSchoolName(Map<String, String> parameter);
 	public List<USchoolDto> selectUSchoolName(Map<String, String> parameter);
+	public void mergeSearchLog(Map<String, String> parameter);
+	public void hSchoolDataInsert(); 
 }

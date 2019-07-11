@@ -5,11 +5,18 @@
 <c:set var="imgUrl" value="${requestScope.imgUrl}"/>
 <c:set var="schoolCate" value="${requestScope.schoolCate}"/>
 <c:set var="schoolCode" value="${requestScope.schoolCode}"/>
+<c:set var="schoolName" value="${requestScope.schoolName}"/>
 <c:set var="cateAvg" value="${requestScope.cateAvg}"/>
+<c:set var="schoolType" value="${requestScope.schoolType}"/>
 	<!-- Content -->
 	<section>
 		<header class="main">
+		<c:if test="${schoolCate == 'h'}">
 			<h2 class="schooldetail">${schoolDto.schoolName}</h2>
+		</c:if>
+		<c:if test="${schoolCate == 'u'}">
+			<h2 class="schooldetail">${schoolDto.name}</h2>
+		</c:if>
 		</header>
 			<div class="row">
 				<div class="col-8 col-12-small">
@@ -17,6 +24,7 @@
 				</div>
 				<div class="col-4 col-12-small">
 					<h3>학교정보</h3>
+					<c:if test="${schoolCate == 'h'}">
 					<fieldset> 
 						<legend>관할 교육청</legend> 
 						<label>${schoolDto.eduOffice}</label>
@@ -29,6 +37,17 @@
 						<legend>홈페이지</legend> 
 						<label>${schoolDto.homePage}</label>
 					</fieldset>
+					</c:if>
+					<c:if test="${schoolCate == 'u'}">
+					<fieldset> 
+						<legend>대표 전화 / 팩스</legend> 
+						<label>${schoolDto.tel} / ${schoolDto.fax}</label>
+					</fieldset>
+					<fieldset> 
+						<legend>홈페이지</legend> 
+						<label>${schoolDto.link}</label>
+					</fieldset>
+					</c:if>
 				</div>
 			</div>
 
@@ -122,7 +141,7 @@
 	      
 	      function drawChart() {
 	        var data = google.visualization.arrayToDataTable([
-	        	  ['학교 구분', '일반고 평균', '신림고등학교'],
+	        	  ['학교 구분', '${schoolType} 평균', '${schoolName}'],
 		          ['시설', ${cateAvg.EVAL1AVG}, ${schoolDto.eval1Avg}],
 		          ['학업 분위기', ${cateAvg.EVAL1AVG}, ${schoolDto.eval2Avg}],
 		          ['교직원(교육, 인성)', ${cateAvg.EVAL1AVG}, ${schoolDto.eval3Avg}],
@@ -153,28 +172,6 @@
 			$("span.adis").click(function() {
 				$(this).css("color", "black").css("font-weight", "bold").siblings().css("color", "gray").css("font-weight", "normal");
 			});
-			
-			if ($('#morris_line').length) {
-				console.log("차트차트");
-	            // Use Morris.Area instead of Morris.Line
-	            Morris.Line({
-	                element: 'morris_line',
-	                behaveLikeLine: true,
-	                data: [
-	                    { y: '시설', a: 10, b: 20 },
-	                    { y: '학업분위기', a: 65, b: 45 },
-	                    { y: '교직원(교육, 인성)', a: 50, b: 40 },
-	                    { y: '진로교육', a: 75, b: 65 },
-	                    { y: '학생 복지', a: 50, b: 40 },
-	                ],
-	                xkey: 'y',
-	                ykeys: ['a'],
-	                labels: ['마이스터 평균', '학교 평균'],
-	                   lineColors: ['#5969ff', '#ff407b'],
-	                     resize: true,
-	                        gridTextSize: '14px'
-	            });
-	        }
 			
 			function getEvals(adDivVal, searchType, currpg) {
 				$.ajax({

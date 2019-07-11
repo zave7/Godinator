@@ -90,9 +90,10 @@
 					var schoolName = $("#newsSearch").val();
 					var nextGoogle = $("#nextGoogle").val();
 					var nextNaver = $("#nextNaver").val();
-					var param = JSON.stringify({"keyWord" : schoolName, "nextGoogle" : nextGoogle, "nextNaver" : nextNaver});
+					var schoolCate = $("#schoolCate").val();
+					var param = JSON.stringify({"keyWord" : schoolName, "nextGoogle" : nextGoogle, "nextNaver" : nextNaver, "schoolCate" : schoolCate});
 					$.ajax({
-						url : '${root}/schoolnews/searchnews/',
+						url : '${root}/schoolnews/searchnews',
 						type : 'POST',
 						contentType : "application/json;charset=UTF-8",
 						dataType : 'json',

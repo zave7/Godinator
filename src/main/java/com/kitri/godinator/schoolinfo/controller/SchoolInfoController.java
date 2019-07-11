@@ -2,6 +2,8 @@ package com.kitri.godinator.schoolinfo.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.USchoolDto;
-import com.kitri.godinator.schoolinfo.model.PageBean;
+import com.kitri.godinator.schoolinfo.service.SchoolInfoCommonService;
 import com.kitri.godinator.schoolinfo.service.SchoolInfoService;
 import com.kitri.godinator.schoolinfo.util.SchoolInfoUtil;
 
@@ -22,10 +25,19 @@ import com.kitri.godinator.schoolinfo.util.SchoolInfoUtil;
 public class SchoolInfoController {
 	
 	@Autowired
+	private SchoolInfoCommonService schoolInfoCommonService;
+	
+	@Autowired
 	private SchoolInfoService schoolInfoService;
 	
 	@RequestMapping(value = "/schooldetail", method = RequestMethod.GET)
-	public String viewSchoolDetail(@RequestParam Map<String, String> parameter, Model model) {
+	public String viewSchoolDetail(@RequestParam Map<String, String> parameter, Model model, HttpSession httpSession) {
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			// 유저 학교 검색 로그
+			schoolInfoCommonService.mergeSearchLog(parameter);
+		}
 		String schoolCate = parameter.get("schoolCate");
 		// view 화면으로 줘야 할것
 		// 1. 학교 기본 정보
@@ -73,6 +85,11 @@ public class SchoolInfoController {
 		System.out.println("parameter.get(schoolCate) : "+parameter.get("schoolCate"));
 		System.out.println("parameter.get(schoolCate)"+parameter.get("schoolCode"));
 		return schoolInfoService.evalUpDownClick(parameter);
+	}
+	@RequestMapping("/hinsert")
+	public String hinsert() {
+		schoolInfoCommonService.hSchoolDataInsert();
+		return "inserting";
 	}
 	
 }

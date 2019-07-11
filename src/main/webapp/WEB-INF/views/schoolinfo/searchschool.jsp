@@ -137,7 +137,7 @@
 						<h3 class="searchschool-h3">${hSchool.schoolCate1}</h3><br>
 						&#9475;
 					</c:if>
-					<span class="ssdetail" data-code="${hSchool.schoolCode}">${hSchool.schoolName}</span><b class="up">(up)</b>&#9475;
+					<span class="ssdetail" data-cate="h" data-code="${hSchool.schoolCode}">${hSchool.schoolName}</span><b class="up">(up)</b>&#9475;
 				</c:forEach>
 				<c:forEach var="uSchool" items="${uSchoolList}">
 					<c:if test="${cate != uSchool.type}">
@@ -146,7 +146,7 @@
 						<h3 class="searchschool-h3">${uSchool.type}</h3><br>
 						&#9475;
 					</c:if>
-					<span class="ssdetail" data-code="${uSchool.code}">${uSchool.name}</span><b class="up">(up)</b>&#9475;
+					<span class="ssdetail" data-cate="u" data-code="${uSchool.code}">${uSchool.name}</span><b class="up">(up)</b>&#9475;
 				</c:forEach>
 			</div>
 			<hr id="end">

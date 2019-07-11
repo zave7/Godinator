@@ -27,7 +27,7 @@
 	  	SELECT code, name, type, estType, zipcode, region, address, link, latitude, longitude, tel, fax, eval1_avg eval1Avg, 
 	  			eval2_avg eval2Avg, eval3_avg eval3Avg, eval4_avg eval4Avg, eval5_avg eval5Avg, eval6_avg eval6Avg, eval_cnt evalCnt
 	  	FROM u_school
-	  	WEHRE code = #{schoolCode}
+	  	WHERE code = #{schoolCode}
   	</select>
   	<update id="mergeSearchLog" parameterType="map">
   		MERGE INTO search_log
@@ -38,5 +38,10 @@
 		WHEN NOT MATCHED THEN
 		     INSERT (school_code, user_id, school_cate, search_cnt, search_date) 
 		     VALUES (#{schoolCode},#{userId},#{schoolCate},1,sysdate)
+  	</update>
+  	<update id="hSchoolDataInsert" parameterType="map">
+  		update h_school set school_cate2 = #{schoolCate2} 
+  		WHERE school_name = #{schoolName}
+  		AND substr(address, 1, 2) = #{address}
   	</update>
   </mapper>

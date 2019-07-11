@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.USchoolDto;
 import com.kitri.godinator.schoolinfo.model.SchoolNewsDto;
 import com.kitri.godinator.schoolinfo.service.SchoolInfoCommonService;
@@ -92,7 +95,13 @@ public class SchoolNewsController {
 	//구글, 네이버 크롤링
 	@RequestMapping(value = "/searchnews", method = RequestMethod.POST)
 	@ResponseBody
-	public String searchNews(@RequestBody Map<String, String> parameter) {
+	public String searchNews(@RequestBody Map<String, String> parameter, HttpSession httpSession) {
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			// 유저 학교 검색 로그
+			schoolInfoCommonService.mergeSearchLog(parameter);
+		}
 		System.out.println("searchnews keyWord : " + parameter.get("keyWord"));
 		String keyWord = parameter.get("keyWord");
 		String encodeKeyWord = "";

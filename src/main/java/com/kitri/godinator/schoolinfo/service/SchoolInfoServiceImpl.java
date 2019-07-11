@@ -61,23 +61,29 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 		Map<String, Integer> cateAvg = new HashMap<String, Integer>();
 		Object schoolDto = null;
 		String imgUrl = "";
+		String schoolType = "";
+		String schoolName = "";
 		if(schoolCate != null && "h".equals(schoolCate)) {
 			// 학교 기본 정보 (좌표 포함)
 			//schoolCate, schoolCode, adDiv, state
 			//구글 학교 이미지 태그 클래스 : data-ved 2ahUKEwiI-qTWypvjAhUZyosBHZwvDqIQ_xd6BAgUEAI\
 			schoolDto = sqlSession.getMapper(SchoolInfoCommonDao.class).findHSchoolByCode(parameter);
-			String schoolName = ((HSchoolDto)schoolDto).getSchoolName();
+			schoolName = ((HSchoolDto)schoolDto).getSchoolName();
 			cateAvg = sqlSession.getMapper(SchoolInfoDao.class).getHEvalCateAvg(parameter);
 			imgUrl = getImgUrl(schoolName);
+			schoolType = ((HSchoolDto)schoolDto).getSchoolCate1();
 		} else if(schoolCate != null && "u".equals(schoolCate)) {
-			schoolDto = sqlSession.getMapper(SchoolInfoCommonDao.class).findHSchoolByCode(parameter);
-			String schoolName = ((USchoolDto)schoolDto).getName();
+			schoolDto = sqlSession.getMapper(SchoolInfoCommonDao.class).findUSchoolByCode(parameter);
+			schoolName = ((USchoolDto)schoolDto).getName();
 			cateAvg = sqlSession.getMapper(SchoolInfoDao.class).getUEvalCateAvg(parameter);
 			imgUrl = getImgUrl(schoolName);
+			schoolType = ((USchoolDto)schoolDto).getType();
 		}
 		map.put("schoolDto", schoolDto);
 		map.put("imgUrl", imgUrl);
 		map.put("cateAvg", cateAvg);
+		map.put("schoolType", schoolType);
+		map.put("schoolName", schoolName);
 		System.out.println("cateAvg : "+cateAvg);
 		return map;
 	}
