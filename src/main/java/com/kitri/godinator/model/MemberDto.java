@@ -27,6 +27,7 @@ public class MemberDto {
 	private String withdraw;		// 탈퇴여부
 	private String latitude;		// 위도
 	private String longitude;		// 경도
+	private String temp; // 잠시 임시
 	/*
 	 * public String getUserName() { return userName; }
 	 * 

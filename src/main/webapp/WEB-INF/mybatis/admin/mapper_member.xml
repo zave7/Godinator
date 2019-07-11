@@ -6,8 +6,9 @@
   
   <mapper namespace="com.kitri.godinator.admin.dao.MemberDao">
 	  <select id="viewAll" parameterType="String" resultType="MemberDto">
-	  SELECT user_id userId, user_name userName, h_school_code hSchoolCode, u_school_code uSchoolCode, user_cate userCate, join_date joinDate
-      FROM member
+	  SELECT m1.user_id userId, m1.user_name userName, m1.h_school_code hSchoolCode, m1.u_school_code uSchoolCode, m1.user_cate userCate, m1.join_date joinDate, m2.mentor temp
+   	  FROM member m1 full outer join mentor m2
+      ON m1.user_id = m2.user_id
 	  </select>
 	  
 	  <select id="getHSchoolName" parameterType="String" resultType="HSchoolDto">

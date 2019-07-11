@@ -65,6 +65,7 @@ $(document).ready(function(){
                          var uSchoolCode = data.members[i].uSchoolCode;
                          var userCate = data.members[i].userCate;
                          var joinDate = data.members[i].joinDate;
+                         var temp = data.members[i].mentor;
                           //console.log(schoolCate + '/'+schoolName);
                            
                          var tr = $("<tr>").attr("class", "table-active");
@@ -74,7 +75,7 @@ $(document).ready(function(){
              			 var td4 = $("<td>").html(uSchoolCode);
              			 var td5 = $("<td>").html(userCate);
              			 var td6 = $("<td>").html(joinDate);
-             			 var td7 = $("<td>").html('');
+             			 var td7 = $("<td>").html(temp);
              			 
              			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
              			 $("#memberlist").append(tr);

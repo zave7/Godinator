@@ -32,7 +32,7 @@ public class MemberController {
 		return "admin/adminmain";
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET) // 검색할 때 들어오는건가
+	   @RequestMapping(value = "/list", method = RequestMethod.GET) // 검색할 때 들어오는건가
 	   @ResponseBody
 	   public String allMember (@RequestParam Map<String, String> parameter) throws Exception {
 		   JsonObject members = new JsonObject();
@@ -40,6 +40,7 @@ public class MemberController {
 		   
 	       String keyword = parameter.get("keyword");
 	       String status = "";
+	       String mentor = "";
 	       
 	       System.out.println("> 초기 페이지 init : " + keyword);
 	       
@@ -55,13 +56,18 @@ public class MemberController {
 	                   String uSchoolCode = ((MemberDto)obj).getUSchoolCode();
 	                   String userCate = ((MemberDto)obj).getUserCate();
 	                   String joinDate = ((MemberDto)obj).getJoinDate();
-	                   
+	                   String temp = ((MemberDto)obj).getTemp();
+
 	                   /** userCate 변경 **/
 	                   if(userCate.equals("s"))  // 학생
 	                	   status = "학생";
 	                    else if (userCate.equals("p")) // 학부모
 	                	   status = "학부모";
 	                   
+	                   if(temp.equals("R"))  // 멘토요청 보낸 이들
+	                	   mentor = "멘토승인";
+	                   else if(temp.equals(null))
+	                	   mentor = "멘토";
 	                   //getSchoolName(hSchoolCode);
 	                   
 	                   member.addProperty("userId", userId);
@@ -70,8 +76,10 @@ public class MemberController {
 	                   member.addProperty("uSchoolCode", uSchoolCode);
 	                   member.addProperty("userCate", status);
 	                   member.addProperty("joinDate", joinDate);
+	                   member.addProperty("temp", temp);
 	                   
 	                   jsonArray.add(member);
+	                   System.out.println(member);
 	               }
 	           }   
 	       members.add("members", jsonArray);
