@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,13 +35,14 @@ public class MemberController {
 	
 	   @RequestMapping(value = "/list", method = RequestMethod.GET) // 검색할 때 들어오는건가
 	   @ResponseBody
-	   public String allMember (@RequestParam Map<String, String> parameter) throws Exception {
+	   public String allMember (@RequestParam Map<String, String> parameter, Model model) throws Exception {
 		   JsonObject members = new JsonObject();
 	       JsonArray jsonArray = new JsonArray();
 		   
 	       String keyword = parameter.get("keyword");
 	       String status = "";
-	       String mentor = "";
+	       String i1 = "";
+	       String i2;
 	       
 	       System.out.println("> 초기 페이지 init : " + keyword);
 	       
@@ -64,11 +66,15 @@ public class MemberController {
 	                    else if (userCate.equals("p")) // 학부모
 	                	   status = "학부모";
 	                   
-	                   if(temp.equals("R"))  // 멘토요청 보낸 이들
-	                	   mentor = "멘토승인";
-	                   else if(temp.equals(null))
-	                	   mentor = "멘토";
-	                   //getSchoolName(hSchoolCode);
+	                   if(temp.equals("R")) {  // 멘토요청 보낸 이들
+	                	   i1 = "<td><input type='button' id='mentoConfirm' value='멘토승인'>";
+	                	   //i2 = "html()";
+		               }else {
+		                   i1 = "<td>";
+		                   //i2 = "html('')";
+		               }
+	                   
+	                   //getSchoolName(hSchoolCode); > 학교이름 구하기
 	                   
 	                   member.addProperty("userId", userId);
 	                   member.addProperty("userName", userName);
@@ -76,7 +82,8 @@ public class MemberController {
 	                   member.addProperty("uSchoolCode", uSchoolCode);
 	                   member.addProperty("userCate", status);
 	                   member.addProperty("joinDate", joinDate);
-	                   member.addProperty("temp", temp);
+	                   member.addProperty("i1", i1);
+	                   //member.addProperty("i2", i2);
 	                   
 	                   jsonArray.add(member);
 	                   System.out.println(member);
@@ -85,6 +92,16 @@ public class MemberController {
 	       members.add("members", jsonArray);
 	       return members.toString();
 	   }
+	   
+	   @RequestMapping(value = "/mentor", method = RequestMethod.GET)
+		public void changeMentor(@RequestParam Map<String, String> parameter) {
+		   String id = parameter.get("id");
+		   System.out.println("> 멘토로 바꿀 ID : "+ id);
+		   
+		   memberService.setMentor(id);
+		   //return "admin/member";
+		}   
+	   
 
 	private void getSchoolName(String hSchoolCode) {
 		List<HSchoolDto> name = memberService.getHSchoolName(hSchoolCode);

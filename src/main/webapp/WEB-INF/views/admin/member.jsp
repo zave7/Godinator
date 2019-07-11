@@ -65,7 +65,8 @@ $(document).ready(function(){
                          var uSchoolCode = data.members[i].uSchoolCode;
                          var userCate = data.members[i].userCate;
                          var joinDate = data.members[i].joinDate;
-                         var temp = data.members[i].mentor;
+                         var temp = data.members[i].i1;
+                         var temp2 = data.members[i].i2;
                           //console.log(schoolCate + '/'+schoolName);
                            
                          var tr = $("<tr>").attr("class", "table-active");
@@ -75,7 +76,7 @@ $(document).ready(function(){
              			 var td4 = $("<td>").html(uSchoolCode);
              			 var td5 = $("<td>").html(userCate);
              			 var td6 = $("<td>").html(joinDate);
-             			 var td7 = $("<td>").html(temp);
+             			 var td7 = $(temp).html();
              			 
              			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
              			 $("#memberlist").append(tr);
@@ -85,7 +86,26 @@ $(document).ready(function(){
                  alert('검색이 실패하였습니다.');
              }});
    		 } // allList끝 
-   
+   		 
+   		$(document).on('click', 'tr.table-active', function(){
+   			confirm('멘토로 저장하시겠습니까?');
+   			
+   			var a = $(this).children();
+   	  		var id = a[0].childNodes[0].nodeValue;
+   	  		
+	   	  	$.ajax({
+	            url : "${root}/member/mentor",
+	            type : "GET",
+	            contentType : "application/json;charset=UTF-8",
+	            data : "id="+id,
+	            dataType : "json",
+	            error : function() {
+	                alert('멘토로 수정되었습니다.');
+	                location.href = "view";
+	            }
+	         });
+	   	  		
+	   });
 });
 
 </script>
@@ -129,15 +149,6 @@ $(document).ready(function(){
 
          <!-- 잠시 임시!<img src="/images/crowns.png" width="30" height="30"> -->
          <tbody id="memberlist">
-	         <tr>
-	               <td>test</td>
-	               <td>test</td>
-	               <td>test</td>
-	               <td>test</td>
-	               <td>s</td>
-	               <td>2019-07-10 14:19:53</td>
-	               <td><button>멘토승인</button></td>
-	          </tr>
          </tbody>
 
       </table>

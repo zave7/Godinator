@@ -11,6 +11,7 @@ import com.kitri.godinator.admin.dao.MemberDao;
 import com.kitri.godinator.admin.dao.SchoolDao;
 import com.kitri.godinator.model.HSchoolDto;
 import com.kitri.godinator.model.MemberDto;
+import com.kitri.godinator.model.MentorDto;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -28,6 +29,12 @@ public class MemberServiceImpl implements MemberService{
 	public List<HSchoolDto> getHSchoolName(String hSchoolCode) {
 		System.out.println("   > MemberServiceImpl 입성 > 고등학교 이름 get하기");
 		return sqlSession.getMapper(MemberDao.class).getHSchoolName(hSchoolCode);
+	}
+
+	@Override
+	public List<MentorDto> setMentor(String id) {
+		System.out.println("   > MemberServiceImpl 입성 > 멘토로 승격");
+		return sqlSession.getMapper(MemberDao.class).setMentor(id);
 	}
 
 
