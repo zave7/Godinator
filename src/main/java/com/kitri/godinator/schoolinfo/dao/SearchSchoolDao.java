@@ -14,5 +14,6 @@ public interface SearchSchoolDao {
 	public List<USchoolDto> getUSchoolList();
 	public int getCountHSchoolsByCondition(Map<String, Object> parameter);
 	public int getCountUSchoolsByCondition(Map<String, Object> parameter);
+	public String getUserPrefer(String userId);
 
 }

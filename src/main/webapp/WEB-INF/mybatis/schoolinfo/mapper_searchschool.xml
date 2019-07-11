@@ -148,4 +148,6 @@
 			</if>
 		</trim>
   	</select>
+  	<select id="getUserPrefer" parameterType="string" resultType="string">
+  	</select>
   </mapper>

@@ -184,117 +184,130 @@
 						var evals = result.evals;
 						var evalsCnt = evals.length;
 						var content = "";
-						for(var i=0; i<evalsCnt; i ++) {
-							content += '<div class="adis-content"><div class="row"><div class="col-8 col-12-small">';
-							content += '	<span class="id">&nbsp;&nbsp;<strong>'+evals[i].userId+'</strong></span></div>';
-							content += '	<div class="col-4 col-12-small menu" data-seq="'+evals[i].adNo+'">';
-							content += '		<a class="button btn-success small sympathy">공감:<span>'+evals[i].upvote+'</span></a>';
-							content += '		<a class="button primary small uncensored">비공감:<span>'+evals[i].downvote+'</span></a>';
-							content += '		<a class="button primary small">신고</a>';
-							content += '	</div></div><div class="row"><div class="col-1 col-12-small"></div>';
-							content += '	<div class="col-10 col-12-small"><div class="textarea">';
-							content += '			<p>'+evals[i].content+'</p>';
-							content += '		</div></div></div><div class="row"><div class="col-12 col-12-small">';
-							content += '		<span>'+evals[i].regitDate+'</span></div></div><hr/></div>';
-						}
-						$("div.adis-contents").empty();
-						$("div.adis-contents").append(content);
-						
-						//공감 비공감 눌렀을때
-						$("div.adis-contents a.sympathy, a.uncensored").click(function() {
-							console.log($(this).text());
-							var $this = this;
-							var adNo = $(this).parent().attr("data-seq");
-							var $parent = $(this).parent();
-							console.log("data-seq : "+adNo);
-							var upDown;
-							if($(this).index() == 0) {
-								upDown = "u";
-							} else {
-								upDown = "d";
+						if(evalsCnt != 0) {
+							for(var i=0; i<evalsCnt; i ++) {
+								content += '<div class="adis-content"><div class="row"><div class="col-8 col-12-small">';
+								content += '	<span class="id">&nbsp;&nbsp;<strong>'+evals[i].userId+'</strong></span></div>';
+								content += '	<div class="col-4 col-12-small menu" data-seq="'+evals[i].adNo+'">';
+								content += '		<a class="button btn-success small sympathy">공감:<span>'+evals[i].upvote+'</span></a>';
+								content += '		<a class="button primary small uncensored">비공감:<span>'+evals[i].downvote+'</span></a>';
+								content += '		<a class="button primary small">신고</a>';
+								content += '	</div></div><div class="row"><div class="col-1 col-12-small"></div>';
+								content += '	<div class="col-10 col-12-small"><div class="textarea">';
+								content += '			<p>'+evals[i].content+'</p>';
+								content += '		</div></div></div><div class="row"><div class="col-12 col-12-small">';
+								content += '		<span>'+evals[i].regitDate+'</span></div></div><hr/></div>';
 							}
-							var param = JSON.stringify({
-								"schoolCate" : schoolCate,
-								"schoolCode" : schoolCode,
-								"adNo" : adNo,
-								"upDown" : upDown
-							});
-							$.ajax({
-								url : "${root}/schoolinfo/poscon",
-								type : "PATCH",
-								contentType : "application/json;charset=utf-8",
-								dataType : "json",
-								data : param,
-								success : function(result) {
-									// s, d, e
-									console.log(result.msg);
-									if(result.msg == "s") {
-										$($parent).children().eq(0).find("span").text(result.upvote);
-										$($parent).children().eq(1).find("span").text(result.downvote);
-										if(upDown == "u") {
-											//$(this).css("border", "u");
-											$($this).css("border", "3px solid yellow !important");
-											console.log($($this).find("span").first().text());
-										} else {
-											//$(this).attr("data-state", "d");
-											$($this).css("border", "3px solid blue !important");
-											console.log($($this).find("span").first().text());
-										}
-									} else if(result.msg == "d") {
-										//$(this).removeAttr("data-state");
-											$($this).css("border", "none");
-											$($this).find("span").text(Number($($this).find("span").text())-1);
-											console.log($($this).find("span").first().text());
-									} else {
-										alert(result.msg);
-									}
-								},
-								error : function() {
-									alert("에러가 발생했습니다! 다시시도해주세요");
+							$("div.adis-contents").empty();
+							$("div.adis-contents").append(content);
+							
+
+							//페이징 처리
+							var pageBean = result.pageBean;
+							if(pageBean.totalPage > 1) {
+								var pagination = "";
+								var startPage = pageBean.startPage;
+								var endPage= pageBean.endPage;
+								if(pageBean.startPage != 1) {
+									pagination += '<li><a class="page eval" data-pg="'+1+'">'+1+'</a></li>';
+									pagination += '<li><span>&hellip;</span></li>';
 								}
+								for(var i=startPage; i<=endPage; i++) {
+									if(pageBean.currentPage == i)
+										pagination += '<li><a class="page active" data-pg="'+i+'">'+i+'</a></li>';
+									else
+										pagination += '<li><a class="page eval" data-pg="'+i+'">'+i+'</a></li>';
+								}						
+								if(pageBean.endPage != pageBean.totalPage) {
+									pagination += '<li><span>&hellip;</span></li>';
+									pagination += '<li><a class="page eval" data-pg="'+pageBean.totalPage+'">'+pageBean.totalPage+'</a></li>';
+								}
+								$("#pros-cons").empty();
+								$("#pros-cons").append(pagination);
+								
+								var prevFlag = "";
+								var nextFlag = "";
+								if(!pageBean.isPrev)
+									prevFlag = " disabled";
+								if(!pageBean.isNext)	
+									nextFlag = " disabled";
+								var prevAndNext = "";
+								$("#pros-cons").prepend('<li><span class="button'+prevFlag+' eval" data-pg="'+(pageBean.startPage-1)+'">Prev</span></li>');
+								$("#pros-cons").append('<li><span class="button'+nextFlag+' eval" data-pg="'+(pageBean.endPage+1)+'">Next</span></li>');
+								$("ul#pros-cons>li .eval").click(function() {
+									var currpg = $(this).attr("data-pg");
+									getEvals(adDiv, searchType, currpg);
+								});
+							}
+							//공감 비공감 눌렀을때
+							$("div.adis-contents a.sympathy, a.uncensored").click(function() {
+								console.log($(this).text());
+								var $this = this;
+								var adNo = $(this).parent().attr("data-seq");
+								var $parent = $(this).parent();
+								console.log("data-seq : "+adNo);
+								var upDown;
+								if($(this).index() == 0) {
+									upDown = "u";
+								} else {
+									upDown = "d";
+								}
+								var param = JSON.stringify({
+									"schoolCate" : schoolCate,
+									"schoolCode" : schoolCode,
+									"adNo" : adNo,
+									"upDown" : upDown
+								});
+								$.ajax({
+									url : "${root}/schoolinfo/poscon",
+									type : "PATCH",
+									contentType : "application/json;charset=utf-8",
+									dataType : "json",
+									data : param,
+									success : function(result) {
+										if(result.loginCheck == "true") {
+											// s, d, e
+											console.log(result.msg);
+											if(result.msg == "s") {
+												$($parent).children().eq(0).find("span").text(result.upvote);
+												$($parent).children().eq(1).find("span").text(result.downvote);
+												if(upDown == "u") {
+													//$(this).css("border", "u");
+													$($this).css("border", "3px solid yellow !important");
+													console.log($($this).find("span").first().text());
+												} else {
+													//$(this).attr("data-state", "d");
+													$($this).css("border", "3px solid blue !important");
+													console.log($($this).find("span").first().text());
+												}
+											} else if(result.msg == "d") {
+												//$(this).removeAttr("data-state");
+													$($this).css("border", "none");
+													$($this).find("span").text(Number($($this).find("span").text())-1);
+													console.log($($this).find("span").first().text());
+											} else {
+												alert(result.msg);
+											}
+										} else {
+											var cf = confirm("로그인 후 이용해주세요");
+											if(cf) {
+												alert(result.referer);
+												$(location).attr("href", "${root}/searchschool/viewsearch");
+											}
+										}
+									},
+									error : function() {
+										alert("에러가 발생했습니다! 다시시도해주세요");
+									}
+								});
+								return false;
 							});
-							return false;
-						});
-						
-						//페이징 처리
-						var pagination = "";
-						var pageBean = result.pageBean;
-						var startPage = pageBean.startPage;
-						var endPage= pageBean.endPage;
-						if(pageBean.startPage != 1) {
-							pagination += '<li><a class="page eval" data-pg="'+1+'">'+1+'</a></li>';
-							pagination += '<li><span>&hellip;</span></li>';
+						} else {
+							$("div.adis-contents").empty();
+							$("div.adis-contents").append("검색 결과가 없습니다");
 						}
-						for(var i=startPage; i<=endPage; i++) {
-							if(pageBean.currentPage == i)
-								pagination += '<li><a class="page active" data-pg="'+i+'">'+i+'</a></li>';
-							else
-								pagination += '<li><a class="page eval" data-pg="'+i+'">'+i+'</a></li>';
-						}						
-						if(pageBean.endPage != pageBean.totalPage) {
-							pagination += '<li><span>&hellip;</span></li>';
-							pagination += '<li><a class="page eval" data-pg="'+pageBean.totalPage+'">'+pageBean.totalPage+'</a></li>';
-						}
-						$("#pros-cons").empty();
-						$("#pros-cons").append(pagination);
-						
-						var prevFlag = "";
-						var nextFlag = "";
-						if(!pageBean.isPrev)
-							prevFlag = " disabled";
-						if(!pageBean.isNext)	
-							nextFlag = " disabled";
-						var prevAndNext = "";
-						$("#pros-cons").prepend('<li><span class="button'+prevFlag+' eval" data-pg="'+(pageBean.startPage-1)+'">Prev</span></li>');
-						$("#pros-cons").append('<li><span class="button'+nextFlag+' eval" data-pg="'+(pageBean.endPage+1)+'">Next</span></li>');
-						$("ul#pros-cons>li .eval").click(function() {
-							var currpg = $(this).attr("data-pg");
-							getEvals(adDiv, searchType, currpg);
-						});
-						
 					},
 					error : function() {
-						
 					}
 				});
 			}
@@ -307,6 +320,7 @@
 			});
 			$("#adDiv>a").click(function() {
 				adDiv = $(this).attr("data-adDiv");
+				console.log(adDiv);
 				getEvals(adDiv, searchType, 1);
 			});
 		});

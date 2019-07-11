@@ -3,7 +3,6 @@ package com.kitri.godinator.schoolinfo.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.time.Clock;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +152,7 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 		jsonObject.addProperty("msg", result);
 		jsonObject.addProperty("upvote",  map.get("UPVOTE"));
 		jsonObject.addProperty("downvote", map.get("DOWNVOTE"));
+		jsonObject.addProperty("loginCheck", "true");
 //		String result = "";
 //		String clickUpDown = parameter.get("clickUpDown");
 //		if(clickUpDown)

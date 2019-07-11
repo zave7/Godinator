@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.USchoolDto;
 import com.kitri.godinator.schoolinfo.service.SearchSchoolService;
 
@@ -24,15 +27,18 @@ public class SearchSchoolController {
 	private SearchSchoolService searchSchoolService;
 	
 	@RequestMapping(value = "/viewsearch", method = RequestMethod.GET)
-	public String viewSearchSchool(Model model) {
-
+	public String viewSearchSchool(Model model, HttpSession httpSession) {
+		
+		
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
 		Map<String, Object> schoolMap = new HashMap<String, Object>();
-	
+		
+		if(memberDto != null) {
+			String preference = searchSchoolService.getUserPrefer(memberDto.getUserId());
+		}
+		
 		List<HSchoolDto> hSchoolList = searchSchoolService.getHSchoolList();
 		List<USchoolDto> uSchoolList = searchSchoolService.getUSchoolList();
-		
-		System.out.println("hSchoolList "+hSchoolList.size()+" : "+ hSchoolList);
-		System.out.println("uSchoolList "+uSchoolList.size()+" : "+ uSchoolList);
 		
 		model.addAttribute("hSchoolList", hSchoolList);
 		model.addAttribute("uSchoolList", uSchoolList);

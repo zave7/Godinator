@@ -31,19 +31,78 @@
 				<h2 id="content">항목 평가</h2>
 				<div class="row">
 					<div class="col-6 col-12-small">
-						<p>시설&#9733;&#9733;&#9733;&#9733;&#9733;&#9734;&#9734;&#9734;&#9734;&#9734;</p>
+						<span>시설 : </span><div class="starRev">
+										  <span class="starR on">별1</span>
+										  <span class="starR">별2</span>
+										  <span class="starR">별3</span>
+										  <span class="starR">별4</span>
+										  <span class="starR">별5</span>
+										  <span class="starR">별6</span>
+										  <span class="starR">별7</span>
+										  <span class="starR">별8</span>
+										  <span class="starR">별9</span>
+										  <span class="starR">별10</span>
+										</div>
 					</div>
 					<div class="col-6 col-12-small">
-						<p>학업분위기&#9733;&#9733;&#9733;&#9733;&#9733;&#9734;&#9734;&#9734;&#9734;&#9734;</p>
+						<span>학업분위기 : </span><div class="starRev">
+										  <span class="starR on">별1</span>
+										  <span class="starR">별2</span>
+										  <span class="starR">별3</span>
+										  <span class="starR">별4</span>
+										  <span class="starR">별5</span>
+										  <span class="starR">별6</span>
+										  <span class="starR">별7</span>
+										  <span class="starR">별8</span>
+										  <span class="starR">별9</span>
+										  <span class="starR">별10</span>
+										</div>
+					</div>
+				</div><br>
+				<div class="row">
+					<div class="col-6 col-12-small">
+						<span>교직원 (교육, 인성) : </span><div class="starRev">
+										  <span class="starR on">별1</span>
+										  <span class="starR">별2</span>
+										  <span class="starR">별3</span>
+										  <span class="starR">별4</span>
+										  <span class="starR">별5</span>
+										  <span class="starR">별6</span>
+										  <span class="starR">별7</span>
+										  <span class="starR">별8</span>
+										  <span class="starR">별9</span>
+										  <span class="starR">별10</span>
+										</div>
 					</div>
 					<div class="col-6 col-12-small">
-						<p>교직원 (교육, 인성)&#9733;&#9733;&#9733;&#9733;&#9733;&#9734;&#9734;&#9734;&#9734;&#9734;</p>
+						<span>진로 교육 : </span><div class="starRev">
+										  <span class="starR on">별1</span>
+										  <span class="starR">별2</span>
+										  <span class="starR">별3</span>
+										  <span class="starR">별4</span>
+										  <span class="starR">별5</span>
+										  <span class="starR">별6</span>
+										  <span class="starR">별7</span>
+										  <span class="starR">별8</span>
+										  <span class="starR">별9</span>
+										  <span class="starR">별10</span>
+										</div>
 					</div>
+				</div><br>
+				<div class="row">
 					<div class="col-6 col-12-small">
-						<p>진로 교육&#9733;&#9733;&#9733;&#9733;&#9733;&#9734;&#9734;&#9734;&#9734;&#9734;</p>
-					</div>
-					<div class="col-6 col-12-small">
-						<p>학생 복지&#9733;&#9733;&#9733;&#9733;&#9733;&#9734;&#9734;&#9734;&#9734;&#9734;</p>
+						<span>학생 복지 : </span><div class="starRev">
+										  <span class="starR on">별1</span>
+										  <span class="starR">별2</span>
+										  <span class="starR">별3</span>
+										  <span class="starR">별4</span>
+										  <span class="starR">별5</span>
+										  <span class="starR">별6</span>
+										  <span class="starR">별7</span>
+										  <span class="starR">별8</span>
+										  <span class="starR">별9</span>
+										  <span class="starR">별10</span>
+										</div>
 					</div>
 				</div>
 				<hr>
@@ -97,6 +156,11 @@
 				$("div.submit-school-evaluation a#submit").click(function() {
 					var check = confirm("입력 확인 시 수정이 불가합니다. 신중히 작성해주시기 바랍니다.\n작성 완료하시겠습니까?");
 					return false;
+				});
+				$('div.starRev span').click(function(){
+				  $(this).parent().children('span').removeClass('on');
+				  $(this).addClass('on').prevAll('span').addClass('on');
+				  return false;
 				});
 			});
 		</script>

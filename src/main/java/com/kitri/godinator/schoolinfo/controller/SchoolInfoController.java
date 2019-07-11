@@ -2,6 +2,7 @@ package com.kitri.godinator.schoolinfo.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,21 +76,40 @@ public class SchoolInfoController {
 		return schoolInfoService.getEvals(parameter); 
 	}
 	
+	
 	@RequestMapping(value = "/poscon", method = RequestMethod.PATCH)
 	@ResponseBody
-	public String getUpDownByUser(@RequestBody Map<String, Object> parameter) {
+	public String getUpDownByUser(@RequestBody Map<String, Object> parameter, HttpSession session, HttpServletRequest request) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			Integer adNo = SchoolInfoUtil.getInt((String)parameter.get("adNo"));
+			parameter.put("adNO", adNo);
+			System.out.println("parameter.get(schoolCate) : "+parameter.get("schoolCate"));
+			System.out.println("parameter.get(schoolCate)"+parameter.get("schoolCode"));
+			return schoolInfoService.evalUpDownClick(parameter);
+		} else {
+			String referer = request.getHeader("Referer");
+			return "{\"loginCheck\":\"false\", \"referer\":\""+referer+"\"}";
+		}
 		//테스트 아이디
-		parameter.put("userId", "testid");
-		Integer adNo = SchoolInfoUtil.getInt((String)parameter.get("adNo"));
-		parameter.put("adNO", adNo);
-		System.out.println("parameter.get(schoolCate) : "+parameter.get("schoolCate"));
-		System.out.println("parameter.get(schoolCate)"+parameter.get("schoolCode"));
-		return schoolInfoService.evalUpDownClick(parameter);
 	}
+	
+	//고등학교 유형 2 업데이트
 	@RequestMapping("/hinsert")
 	public String hinsert() {
 		schoolInfoCommonService.hSchoolDataInsert();
 		return "inserting";
+	}
+	
+	@RequestMapping(value = "/rating", method = RequestMethod.GET)
+	public String rating(HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		String path = "schoolinfo/schoolrating";
+		if(memberDto != null) {
+			path = "schoolinfo/schoolrating";
+		}
+		return path;
 	}
 	
 }

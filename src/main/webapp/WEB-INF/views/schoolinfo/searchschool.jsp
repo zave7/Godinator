@@ -311,7 +311,6 @@
 							var pageBean = result.pageBean;
 							if(pageBean.totalPage > 1) {
 								var pagination = "";
-								var pageBean = result.pageBean;
 								var startPage = pageBean.startPage;
 								var endPage= pageBean.endPage;
 								if(pageBean.startPage != 1) {
