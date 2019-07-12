@@ -12,3 +12,4 @@ memberDto.setEmail("son@naver.com");
 
 session.setAttribute("userInfo", memberDto);
 %>
+ 

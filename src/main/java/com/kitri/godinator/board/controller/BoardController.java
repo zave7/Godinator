@@ -96,7 +96,7 @@ public class BoardController {
 					DateFormat df = new SimpleDateFormat("yyMMdd");//MM대문자가 월 /소문자 분(minute)
 					String saveFolder = df.format(new Date());
 					String realSaveFolder = realPath + File.separator + saveFolder; 
-					File dir = new File(saveFolder);
+					File dir = new File(realSaveFolder);
 					
 					System.out.println("controller에서 저장된 경로!! : "+realPath);
 					if(!dir.exists())
