@@ -161,4 +161,13 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 		System.out.println(jsonObject.toString());
 		return jsonObject.toString(); 
 	}
+
+	@Override
+	public int insertEvalByUser(Map<String, String> parameter) {
+		// TODO 학교 평가 삽입
+		int result = 0;
+		result += sqlSession.getMapper(SchoolInfoDao.class).updateEvalAvgByUser(parameter); 
+		result += sqlSession.getMapper(SchoolInfoDao.class).insertEvalByUser(parameter); 
+		return result;
+	}
 }

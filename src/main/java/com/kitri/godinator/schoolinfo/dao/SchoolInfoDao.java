@@ -16,4 +16,6 @@ public interface SchoolInfoDao {
 	public Map<String, Integer> getEvalUpDown(Map<String, Object> parameter);
 	public Map<String, Integer> getHEvalCateAvg(Map<String, String> parameter);
 	public Map<String, Integer> getUEvalCateAvg(Map<String, String> parameter);
+	public int insertEvalByUser(Map<String, String> parameter);
+	public int updateEvalAvgByUser(Map<String, String> parameter);
 }

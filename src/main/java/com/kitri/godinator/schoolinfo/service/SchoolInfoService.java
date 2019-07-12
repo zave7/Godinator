@@ -10,4 +10,6 @@ public interface SchoolInfoService {
 
 	public String evalUpDownClick(Map<String, Object> parameter);
 
+	public int insertEvalByUser(Map<String, String> parameter);
+
 }

@@ -9,6 +9,7 @@
   		SELECT school_name schoolName, school_code schoolCode
   		FROM h_school
   		WHERE school_name LIKE '%'||#{keyword}||'%'
+  		ORDER BY schoolName
   	</select>
   	<select id="selectUSchoolName" parameterType="map" resultType="uSchoolDto">
   		SELECT name, code

@@ -14,6 +14,9 @@ public interface SearchSchoolService {
 
 	public List<USchoolDto> getUSchoolList();
 
-	public String getUserPrefer(String userId);
+	public List<String> getUserPrefer(String userId);
+	
+	public List<HSchoolDto> getHRecomSchool(String userId);
+	public List<USchoolDto> getURecomSchool(String userId);
 
 }

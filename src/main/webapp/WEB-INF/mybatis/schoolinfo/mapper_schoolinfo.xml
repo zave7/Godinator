@@ -96,4 +96,10 @@
 		                        FROM u_school 
 		                        WHERE code = #{schoolCode})
   	</select>
+  	<insert id="insertEvalByUser" parameterType="map">
+  		
+  	</insert>
+  	<update id="updateEvalAvgByUser" parameterType="map">
+  	
+  	</update>
   </mapper>

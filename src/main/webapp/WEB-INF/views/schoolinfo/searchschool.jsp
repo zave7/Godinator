@@ -3,6 +3,8 @@
 <%@ include file="../template/header.jsp" %>
 <c:set var="hSchoolList" value="${requestScope.hSchoolList}"/>
 <c:set var="uSchoolList" value="${requestScope.uSchoolList}"/>
+<c:set var="hRecomList" value="${requestScope.hRecomList}"/>
+<c:set var="uRecomList" value="${requestScope.uRecomList}"/>
 	<!-- Content -->
 		<section>
 			<header class="main">
@@ -119,11 +121,40 @@
 					</select>
 				</div>
 			</div>
+			<h2>회원님을 위한 추천학교 목록</h2>
+			<hr>
+			<div class="row school-recommendation">
+			<c:forEach var="hSchool" items="${hRecomList}">
+				<div class="col-3 col-12-small recomSchool">
+					<div class="img"><span class="image main"><img src="" alt="" /></span></div>
+					<p class="shcool-name"><span>${hSchool.schoolName}</span></p>
+					<hr>
+					<p><span class="juris">${hSchool.estType}</span>&#9475;<span class="estab">${hSchool.estType}</span></p>
+					<hr>
+					<p><span class="kind">${hSchool.schoolCate2}</span>&#9475;<span class="coeducation">${hSchool.schoolCate2}</span></p>
+					<hr>
+					<p class="url">${hSchool.homePage}</p>
+				</div>
+			</c:forEach>
+			<hr>
+			<c:forEach var="uSchool" items="${uRecomList}">
+				<div class="col-3 col-12-small recomSchool">
+					<div class="img"><span class="image main"><img src="" alt="" /></span></div>
+					<p class="shcool-name"><span>${uSchool.name}</span></p>
+					<hr>
+					<p><span class="juris">${uSchool.estType}</span>&#9475;<span class="estab">${uSchool.estType}</span></p>
+					<hr>
+					<p><span class="kind">${uSchool.type}</span>&#9475;<span class="coeducation">${uSchool.type}</span></p>
+					<hr>
+					<p class="url">${uSchool.link}</p>
+				</div>
+			</c:forEach>
+			</div>
 			<div class="row" id="hotList">
 				<div class="col-10 col-12-small">
 				</div>
 				<div class="col-1 col-12-small">
-					<a class="button primary">목록보기</a>
+					<a class="button primary">핫한 학교 목록보기</a>
 				</div>
 				<div class="col-1 col-12-small">
 				</div>
@@ -358,13 +389,13 @@
 				});
 				//목록보기 클릭			
 				$("#hotList a").on("click", function() {
-					if($("#hotList a").text() == "목록보기") {
+					if($("#hotList a").text() == "핫한 학교 목록보기") {
 						$("div#hotschool").slideDown(200);
-						$("#hotList a").text("목록닫기");
+						$("#hotList a").text("핫한 학교 목록닫기");
 					}
 					else {
 						$("div#hotschool").slideUp(200);
-						$("#hotList a").text("목록보기");
+						$("#hotList a").text("핫한 학교 목록보기");
 					} 
 					return false;
 				});

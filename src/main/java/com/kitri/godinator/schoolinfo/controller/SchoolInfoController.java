@@ -103,13 +103,31 @@ public class SchoolInfoController {
 	}
 	
 	@RequestMapping(value = "/rating", method = RequestMethod.GET)
-	public String rating(HttpSession session) {
+	public String viewRating(HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "schoolinfo/schoolrating";
 		if(memberDto != null) {
 			path = "schoolinfo/schoolrating";
 		}
 		return path;
+	}
+	
+	@RequestMapping(value = "/rating", method = RequestMethod.POST)
+	public String setRating(@RequestParam Map<String, String> parameter, HttpSession session) {
+		//필요한 값 : 항목 6개, 장단점, 아이디, 학교 구분, 학교 번호
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		System.out.println(parameter);
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			int result = schoolInfoService.insertEvalByUser(parameter);
+			if(result != 0) {
+				return "user/registerok";
+			} else {
+				return "user/registerfail";
+			}
+		} else {
+			return "redirect:main";
+		}
 	}
 	
 }

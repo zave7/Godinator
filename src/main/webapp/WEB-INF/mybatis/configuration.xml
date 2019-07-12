@@ -27,6 +27,7 @@
 		<typeAlias alias="uSchoolDto" type="com.kitri.godinator.model.USchoolDto"/>
 		<typeAlias alias="visitDto" type="com.kitri.godinator.model.VisitDto"/>
 		<typeAlias alias="onChatDto" type="com.kitri.godinator.model.OnChatDto"/>
+		<typeAlias alias="recommendationSchoolDto" type="com.kitri.godinator.schoolinfo.model.RecommendationSchoolDto"/>
 	</typeAliases>
 
 </configuration>

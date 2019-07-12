@@ -30,13 +30,10 @@ div#newsarea p.subject:hover {
 	cursor: pointer;
 }
 
-ul#schoolScrollDiv {
-	float: left;
-}
-
 ul#schoolScrollUl {
+	position: relative;
 	overflow-y: auto;
-	height: 100px;
+	height: 17em;
 	top: 1px;
 	left: 1px;
 	display: none;
