@@ -16,26 +16,38 @@
 		<nav id="menu">
 			<header class="major"><h2>Menu</h2></header>
 			<ul>
-				<li><a href="member.jsp">show member</a></li>
-				<li><a href="school.jsp">show school</a></li>
-				<li><a href="recruit.jsp">recruit Info</a></li>
-				<li><a href="chart.jsp">statistics</a></li>
-				<li>
-					<span class="opener">Submenu</span>
+				<c:if test="${not empty userInfo}">
+					<li>
+					<span class="opener">마이페이지</span>
 					<ul>
-						<li><a href="#">Lorem Dolor</a></li>
-						<li><a href="#">Ipsum Adipiscing</a></li>
-						<li><a href="#">Tempus Magna</a></li>
-						<li><a href="#">Feugiat Veroeros</a></li>
+						<li><a href="${root}/">진로검사</a></li>
+						<li><a href="${root}/">모교 평가</a></li>
+					</ul>
+					</li>
+				</c:if>
+				<li>
+					<span class="opener">학교 정보</span>
+					<ul>
+						<li><a href="${root}/searchschool/viewsearch">학교 검색</a></li>
+						<li><a href="${root}/schoolnews/viewnews">학교 뉴스 검색</a></li>
 					</ul>
 				</li>
 				<li>
-					<span class="opener">Another Submenu</span>
+					<span class="opener" id = "community">커뮤니티</span>
+					<ul id ="communityMenu">
+						<li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">홍보게시판</a></li>
+						<li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등학교 게시판</a></li>
+						<li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">대학교 게시판</a></li>
+						<li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">핫 게시물</a></li>
+					</ul>
+				</li>
+				<li>
+					<span class="opener">멘토링</span>
 					<ul>
-						<li><a href="#">Lorem Dolor</a></li>
-						<li><a href="#">Ipsum Adipiscing</a></li>
-						<li><a href="#">Tempus Magna</a></li>
-						<li><a href="#">Feugiat Veroeros</a></li>
+						<li><a href="${root}/mentor/findmentor">멘토 찾기</a></li>
+						<li><a href="${root}/msg/msgbox">쪽지함</a></li>
+						<li><a href="${root}/resume/resumelist">자소서목록</a></li>
+						<li><a href="${root}/resume/editlist">첨삭목록</a></li>
 					</ul>
 				</li>
 			</ul>
