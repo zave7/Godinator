@@ -3,6 +3,8 @@ package com.kitri.godinator.mentor.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kitri.godinator.mentor.service.MentorPageNavi;
 import com.kitri.godinator.mentor.service.ResumeService;
 import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.EditDto;
+import com.kitri.godinator.model.MemberDto;
 
 
 @Controller
@@ -24,10 +29,10 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeService;
 
-//---------------------------------------------------------------------------------- 자소서 작성
+//------------------------------------------------------------------------------------------------------------------------- 자소서 작성
 	// #### 자소서 작성 페이지 이동 ####
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String mvWrite(@RequestParam String mentor, Model model) {
+	@RequestMapping(value = "/writeresume", method = RequestMethod.GET)
+	public String mvWriteR(@RequestParam String mentor, Model model) {
 		model.addAttribute("mentor", mentor);
 		return "mentor/writeresume";
 	}
@@ -41,21 +46,106 @@ public class ResumeController {
 	}
 	
 	// #### 자소서 작성 ####
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BoardDto boardDto, Model model) {
-		String result = "";
+	@RequestMapping(value = "/writeresume", method = RequestMethod.POST)
+	public @ResponseBody String writeResume(EditDto editDto, Model model, HttpSession session) {
 //		System.out.println(boardDto.getbSchoolName());
-		return result;
-	}
-	
-	
-	@RequestMapping("/resumelist")
-	public String resumelist() {
-		return "mentor/resumelist";
+		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
+		editDto.setUserName(userInfo.getUserName());
+		editDto.setbUserId(userInfo.getUserId());
+		editDto.setMenteeId(userInfo.getUserId());
+//		System.out.println(editDto.getUserName());
+//		System.out.println(userInfo.getUserName());
+		int result = resumeService.saveResume(editDto);
+//		System.out.println(result);
+		return result+"";
 	}
 
+	
+//------------------------------------------------------------------------------------------------------------------------- 첨삭 작성
+	// #### 첨삭 작성 페이지 이동 ####
+	@RequestMapping(value = "/writeedit", method = RequestMethod.GET)
+	public String mvWriteE(@RequestParam String pseq, Model model) {
+		
+		return "mentor/edit";
+	}
+	
+//------------------------------------------------------------------------------------------------------------------------- 목록 화면
+	// #### 자소서 목록 ####
+	@RequestMapping("/resumelist")
+	public String resumeList(@RequestParam Map<String, String> parameter, Model model, HttpSession session) {
+		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
+		if(userInfo != null) {
+			String userId = userInfo.getUserId();
+			String schoolCate1 = ((parameter.get("schoolCate1") != null) ? parameter.get("schoolCate1").toString() : "h");
+			String state = ((parameter.get("state") != null) ? parameter.get("state").toString() : "5");
+			
+			parameter.put("pageSize", "1");
+			parameter.put("articleSize", "1");
+			parameter.put("userId", userId);
+			parameter.put("schoolCate1", schoolCate1);
+			parameter.put("state", state);
+			
+			List<EditDto> list = resumeService.getResumeList(parameter);
+			
+			// 페이지 처리
+			MentorPageNavi pageNavi = resumeService.getPageNavi(parameter);
+			
+			pageNavi.makeNavigator();
+			
+			model.addAttribute("parameter", parameter);
+			model.addAttribute("resumelist", list);
+			model.addAttribute("navigator", pageNavi);
+		}
+		return "mentor/resumelist";
+		
+	}
+
+	// #### 첨삭 목록 ####
 	@RequestMapping("/editlist")
-	public String editlist() {
+	public String editlist(@RequestParam Map<String, String> parameter, Model model, HttpSession session) {
+		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
+		if(userInfo != null) {
+			String userId = userInfo.getUserId();
+			String schoolCate1 = ((parameter.get("schoolCate1") != null) ? parameter.get("schoolCate1").toString() : "h");
+			String state = ((parameter.get("state") != null) ? parameter.get("state").toString() : "5");
+			
+			parameter.put("pageSize", "1");
+			parameter.put("articleSize", "1");
+			parameter.put("userId", userId);
+			parameter.put("schoolCate1", schoolCate1);
+			parameter.put("state", state);
+			
+			List<EditDto> list = resumeService.getEditList(parameter);
+			
+			// 페이지 처리
+			MentorPageNavi pageNavi = resumeService.getPageNavi(parameter);
+			
+			pageNavi.makeNavigator();
+			
+			int editcnt = resumeService.getEditCnt(parameter);
+			
+			model.addAttribute("editcnt", editcnt);
+			model.addAttribute("parameter", parameter);
+			model.addAttribute("resumelist", list);
+			model.addAttribute("navigator", pageNavi);
+		}
 		return "mentor/editlist";
+	}
+	
+//------------------------------------------------------------------------------------------------------------------------- 상세 화면
+	// #### 자소서 상세보기 ####
+	@RequestMapping("/viewresume")
+	public String mvViewR(@RequestParam Map<String, String> parameter, Model model) {
+		EditDto editDto = resumeService.getResume(parameter);
+		model.addAttribute("editDto", editDto);
+		return "mentor/viewresume";
+	}
+	
+	// #### 첨삭 상세보기 ####
+	@RequestMapping("/viewedit")
+	public String mvViewE(@RequestParam Map<String, String> parameter, Model model) {
+		EditDto editDto = resumeService.getResume(parameter);
+		model.addAttribute("editDto", editDto);
+		return "mentor/viewedit";
 	}
 }

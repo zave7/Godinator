@@ -3,7 +3,7 @@ package com.kitri.godinator.model;
 import lombok.Data;
 
 @Data
-public class EditDto {
+public class EditDto extends BoardDto{
 
 	private int editNo;				// 일련번호
 	private int boardNo;			// 글번호

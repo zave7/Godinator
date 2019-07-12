@@ -47,7 +47,7 @@ $(function(){
 	var cate1;
 	var cate2;
 	<%-- 학교 분류 select 변경 이벤트 처리 --%>
-	$('#school-cate1').change(function(){
+	$('#schoolCate1').change(function(){
 		if($(this).val() == 'h') {
 			$('#hcate2').css('display', '');
 			$('#ucate2').css('display', 'none');
@@ -61,9 +61,10 @@ $(function(){
 	
 	<%-- 학교 검색창 활성화 --%>
 	$('#schoolName').click(function(){
-		cate1 = $('#school-cate1 option:selected').val();
+		cate1 = $('#schoolCate1 option:selected').val();
 		cate2 = (cate1 == 'h') ? $('#hcate2 option:selected').val() : $('#ucate2 option:selected').val();
 		$('#myModal').css("display", "block");
+		$('#srcName').focus();
 		return false;
 	});
 	
@@ -84,12 +85,16 @@ $(function(){
 					success: function(response){
 						var list = '';
 						var cnt = response.length;
-						for(var i=0;i<cnt;i++) {
-							var school = response[i];
-							list += '<tr class="school" data-code="' + school.bSchoolCode + '" data-name="' + school.bSchoolName + '" data-cate1="' + school.bSchoolCate1 + '" data-cate2="' + school.bSchoolCate2 + '" >';
-							list += '	<td>' + school.bSchoolName + '</td>';
-							list += '	<td>' + ((school.bSchoolCate2 != undefined) ? school.bSchoolCate2 : '') + '</td>';
-							list += '</tr>';
+						if(cnt != 0) {
+							for(var i=0;i<cnt;i++) {
+								var school = response[i];
+								list += '<tr class="school" data-code="' + school.bSchoolCode + '" data-name="' + school.bSchoolName + '" data-cate1="' + school.bSchoolCate1 + '" data-cate2="' + school.bSchoolCate2 + '" >';
+								list += '	<td>' + school.bSchoolName + '</td>';
+								list += '	<td>' + ((school.bSchoolCate2 != undefined) ? school.bSchoolCate2 : '') + '</td>';
+								list += '</tr>';
+							}
+						} else {
+							list = '<tr><td>검색결과가 없습니다.</td></tr>';
 						}
 						$('#schoolList').html(list);
 					}
@@ -128,15 +133,25 @@ $(function(){
 		} else if($('#boardContent').val() == ''){
 			alert('내용을 입력하세요.');
 		}  else {
-			var param = $('form').serialize();
-			$.ajax({
-				url: '${root}/resume/write',
-				type: 'POST',
-				data: param,
-				success: function(response) {
-					
+			if(confirm('저장 완료된 자소서는 삭제할 수 없습니다. 작성한 자소서를 저장하시겠습니까?')) {
+				if($('#bSchoolCate1').val() == 'u') {
+					$('#bSchoolCate2').val($('#bSchoolCate2').val() + '||' + $('#major').val());
 				}
-			});
+				var param = $('form').serialize();
+				$.ajax({
+					url: '${root}/resume/writeresume',
+					type: 'POST',
+					data: param,
+					success: function(response) {
+						if(response == '2') {
+							alert('자소서 저장이 완료되었습니다. 목록 페이지로 이동합니다.');
+							location.href = '${root}/resume/resumelist';
+						} else {
+							alert('서버 문제로 인하여 자소서 저장에 실패하였습니다. 나중에 다시 시도하세요.');
+						}
+					}
+				});
+			}
 		}
 		return false;
 	});
@@ -195,7 +210,7 @@ $(function(){
 					<%-- 학교정보 --%>
 					<div class="row gtr-uniform" style="margin: 0">
 						<div class="col-2" style="padding-left: 0; width: 10em;">
-							 <select name="school-cate1" id="school-cate1" >
+							 <select name="schoolCate1" id="schoolCate1" >
 								<option value="h">고등학교</option>
 								<option value="u">대학교</option>
 							</select>

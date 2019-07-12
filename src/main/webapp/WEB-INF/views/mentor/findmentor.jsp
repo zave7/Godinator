@@ -116,7 +116,7 @@ $(function(){
 	<%-- 자소서 첨삭 신청 --%>
 	$('.editBtn').click(function(){
 		var mentor = $(this).parent('tr').attr('data-mentor');
-		location.href = "${root}/resume/write?mentor=" + mentor;
+		location.href = "${root}/resume/writeresume?mentor=" + mentor;
 		return false;
 	});
 	

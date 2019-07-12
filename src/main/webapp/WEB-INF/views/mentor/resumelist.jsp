@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
+<%@ include file="/WEB-INF/views/mentor/common.jsp" %>
 <style type="text/css">
 	.far, .fas {
 		vertical-align: center;
@@ -7,22 +9,77 @@
 	}
 </style>
 <script>
-	$(function(){
-		// 마우스 커서 변경
-		$('.resumeBtn').css('cursor', 'pointer');
-		$('.editBtn').css('cursor', 'pointer');
-		
-		// 자소서 내용보기
-		$('.resumeBtn').click(function(){
-			location.href="${root}/view/mentor/viewresume.jsp";
-			return false;
-		});
-		// 첨삭 내용보기
-		$('.editBtn').click(function(){
-			location.href="${root}/view/mentor/viewedit.jsp";
-			return false;
-		});
+$(function(){
+	<%-- 권한 확인 --%>
+	$.ajax({
+		url: '${root}/mentor/checkAuth',
+		success: function(response){
+			if(response == '-1') {
+				if(confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')){
+					location.href = '${root}/view/user/login.jsp';
+				} else {
+					history.back();
+				}
+			} else if(response == '2') {
+				alert('멘티 권한이 없습니다. 이전 페이지로 이동합니다.');
+				history.back();
+			} else {
+				init();
+			}
+		}
 	});
+	
+	<%-- select 이벤트 --%>
+	$('#stateSel').change(function(){
+		$('#pg').val('${pg}');
+		$('#state').val($(this).val());
+		$('#schoolCate1').val('${schoolCate1}');
+		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
+		return false;
+	});
+	$('#schoolCate1Sel').change(function(){
+		$('#pg').val('${pg}');
+		$('#state').val('${state}');
+		$('#schoolCate1').val($(this).val());
+		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
+		return false;
+	});
+	
+	<%-- 자소서 내용보기 --%>
+	$('.resumeBtn').click(function(){
+		var seq = $(this).attr('data-seq');
+		var pseq = $(this).attr('data-pseq');
+		location.href="${root}/resume/viewresume?seq=" + seq + "&pseq=" + pseq;
+		return false;
+	});
+	
+	<%-- 페이지 이동 --%>
+	$('.apage').click(function(){
+		$('#pg').val($(this).text());
+		$('#state').val('${state}');
+		$('#schoolCate1').val('${schoolCate1}');
+		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
+		return false;
+	});
+	$('.pageBtn').click(function(){
+		$('#pg').val($(this).attr('data-pg'));
+		$('#state').val('${state}');
+		$('#schoolCate1').val('${schoolCate1}');
+		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
+		return false;
+	});
+	
+	<%-- 마우스 커서 변경 --%>
+	$('.resumeBtn').css('cursor', 'pointer');
+	$('.editBtn').css('cursor', 'pointer');
+	$('.apage').css('cursor', 'pointer');
+	
+	<%-- function --%>
+	function init() {
+		$('#stateSel').val('${state}').prop("selected", true);
+		$('#schoolCate1Sel').val('${parameter.schoolCate1}').prop("selected", true);
+	}
+});
 </script>
 		<%-- Content --%>
 		<section>
@@ -32,75 +89,53 @@
 			<%-- 자소서&첨삭 분류 --%>
 			<div class="row gtr-uniform" style="margin: 0 0 3em 0; padding-right:0;">
 				<div class="col-2" style="width:8em; padding-left: 0;">
-					 <select name="school-cate2" id="school-cate2">
+					 <select name="stateSel" id="stateSel">
+						<option value="5">- 상태 -</option>
 						<option value="0">첨삭대기</option>
 						<option value="1">첨삭완료</option>
 					</select>
 				</div>
 				<div class="col-2" style="width:10em; padding-left: 0; margin-left: 1em;"> 
-					<select name="school-cate1" id="school-cate1" >
-						<option value="0">- 학교분류 -</option>
-						<option value="1">고등학교</option>
-						<option value="2">대학교</option>
+					<select name="schoolCate1Sel" id="schoolCate1Sel" >
+						<option value="h">고등학교</option>
+						<option value="u">대학교</option>
 					</select>
 				</div>
 			</div>
 			<%-- 자소서&첨삭 목록 --%>
 			<div>
 				<table class="table-wrapper" style="text-align: center;">
+					<col width="10%">
+					<col width="24%">
+					<col width="42%">
+					<col width="12%">
+					<col width="12%">
 					<thead>
 						<tr>
 							<th></th>
-							<th style="text-align: center;">학교명</th>
+							<th width="10%" style="text-align: center;">학교명</th>
 							<th style="text-align: center;">제목</th>
-							<th style="text-align: center;">멘토</th>
+							<th style="text-align: center;">ID</th>
 							<th style="text-align: center;">작성일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="resumeBtn">
-							<td>✔</td>
-							<td>ㅇㅇ고등학교</td>
-							<td style="text-align: left;">ㅇㅇ고등학교 지원 자소서</td>
-							<td>userID</td>
-							<td>2019.06.12</td>
+						<c:if test="${fn:length(resumelist) != 0}">
+							<c:forEach var="resume" items="${resumelist}">
+						<tr class="resumeBtn" data-seq="${resume.boardNo}" data-pseq="${resume.pseq}">
+							<td>${(resume.pseq == 0) ? ((resume.state == '0') ? '첨삭대기' : '✔') : '↳'}</td>
+							<td>${resume.bSchoolName}</td>
+							<td style="text-align: left;">${resume.boardSubject}</td>
+							<td>${resume.bUserId}</td>
+							<td>${resume.bPostdate}</td>
 						</tr>
-						<tr class="editBtn">
-							<td>↳</td>
-							<td>ㅇㅇ고등학교</td>
-							<td style="text-align: left;">Re: ㅇㅇ고등학교 지원 자소서</td>
-							<td>mentorID</td>
-							<td>2019.06.27 11:23:12</td>
-						</tr>
-						<tr class="resumeBtn">
-							<td>첨삭대기</td>
-							<td>ㅇㅇ대학교</td>
-							<td style="text-align: left;">ㅇㅇ대학교 지원 자소서</td>
-							<td>userID</td>
-							<td>2019.06.01</td>
-						</tr>
-						<tr class="resumeBtn">
-							<td>첨삭대기</td>
-							<td>ㅇㅇ대학교</td>
-							<td style="text-align: left;">ㅇㅇ대학교 지원 자소서</td>
-							<td>userID</td>
-							<td>2019.05.24</td>
-						</tr>
+							</c:forEach>
+						</c:if>
 					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="5" align="center" style="padding-top: 4em;">
-								<ul class="pagination">
-									<li><span class="button disabled">Prev</span></li>
-									<li><a href="#" class="page active">1</a></li>
-									<li><a href="#" class="page">2</a></li>
-									<li><a href="#" class="page">3</a></li>
-									<li><span>&hellip;</span></li>
-									<li><a href="#" class="page">8</a></li>
-									<li><a href="#" class="page">9</a></li>
-									<li><a href="#" class="page">10</a></li>
-									<li><a href="#" class="button">Next</a></li>
-								</ul>
+								<ul class="pagination">${navigator.navigator}</ul>
 							</td>
 						</tr>
 					</tfoot>

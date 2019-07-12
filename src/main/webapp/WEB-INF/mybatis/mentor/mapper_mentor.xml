@@ -4,5 +4,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.kitri.godinator.mentor.dao.ChatDao">
+  <mapper namespace="com.kitri.godinator.mentor.dao.MentorDao">
+  <select id="checkAuth" parameterType="String" resultType="int">
+  SELECT COUNT(user_id)
+  FROM mentor
+  WHERE LOWER(mentor) = 'y' AND user_id = #{id}
+  </select>
   </mapper>
