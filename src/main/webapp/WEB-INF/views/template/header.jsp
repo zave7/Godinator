@@ -23,16 +23,20 @@ $(document).ready(function() {
 	});
 	
 	$("#logoutBtn").click(function() {
-		$("#logoutBtn").attr("action","${root}/user/logout").submit();
+		alert("로그아웃!")
+		//$("#logoutBtn").attr("method","post").attr("action","${root}/user/logout").submit();
 		
-		
-	});
-		/* $.ajax({
+		$.ajax({
 			url: '/godinator/user/logout',
+			type: 'post',
 			success: function(msg) {
 				alert(msg);
+				location.href="${root}/view/user/main.jsp";
 			} 
-		});*/
+		});
+		
+		return false;
+	});
 		
 	$("#moveMypageBtn").click(function() {//회원정보수정
 		alert("회원수정하러 가실렵니까?");

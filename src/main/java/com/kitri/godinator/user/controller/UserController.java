@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,14 +70,16 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/logout")
-	public String logout(SessionStatus sessionStatus, Model model) {
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public @ResponseBody String logout(SessionStatus sessionStatus, Model model, HttpSession session) {
 		System.out.println("로그아웃 컨트롤러");
 		String msg = "로그아웃 되었습니다.";
 		sessionStatus.setComplete();
 		System.out.println("로그아웃 : 여기까지는 오나?");
-		model.addAttribute("logoutMsg", msg);
-		return "redirect:/view/user/main.jsp";
+		//model.addAttribute("logoutMsg", msg);
+		session.setAttribute("userInfo", "");
+		return msg;
+		//return "redirect:/view/user/main.jsp";
 
 	}
 
@@ -124,7 +128,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam(name = "userId", defaultValue = "") String id,
 			@RequestParam(name = "pass", defaultValue = "") String pass, Model model, HttpSession session) {
-		System.out.println("로그인 controller 입성");
+		//System.out.println("로그인 controller 입성");
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", id);
@@ -136,20 +140,20 @@ public class UserController {
 		String uName = "";
 		String hCode = "";
 		String uCode = "";
-		System.out.println("memberDto : " + memberDto);
+		//System.out.println("memberDto : " + memberDto);
 		// 학교이름
 
 		if (!memberDto.equals(null)) {
 			hCode = memberDto.getHSchoolCode();
 		}
-		System.out.println("여기서 걸리나...");
-		System.out.println("hcode : " + hCode);
+		//System.out.println("여기서 걸리나...");
+		//System.out.println("hcode : " + hCode);
 
 		if (hCode != null) {
 			hName = userService.selectHname(hCode);
 		}
-		System.out.println("여기서 걸리나...2");
-		System.out.println("hName : " + hName);
+		//System.out.println("여기서 걸리나...2");
+		//System.out.println("hName : " + hName);
 
 		if (!memberDto.equals(null)) {
 			uCode = memberDto.getUSchoolCode();
@@ -159,8 +163,8 @@ public class UserController {
 		if (uCode != null) {
 			uName = userService.selectUname(uCode);
 		}
-		System.out.println("ucode : " + uCode);
-		System.out.println("uName : " + uName);
+		//System.out.println("ucode : " + uCode);
+		//System.out.println("uName : " + uName);
 
 		// 멘토여부(고등학교, 대학교)
 		List<String> cateList = new ArrayList<String>();
@@ -169,7 +173,7 @@ public class UserController {
 		if (!memberDto.equals(null)) {// 로그인 성공
 			// 세션에 정보 얻어서 메인페이지로 넘어가기
 			session.setAttribute("userInfo", memberDto);
-			System.out.println("SESSION에 넣어졌니?");
+			//System.out.println("SESSION에 넣어졌니?");
 			if (hName != "") {
 				model.addAttribute("hName", hName);
 			}
@@ -191,7 +195,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/moveRegister", method = RequestMethod.GET)
+	@RequestMapping(value = "/moveRegister", method = {RequestMethod.GET, RequestMethod.POST})
 	public String moveRegister() {
 
 
