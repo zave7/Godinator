@@ -5,6 +5,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.user.dao.UserDao">
+  	<update id="memberReset" parameterType="String" >
+  		update member
+		set h_school_code = '', h_school_cate='', u_school_code = '', u_school_cate='' 
+		where user_id=#{id}
+  	</update>
+  	
+  	<update id="mentorReset" parameterType="String" >
+  		delete from mentor 
+		where user_id=#{id}
+  	</update>
+  	
+  	<select id="ckId" parameterType="String" resultType="int">
+  		select count(*) 
+  		from mentor 
+  		where user_id=#{id}
+  	</select>
+  	<select id="selectHname" parameterType="String" resultType="String">
+  		select school_name 
+  		from h_school 
+  		where school_code=#{hCode}
+  	</select>
+  	
+  	<select id="selectUname" parameterType="String" resultType="String">
+  		select name 
+  		from u_school 
+  		where code=#{uCode}
+  	</select>
+  	
+  	<select id="selectCate" parameterType="String" resultType="String">
+  		select cate 
+  		from mentor 
+  		where user_id=#{id}
+  	</select>
+  
   	<select id="idCheck" parameterType="String" resultType="int">
   		select count(*)
   		from member
@@ -47,9 +81,33 @@
 		values(#{registerId}, 'R', '', 'u')
   	</insert>
   	
-  	<insert id="insertMentor" parameterType="String">
+  	<!-- <insert id="insertMentor" parameterType="String">
   		insert into mentor (user_id, mentor, aprvl_date, cate)
 		values(#{registerId}, 'N', '', '')
+  	</insert> -->
+  	
+  	<insert id="insertMemberPreference" parameterType="memberPreferDto">
+  		insert into user_prefer(USER_ID, H_EVAL1, H_EVAL2, H_EVAL3, H_EVAL4, H_EVAL5, H_EVAL6, U_EVAL1, U_EVAL2, U_EVAL3, U_EVAL4, U_EVAL5, U_EVAL6)
+		values(#{userId}, #{hEval1}, #{hEval2}, #{hEval3}, #{hEval4}, #{hEval5}, #{hEval6}, #{uEval1}, #{uEval2}, #{uEval3}, #{uEval4}, #{uEval5}, #{uEval6}) 
   	</insert>
   	
+  	<select id="selectMember" parameterType="map" resultType="memberDto">
+  		select user_id "USERID" , user_name "USERNAME", pass, email, email_domain "EMAILDOMAIN", 
+			phone1, phone2, phone3, zipcode, address, address_detail "ADDRESSDETAIL", h_school_code "HSCHOOLCODE", h_school_cate "HSCHOOLCATE", 
+			u_school_code "USCHOOLCODE", u_school_cate "USCHOOLCATE", user_cate "USERCATE", join_date "JOINDATE", withdraw, latitude, longitude
+		from member
+		where user_id = #{userId} and pass = #{pass} and withdraw='N'
+  	</select>
+  	<update id="modifyMember" parameterType="memberDto">
+  		update member
+		set user_name=#{userName}, pass=#{pass}, email=#{email}, email_domain=#{emailDomain},
+			phone1=#{phone1}, phone2=#{phone2}, phone3=#{phone3},
+		    zipcode=#{zipcode}, address=#{address}, address_detail= #{addressDetail}
+		where user_id = #{userId}
+  	</update>
+  	<update id="withdrawMember" parameterType="String">
+  		update member
+  		set withdraw = 'Y'
+  		where user_id=#{id}
+  	</update>
   </mapper>

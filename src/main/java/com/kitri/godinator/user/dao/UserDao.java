@@ -1,8 +1,10 @@
 package com.kitri.godinator.user.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.kitri.godinator.model.MemberDto;
+import com.kitri.godinator.model.MemberPreferDto;
 
 public interface UserDao {
 
@@ -15,5 +17,15 @@ public interface UserDao {
 	int insertMentorh(String id);
 	int insertMentoru(String id);
 	int insertMentor(String id);
+	int insertMemberPreference(MemberPreferDto memberPreferDto);
+	MemberDto selectMember(Map<String, String> map);
+	int modifyMember(MemberDto memberDto);
+	int withdrawMember(String id);
+	String selectHname(String hCode);
+	String selectUname(String uCode);
+	List<String> selectCate(String id);
+	int ckId(String id);
+	int memberReset(String id);
+	int mentorReset(String id);
 
 }
