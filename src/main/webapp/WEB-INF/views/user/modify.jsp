@@ -7,6 +7,11 @@
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
 	</head>
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>	
 	<body class="is-preload">
 
 		<!-- Wrapper -->

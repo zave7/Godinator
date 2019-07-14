@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#modifyMentorBtn").click(function() {

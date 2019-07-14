@@ -52,7 +52,7 @@ public class UserController {
 
 	@RequestMapping(value = "/withdrawMember", method = RequestMethod.POST)
 	public String withdrawMember(@RequestParam(name = "userId", defaultValue = "") String id, Model model,
-			SessionStatus sessionStatus) {
+			HttpSession session) {
 		System.out.println("탈퇴할 아이디" + id);
 		String msg = "";
 		int cnt = userService.withdrawMember(id);
@@ -60,7 +60,7 @@ public class UserController {
 		if (cnt != 0) {
 			msg = "탈퇴되었습니다.";
 			model.addAttribute("withdrawMsg", msg);
-			sessionStatus.setComplete();
+			session.removeAttribute("userInfo");
 			return "redirect:/view/user/main.jsp";
 		} else {
 			msg = "서버 오류로 탈퇴가 취소되었습니다. 다음에 다시 시도해주세요.";
@@ -122,6 +122,8 @@ public class UserController {
 		System.out.println("cateList : " + cateList);
 		System.out.println("hName : " + hName);
 		System.out.println("uName : " + uName);
+		
+		session.setAttribute("userInfo", userInfo);
 		return "user/modify_2";
 	}
 
@@ -143,7 +145,7 @@ public class UserController {
 		//System.out.println("memberDto : " + memberDto);
 		// 학교이름
 
-		if (!memberDto.equals(null)) {
+		if (memberDto !=null) {
 			hCode = memberDto.getHSchoolCode();
 		}
 		//System.out.println("여기서 걸리나...");
@@ -155,7 +157,7 @@ public class UserController {
 		//System.out.println("여기서 걸리나...2");
 		//System.out.println("hName : " + hName);
 
-		if (!memberDto.equals(null)) {
+		if (memberDto !=null) {
 			uCode = memberDto.getUSchoolCode();
 		}
 		// String uCode = memberDto.getUSchoolCode();
@@ -170,7 +172,7 @@ public class UserController {
 		List<String> cateList = new ArrayList<String>();
 		cateList = userService.selectCate(id); // list에 저장(h,u or h or u or "")
 
-		if (!memberDto.equals(null)) {// 로그인 성공
+		if (memberDto !=null) {// 로그인 성공
 			// 세션에 정보 얻어서 메인페이지로 넘어가기
 			session.setAttribute("userInfo", memberDto);
 			//System.out.println("SESSION에 넣어졌니?");
@@ -182,7 +184,7 @@ public class UserController {
 			}
 			model.addAttribute("cateList", cateList);
 			return "forward:/view/user/main.jsp";
-		} else if (memberDto.equals(null)) {// 로그인실패 >> 비번, 아이디 확인해달라 (모달창에 메세지 가지고 가기)
+		} else if (memberDto ==null) {// 로그인실패 >> 비번, 아이디 확인해달라 (모달창에 메세지 가지고 가기)
 			String msg = "아이디 또는 비밀번호를 확인하세요.";
 
 			model.addAttribute("msg", msg);
@@ -298,11 +300,13 @@ public class UserController {
 
 		System.out.println("userId : " + userId);// 나옴
 		int cnt = userService.mentorModifyRegister(map);
+		
 		if (cnt > 0) {
 			System.out.println("service 갔다온 cnt : " + cnt);
 //			model.addAttribute("registerId", registerId);
 //			model.addAttribute("highSchool", highSchool);
 //			model.addAttribute("university", university);
+			//session.setAttribute("userInfo", value);
 			return "user/modifyok";
 		} else {
 			return "error";

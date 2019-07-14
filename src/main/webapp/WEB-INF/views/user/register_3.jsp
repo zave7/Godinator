@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
+<style>
 	#imagesHigh>div>img, .bin, #imagesUni>div>img{
 	width: 10% !important;
 	}

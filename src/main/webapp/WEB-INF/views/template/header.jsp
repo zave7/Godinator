@@ -22,10 +22,20 @@ $(document).ready(function() {
 		//location.href("/godinator/view/user/login.jsp");
 	});
 	
+		Kakao.init('18f3deb02686176a9f41dc7fd612c3d0');
 	$("#logoutBtn").click(function() {
 		alert("로그아웃!")
 		//$("#logoutBtn").attr("method","post").attr("action","${root}/user/logout").submit();
-		
+				var isKakao = $(this).attr("data-pass");
+				if(isKakao == 'kakao'){
+					Kakao.Auth.logout(function(data){
+						location.href = "${root}/member/logout";
+						
+					});
+				} else {
+					location.href = "${root}/member/logout";
+				}
+				
 		$.ajax({
 			url: '/godinator/user/logout',
 			type: 'post',

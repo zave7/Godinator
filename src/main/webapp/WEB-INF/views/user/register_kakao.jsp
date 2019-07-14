@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	/* $("#userId").keyup(function() {
