@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="searchSchool" parameterType="map" resultType="HSchoolDto">
-	SELECT school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
+	SELECT distinct school_cate1 schoolCate1, school_name schoolName, phone, address, address_detail addressDetail
 	FROM h_school
 	WHERE school_name LIKE '%'||#{keyword}||'%'
 	</select>
@@ -43,5 +43,11 @@
 	DELETE h_school
     WHERE school_code = #{schoolCode}
 	</delete>
+	
+	<select id="getMentoInfo" parameterType="String" resultType="MemberDto">
+	SELECT distinct m1.user_id userId, m1.user_name userName, m2.mentor userCate, m2.aprvl_date joinDate
+	FROM member m1, mentor m2
+	WHERE m1.user_id = m2.user_id AND m1.h_school_code = #{schoolCode}
+	</select>
 	
 </mapper>

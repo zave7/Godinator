@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.kitri.godinator.admin.dao.SchoolDao;
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 
 @Service//이거 꼭!!
 public class SchoolServiceImpl implements SchoolService{
@@ -66,6 +67,14 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.getMapper(SchoolDao.class).deleteInfo(schoolCode);
 		
 		return"";
+	}
+
+
+
+	@Override
+	public List<MemberDto> getMentoInfo(String schoolCode) {
+		System.out.println("   > SchoolServiceImpl 입성 > 멘토Info DB얻으러");
+		return sqlSession.getMapper(SchoolDao.class).getMentoInfo(schoolCode);
 	}
 
 }

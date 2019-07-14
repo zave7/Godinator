@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 
 public interface SchoolDao {
 
@@ -14,4 +15,6 @@ public interface SchoolDao {
    
    public List<HSchoolDto> modifyInfo(HSchoolDto dto);
    public void deleteInfo(String schoolCode); // 삭제용
+   
+   List<MemberDto> getMentoInfo(String schoolCode);
 }
