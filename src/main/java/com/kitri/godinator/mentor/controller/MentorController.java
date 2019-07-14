@@ -41,12 +41,7 @@ public class MentorController {
 	// #### 멘토 목록 ####
 	@RequestMapping("/findmentor")
 	public String getMentor(@RequestParam Map<String, String> parameter, Model model, HttpSession session) {
-		MemberDto memberDto = new MemberDto();
-		memberDto.setUserId("a12345");
-		memberDto.setUserName("a12345");
-		session.setAttribute("userInfo", memberDto);
-		
-		memberDto = (MemberDto)session.getAttribute("userInfo");
+		MemberDto memberDto = (MemberDto)session.getAttribute("userInfo");
 		
 		if(memberDto != null) {
 			String userId = memberDto.getUserId();
