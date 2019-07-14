@@ -88,3 +88,9 @@ h3.searchschool-h3 {
 	margin-left: 1%;
 	display: inline-block;
 }
+div.recomSchool {
+	display: inline-block;
+}
+div.recomSchool * {
+	display: inline-block;
+}

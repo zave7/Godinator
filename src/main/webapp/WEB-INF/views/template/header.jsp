@@ -49,7 +49,7 @@ $(document).ready(function() {
 	});
 		
 	$("#moveMypageBtn").click(function() {//회원정보수정
-		alert("회원수정하러 가실렵니까?");
+		//alert("회원수정하러 가실렵니까?");
 		$("#editForm").attr("method","post").attr("action","${root}/user/moveMypage").submit();
 		return false;
 	});
@@ -93,7 +93,10 @@ $(document).ready(function() {
 				</c:if>	
 				<c:if test="${not empty userInfo}">
 					<li><a href="" id="logoutBtn">로그아웃</a></li>
-					<li><a href="" id="moveMypageBtn">마이페이지</a></li>
+					<li><a href="" id="moveMypageBtn">회원정보수정</a></li>
+					<c:if test="${sessionScope.userInfo.userId == 'admin'}">
+						<li><a href="${root}/member/main" id="logoutBtn">관리자페이지</a></li>
+					</c:if>	
 				</c:if>	
 				</ul>
 			</header>

@@ -102,7 +102,16 @@ public class SearchSchoolServiceImpl implements SearchSchoolService{
 
 	@Override
 	//유저 선호도 입력 체크 고등학교 h 대학교 u 둘다 hu
-	public String getUserPrefer(String userId) {
+	public List<String> getUserPrefer(String userId) {
 		return sqlSession.getMapper(SearchSchoolDao.class).getUserPrefer(userId);
+	}
+
+	@Override
+	public List<HSchoolDto> getHRecomSchool(String userId) {
+		return sqlSession.getMapper(SearchSchoolDao.class).getHRecomSchool(userId);
+	}
+	@Override
+	public List<USchoolDto> getURecomSchool(String userId) {
+		return sqlSession.getMapper(SearchSchoolDao.class).getURecomSchool(userId);
 	}
 }

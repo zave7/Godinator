@@ -193,7 +193,7 @@
 					$("#schoolScrollUl").css("display", "none");
 					$("#schoolScrollUl").empty();
 				}
-			})
+			});
 			
 			$("h3.newsH3C").click(function() {
 				console.log("학교이름 클릭");

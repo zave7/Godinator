@@ -29,19 +29,29 @@ public class SearchSchoolController {
 	@RequestMapping(value = "/viewsearch", method = RequestMethod.GET)
 	public String viewSearchSchool(Model model, HttpSession httpSession) {
 		
-		
-		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
-		Map<String, Object> schoolMap = new HashMap<String, Object>();
-		
-		if(memberDto != null) {
-			String preference = searchSchoolService.getUserPrefer(memberDto.getUserId());
+		if(httpSession.getAttribute("userInfo") != null) {
+			MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
+			Map<String, Object> schoolMap = new HashMap<String, Object>();
+			
+	//		if(memberDto != null) {
+	//			List<String> preference = searchSchoolService.getUserPrefer(memberDto.getUserId());
+	//			String userId = memberDto.getUserName();
+	//			if("h".equals(preference.get(0))) {
+	//				List<HSchoolDto> hRecomList = searchSchoolService.getHRecomSchool(userId);
+	//				model.addAttribute("hRecomList", hRecomList);
+	//			} 
+	//			if("u".equals(preference.get(1))) {
+	//				List<USchoolDto> uRecomList = searchSchoolService.getURecomSchool(userId);
+	//				model.addAttribute("uRecomList", uRecomList);
+	//			}
+	//		}
+			
+			List<HSchoolDto> hSchoolList = searchSchoolService.getHSchoolList();
+			List<USchoolDto> uSchoolList = searchSchoolService.getUSchoolList();
+			
+			model.addAttribute("hSchoolList", hSchoolList);
+			model.addAttribute("uSchoolList", uSchoolList);
 		}
-		
-		List<HSchoolDto> hSchoolList = searchSchoolService.getHSchoolList();
-		List<USchoolDto> uSchoolList = searchSchoolService.getUSchoolList();
-		
-		model.addAttribute("hSchoolList", hSchoolList);
-		model.addAttribute("uSchoolList", uSchoolList);
 		return "/schoolinfo/searchschool";
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
