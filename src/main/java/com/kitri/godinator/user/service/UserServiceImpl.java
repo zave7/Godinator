@@ -47,15 +47,17 @@ public class UserServiceImpl implements UserService{
 		
 		System.out.println("service ucheck" + ucheck);
 		System.out.println("service hcheck" + hcheck);
+		System.out.println("highName : " + highName);
+		System.out.println("uniName : " + uniName);
 
 			
 		if(highName != "") {//member에 학교코드, 카테고리추가 (update) --고등학교
-			 sqlSession.getMapper(UserDao.class).updateMemberh(map);//id, uniName
+			 sqlSession.getMapper(UserDao.class).updateMemberh(map);//id, highName
 			//cnt++; 
 		}
 		
 		if(uniName != ""){
-			 sqlSession.getMapper(UserDao.class).updateMemberu(map);//id, highName
+			 sqlSession.getMapper(UserDao.class).updateMemberu(map);//id, uniName
 			//cnt++; //1	
 		}
 		
@@ -141,6 +143,11 @@ public class UserServiceImpl implements UserService{
 		}
 
 		return cnt+cnt2;
+	}
+
+	@Override
+	public MemberDto findModify(String userId) {
+		return sqlSession.getMapper(UserDao.class).findModify(userId);
 	}
 
 }

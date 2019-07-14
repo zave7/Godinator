@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	/* $("#userId").keyup(function() {
@@ -107,20 +112,8 @@ function sample6_execDaumPostcode() {
 }
 </script>
 
-		<title>register_1.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
 
 							<!-- Content -->
 								<div id="loginAll">

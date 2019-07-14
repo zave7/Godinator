@@ -35,7 +35,7 @@ public class MailController {
         StringBuilder sb = new StringBuilder();
         sb.append("고디네이터 회원가입 인증코드 안내입니다.<br>");
         sb.append("아래코드를 입력해 주세요.<br><br>");
-        sb.append("귀하의 인증 코드는 " + joinCode + " 입니다.");
+        sb.append("귀하의 인증 코드는 [ " + joinCode + " ] 입니다.");
         
         boolean flag = mailService.send(subject, sb.toString(), "godinator22@gmail.com", email, null);
         

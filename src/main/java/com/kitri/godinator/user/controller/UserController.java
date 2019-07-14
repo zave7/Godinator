@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.MemberPreferDto;
+import com.kitri.godinator.model.MentorDto;
 import com.kitri.godinator.user.service.UserService;
 
 @Controller
@@ -30,7 +31,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/modifyMember", method = RequestMethod.POST)
-	public String modifyMember(MemberDto memberDto, Model model, HttpSession session) {
+	public @ResponseBody String modifyMember(MemberDto memberDto, Model model, HttpSession session) {
 
 		MemberDto memberdDto2 = (MemberDto) (session.getAttribute("userInfo"));
 		String userId = memberdDto2.getUserId();
@@ -38,43 +39,46 @@ public class UserController {
 
 		System.out.println("memberDto" + memberDto.getUserId());
 		int cnt = userService.modifyMember(memberDto);
+		String msg = "개인정보 수정이 완료 되었습니다. 학교정보 및 멘토여부를 수정하시려면 '확인'을 눌러주세요";
+		String errormsg = "서버의 문제로 수정이 완료되지 않았습니다. 다음에 다시 시도해 주세요";
 		if (cnt != 0) {
-			model.addAttribute("modifyInfo", memberDto);
-			model.addAttribute("msg", "개인정보 수정이 완료 되었습니다. 학교정보 및 멘토여부를 수정하시려면 '확인'을 눌러주세요");
+//			model.addAttribute("modifyInfo", memberDto);
+//			model.addAttribute("msg", "개인정보 수정이 완료 되었습니다. 학교정보 및 멘토여부를 수정하시려면 '확인'을 눌러주세요");
 			session.setAttribute("userInfo", memberDto);
-			return "user/modify_1";
+			return msg;
 		} else {
-			model.addAttribute("error", "서버의 문제로 수정이 완료되지 않았습니다. 다음에 다시 시도해 주세요");
-			return "user/modify_1";
+			//model.addAttribute("error", "서버의 문제로 수정이 완료되지 않았습니다. 다음에 다시 시도해 주세요");
+			return errormsg;
 		}
 
 	}
 
 	@RequestMapping(value = "/withdrawMember", method = RequestMethod.POST)
-	public String withdrawMember(@RequestParam(name = "userId", defaultValue = "") String id, Model model,
-			SessionStatus sessionStatus) {
+	public @ResponseBody String withdrawMember(@RequestParam(name = "userId", defaultValue = "") String id, 
+			HttpSession session) {
+		System.out.println("탈퇴 컨트롤러");
 		System.out.println("탈퇴할 아이디" + id);
 		String msg = "";
 		int cnt = userService.withdrawMember(id);
 
 		if (cnt != 0) {
 			msg = "탈퇴되었습니다.";
-			model.addAttribute("withdrawMsg", msg);
-			sessionStatus.setComplete();
-			return "redirect:/view/user/main.jsp";
+			//model.addAttribute("withdrawMsg", msg);
+			session.removeAttribute("userInfo");
+			return msg;
 		} else {
 			msg = "서버 오류로 탈퇴가 취소되었습니다. 다음에 다시 시도해주세요.";
-			model.addAttribute("withdrawMsg", msg);
-			return "forward:/view/user/main.jsp"; // 로그인 안된 메인화면으로 가기
+			//model.addAttribute("withdrawMsg", msg);
+			return msg; // 로그인 안된 메인화면으로 가기
 		}
 
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public @ResponseBody String logout(SessionStatus sessionStatus, Model model, HttpSession session) {
+	public @ResponseBody String logout(HttpSession session) {
 		System.out.println("로그아웃 컨트롤러");
 		String msg = "로그아웃 되었습니다.";
-		sessionStatus.setComplete();
+		session.removeAttribute("userInfo");
 		System.out.println("로그아웃 : 여기까지는 오나?");
 		//model.addAttribute("logoutMsg", msg);
 		session.setAttribute("userInfo", "");
@@ -96,6 +100,7 @@ public class UserController {
 		model.addAttribute("hName", hName);
 		model.addAttribute("uName", uName);
 		model.addAttribute("cateList", cateList);
+		
 		// System.out.println("cateList : " +cateList);
 
 		return "user/modify_1";
@@ -122,6 +127,8 @@ public class UserController {
 		System.out.println("cateList : " + cateList);
 		System.out.println("hName : " + hName);
 		System.out.println("uName : " + uName);
+		
+		session.setAttribute("userInfo", userInfo);
 		return "user/modify_2";
 	}
 
@@ -143,34 +150,27 @@ public class UserController {
 		//System.out.println("memberDto : " + memberDto);
 		// 학교이름
 
-		if (!memberDto.equals(null)) {
+		if (memberDto !=null) {
 			hCode = memberDto.getHSchoolCode();
 		}
-		//System.out.println("여기서 걸리나...");
-		//System.out.println("hcode : " + hCode);
 
 		if (hCode != null) {
 			hName = userService.selectHname(hCode);
 		}
-		//System.out.println("여기서 걸리나...2");
-		//System.out.println("hName : " + hName);
 
-		if (!memberDto.equals(null)) {
+		if (memberDto !=null) {
 			uCode = memberDto.getUSchoolCode();
 		}
-		// String uCode = memberDto.getUSchoolCode();
 
 		if (uCode != null) {
 			uName = userService.selectUname(uCode);
 		}
-		//System.out.println("ucode : " + uCode);
-		//System.out.println("uName : " + uName);
 
 		// 멘토여부(고등학교, 대학교)
 		List<String> cateList = new ArrayList<String>();
 		cateList = userService.selectCate(id); // list에 저장(h,u or h or u or "")
 
-		if (!memberDto.equals(null)) {// 로그인 성공
+		if (memberDto !=null) {// 로그인 성공
 			// 세션에 정보 얻어서 메인페이지로 넘어가기
 			session.setAttribute("userInfo", memberDto);
 			//System.out.println("SESSION에 넣어졌니?");
@@ -182,14 +182,14 @@ public class UserController {
 			}
 			model.addAttribute("cateList", cateList);
 			return "forward:/view/user/main.jsp";
-		} else if (memberDto.equals(null)) {// 로그인실패 >> 비번, 아이디 확인해달라 (모달창에 메세지 가지고 가기)
+		} else if (memberDto ==null) {// 로그인실패 >> 비번, 아이디 확인해달라 (모달창에 메세지 가지고 가기)
 			String msg = "아이디 또는 비밀번호를 확인하세요.";
 
 			model.addAttribute("msg", msg);
 //			return msg;
 			return "forward:/view/user/login.jsp";
 		}
-		return "0";
+		return "error";
 
 		// 뒤로가기 만들기(?)
 
@@ -198,8 +198,6 @@ public class UserController {
 	@RequestMapping(value = "/moveRegister", method = {RequestMethod.GET, RequestMethod.POST})
 	public String moveRegister() {
 
-
-		//return "/user/register_1";
 		return "/user/authentication";
 
 	}
@@ -234,6 +232,7 @@ public class UserController {
 		if (cnt != 0) {
 			model.addAttribute("registerInfo", memberDto);
 			return "user/register_2";
+			
 		} else {
 			return "";
 		}
@@ -261,7 +260,10 @@ public class UserController {
 		map.put("hSchoolCate", hSchoolCate);// 고등학교 멘토 체크 유무
 		map.put("uSchoolCate", uSchoolCate);// 고등학교 멘토 체크 유무
 
+		
 		int cnt = userService.mentorRegister(map);
+		System.out.println(memberDto.getHSchoolCode());
+		System.out.println(memberDto.getUSchoolCode());
 		if (cnt > 0) {
 			model.addAttribute("registerId", registerId);
 			model.addAttribute("highSchool", highSchool);
@@ -296,13 +298,38 @@ public class UserController {
 		map.put("hSchoolCate", hSchoolCate);// 고등학교 멘토 체크 유무
 		map.put("uSchoolCate", uSchoolCate);// 고등학교 멘토 체크 유무
 
+		System.out.println("m highSchool : "+ highSchool);
+		System.out.println("m university : "+ university);
 		System.out.println("userId : " + userId);// 나옴
 		int cnt = userService.mentorModifyRegister(map);
+		
+		//수정된 멤버의 cate 
+		List<String> cateList = new ArrayList<String>();
+		cateList = userService.selectCate(userId); // list에 저장(h,u or h or u or "")
+		
+		//수정된 멤버의 dto 
+		memberDto = userService.findModify(userId);
+		System.out.println(memberDto);
+		
+		String hCode = memberDto.getHSchoolCode();
+		String uCode = memberDto.getUSchoolCode();
+		String hName ="";
+		String uName ="";
+		
+		if (hCode != null) {
+			hName = userService.selectHname(hCode);
+		}
+		if (uCode != null) {
+			uName = userService.selectUname(uCode);
+		}
 		if (cnt > 0) {
 			System.out.println("service 갔다온 cnt : " + cnt);
-//			model.addAttribute("registerId", registerId);
-//			model.addAttribute("highSchool", highSchool);
-//			model.addAttribute("university", university);
+
+			session.setAttribute("userInfo", memberDto );
+			model.addAttribute("modifyMember",memberDto);
+			model.addAttribute("modifyCateList",cateList);
+			model.addAttribute("modifyHname",hName);
+			model.addAttribute("modifyUname",uName);
 			return "user/modifyok";
 		} else {
 			return "error";

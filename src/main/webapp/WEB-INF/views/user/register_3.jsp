@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
+<style>
 	#imagesHigh>div>img, .bin, #imagesUni>div>img{
 	width: 10% !important;
 	}
@@ -62,24 +67,9 @@ function allowDrop(ev) {
 	
 	
 </script>
-<html>
-	<head>
-		<title>register_3.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-						
 
 							<!-- Content -->
 								<div id="loginAll">

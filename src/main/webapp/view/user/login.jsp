@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
-		<title>login.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-<style>
 
+<style>
+a{
+	text-decoration: none;
+	border-bottom: none;
+}
 
 #kakao-login-btn{
 	 width: 20% !important;
     
+}
+
+hr{
+	border: 1px dashed #5a5a5a;
 }
 </style>		
 	</head>
@@ -26,7 +30,7 @@ $(document).ready(function() {
 			});
 			
 			$("#loginGoBtn").click(function() {
-				alert("로그인버튼!");
+				//alert("로그인버튼!");
 					var id = $("#userId").val();
 					var pwd = $("#pass").val();
 					if(id == "") {
@@ -59,13 +63,7 @@ $(document).ready(function() {
 
 	
 	</script>
-	
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+
 							<!-- Content -->
 								<div id="loginAll">
 									<header class="main">
@@ -208,6 +206,6 @@ $(document).ready(function() {
 												<input type="hidden" name="gender" id="gender"/>
 												<input type="hidden" name="profile" id="kakao_profile"/>
 											</form>
-									<hr class="major" />
+								<!-- 	<hr class="major" /> -->
 								</div>
 <%@ include file="/WEB-INF/views/template/sidebar.jsp"%>

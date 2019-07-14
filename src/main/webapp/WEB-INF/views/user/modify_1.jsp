@@ -2,14 +2,31 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script>
 $(document).ready(function() {
-	//alert("${cateList}")
-		/* if("${modifyInfo}" != ""){
-		//수정된 정보로 바꾸기 		
-		$("a #userNameShow > strong").attr("value", "${modifyInfo.userName}"); //header에 이름바꾸기
 	
-		} */
+	// password 형식 - 정규표현식
+	// 숫자, 특수문자, 영문자 포함한 8~15자리 이내의 비밀번호만 허용
+	var passwordRule = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,14}$/;
+	
+	$("#pass").keyup(function(){
+		var pass = $(this).val();
+		
+		 if(!passwordRule.test(pass)){
+			$("#passresult").css('color', 'tomato');
+			$("#passresult").html('비밀번호는 특수문자, 영문, 숫자를 포함한 8~15자리입니다.');
+		} else{
+			$("#passresult").css('color', 'steelblue');
+			$("#passresult").html('사용 가능한 비밀번호 입니다.');
+		}
+	});
+	
+	
 	if("${error}" != ""){
 		alert("${error}");
 	}
@@ -18,14 +35,17 @@ $(document).ready(function() {
 		if($("#userName").val() == "") {
 			alert("이름을 입력하세요");
 			return;
-		} else if($("#pass").val() != $("#passcheck").val()) {
+		}else if($("#pass").val() == ""){
+			alert("비밀번호를 입력하세요");
+			return;
+		}else if($("#pass").val() != $("#passcheck").val()) {
 			alert("비밀번호를 확인하세요");
 			return;
 		}else{
 		//$("#modifyForm").attr("action", "/godinator/user/modifyMember").submit();
 		var params = jQuery("#modifyForm").serialize();
 			$.ajax({
-				url :'/godinator/user/modifyMember',
+				url :'${root}/user/modifyMember',
 				type : 'post',
 				data : params,
 				success : function(msg) {
@@ -40,21 +60,50 @@ $(document).ready(function() {
 			}//else end
 		});//modify end
 	
-	
+	//Kakao.init('18f3deb02686176a9f41dc7fd612c3d0');
 	$("#withdrawBtn").click(function() {//탈퇴
 		alert("정말로 탈퇴하시겠습니까?");
 	
+		//카톡 탈퇴 
+		
+		var isKakao = $(this).attr("data-pass");
+				if(isKakao == 'kakao'){
+		/* if(result){  */
+			// 앱 연결 해제 요청 
+			Kakao.API.request({ 
+				url : '/v1/user/unlink', 
+				success : function(data){ 
+					alert("탈퇴가 완료 되었습니다.");	
+					//일반회원 탈퇴하러 가기
+					
+					 $.ajax({
+						url: '${root}/user/withdrawMember',
+						type:'post',
+						data: $("#modifyForm").serialize(),
+						success: function(msg) {
+							alert(msg);
+							location.href="${root}/view/user/main.jsp";
+						}
+					}); 
+					//location.href = "${root}/user/withdrawMember"; 
+				} 
+			}); 
+		}else{
+	           console.log("왔나요?");
+			 $.ajax({
+					url: '${root}/user/withdrawMember',
+					type:'post',
+					data: $("#modifyForm").serialize(),
+					success: function(msg) {
+						alert(msg);
+						location.href="${root}/view/user/main.jsp";
+					}
+				}); 
+		} 
+
+		
 	
-		/* $.ajax({
-			url: '/godinator/user/withdrawMember',
-			type:'post',
-			data: $("#modifyForm").serialize(),
-			success: function(msg) {
-				alert(msg);
-			}
-		}); */
-	
-		$("#modifyForm").attr("action", "/godinator/user/withdrawMember").submit();
+		//$("#modifyForm").attr("action", "/godinator/user/withdrawMember").submit();
 	});//withdraw end
 	
 });//doc end
@@ -107,20 +156,9 @@ function sample6_execDaumPostcode() {
     }).open();
 }
 </script>
-		<title>modify.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
 
 							<!-- Content -->
 								<div id="loginAll">
@@ -143,6 +181,7 @@ function sample6_execDaumPostcode() {
 									<input type="hidden" id="userId" name="userId" value="${userInfo.userId}" >
 										<h3 id="contentPwd">새 비밀번호 혹은 기존 비밀번호</h3>
 										   <input type="password" name="pass" id="pass" />
+										   <div id="passresult"></div>
 										   <br>
 									
 										<h3 id="contentPwd">비밀번호 확인</h3>
@@ -150,9 +189,6 @@ function sample6_execDaumPostcode() {
 										   <div id="pwdCheck"></div>
 										   <br>
 
-										   
-										<!-- <label for="email">이메일</label><br>
-									<div id="email" class="custom-control-inline"> -->
 									<input type="hidden" class="form-control" id=email name="email" placeholder="" size="25" value="kakao-email">
 									<input type="hidden" id="emailDomain" name="emailDomain" value="kakao-emailDomain">
 									<!-- </div> -->

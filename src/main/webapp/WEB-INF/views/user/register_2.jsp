@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#mentorRegisterBtn").click(function() {
@@ -25,21 +30,8 @@ $(document).ready(function() {
 
 </script>
 
-		<title>register_2.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
 
 							<!-- Content -->
 								<div id="loginAll">
@@ -54,7 +46,7 @@ $(document).ready(function() {
 									<div>
 										<h3 id="contentId">출신 고등학교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
-										   <a href="#" class="button">학교 검색</a>
+										  <!--  <a href="#" class="button">학교 검색</a> -->
 										   <br><br>
 										   <h5>고등학교 구분</h5>
 										   <div id="h_category" class="custom-control-inline">
@@ -68,7 +60,7 @@ $(document).ready(function() {
 										<br><br><br><br>
 										<h3 id="contentPwd">출신 대학교</h3>
 										   <input type="text" name="university" id="university" />
-										   <a href="#" class="button">학교 검색</a>
+										  <!--  <a href="#" class="button">학교 검색</a> -->
 										   <br><br>
 										    <h5>대학교 구분</h5>
 										   <div id="u_category" class="custom-control-inline">

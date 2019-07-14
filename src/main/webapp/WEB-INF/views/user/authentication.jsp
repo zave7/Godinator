@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
-
+<style>
+hr{
+	border: 1px dashed #5a5a5a;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#authenBtn").click(function() {
@@ -14,23 +18,8 @@ $(document).ready(function() {
 		return false;
 	});
 });
-
 </script>
 
-		<title>authentication.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-<br>
 									<!-- Content -->
 									<form id="authenForm" name="authenForm" method="post">
 									<h2 align="left" style="font-weight:bold; ">이메일 인증 </h2>
