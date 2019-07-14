@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
+<%@ include file="/WEB-INF/views/mentor/common.jsp" %>
 <style>
 	.far, .fas {font-size: 1.5em;}
 	i {vertical-align: center;}
@@ -42,6 +44,22 @@
 </style>
 <script>
 $(function(){
+	<%-- 권한 확인 --%>
+	$.ajax({
+		url: '${root}/mentor/checkAuth',
+		success: function(response){
+			if(response == '-1') {
+				if(confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')){
+					location.href = '${root}/view/user/login.jsp';
+				} else {
+					history.back();
+				}
+			} else {
+				init();
+			}
+		}
+	});
+	
 	<%-- #### 채팅 #### --%>
 	<%-- 채팅 권한 선택 modal --%>
 	$('.chatBtn').click(function(){
@@ -82,50 +100,93 @@ $(function(){
 	
 	<%-- #### 멘토 목록 #### --%>
 	<%-- 학교 분류 변경시 --%>
-	$('#school-cate1').change(function(){
-		if($(this).val() == '1') {
-			$('#hcate2').css('display', '');
-			$('#ucate2').css('display', 'none');
-		} else {
-			$('#hcate2').css('display', 'none');
-			$('#ucate2').css('display', '');
-		}
-		<%-- getMentors() 추가 --%>
+	$('#schoolCate1Sel').change(function(){
+		sel($(this));
+		getMentors('');
 	});
-	$('#hcate2, #ucate2').change(function(){
-		<%-- getMentors() 추가 --%>
+	$('#hcate2Sel, #ucate2Sel').change(function(){
+		getMentors('');
 	});
 	
 	<%-- 새로고침 --%>
 	$('#refresh').click(function(){
-		$('#school-cate1').val('1').attr('selected', 'selected');
-		$('#school-cate1').trigger("change");
-		$('#school-cate2').val('0').attr('selected', 'selected');
+		$('#schoolCate1Sel').val('h').attr('selected', 'selected');
+		sel($('#schoolCate1Sel'));
+		$('#hcate2Sel').val('0').attr('selected', 'selected');
+		$('#ucate2Sel').val('0').attr('selected', 'selected');
+		$('#schoolCate3').val('0').attr('selected', 'selected');
 		$('#searchMentor').val('');
-		
+		getMentors('');
 	});
+	
+	<%-- 검색 --%>
+	$('#srchBtn').click(function(){
+		getMentors('');
+	});
+	$('#searchMentor').keypress(function(e) {
+		if (e.which == 13) {
+			getMentors('');
+		}
+	});
+	
+	$('.apage').click(function(){
+		getMentors($(this).text());
+	});
+	$('.pageBtn').click(function(){
+		getMentors($(this).attr('data-pg'));
+	});
+	
 	
 	<%-- #### 쪽지 #### --%>
 	<%-- 쪽지 작성 --%>
-	$('.msgBtn').click(function(){
-		window.open("/template/writemsg.jsp", "_blank", "width=600, height=700, left=500, top=20");
+	$(document).on('click','.msgBtn', function(){
+		var rcp = $(this).parent('tr').attr('data-mentor');
+		window.open("${root}/msg/writemsg?rcp=" + rcp, "_blank", "width=600, height=700, left=500, top=20");
 		return false;
 	});
 	
 	<%-- #### 자소서 #### --%>
 	<%-- 자소서 첨삭 신청 --%>
-	$('.editBtn').click(function(){
+	$(document).on('click', '.editBtn', function(){
 		var mentor = $(this).parent('tr').attr('data-mentor');
 		location.href = "${root}/resume/writeresume?mentor=" + mentor;
 		return false;
 	});
 	
 	<%-- #### function #### --%>
+	function getMentors(pg){
+		$('#pg').val(pg);
+		$('#schoolCate1').val($('#schoolCate1Sel option:selected').val());
+		$('#hcate2').val($('#hcate2Sel option:selected').val());
+		$('#ucate2').val($('#ucate2Sel option:selected').val());
+		$('#schoolCate3').val($('#schoolCate1Se3 option:selected').val());
+		$('#srch').val($('#searchMentor').val().trim());
+		$('#list').attr("method", "GET").attr("action", "${root}/mentor/findmentor").submit();
+	}
+	function init() {
+		$('#schoolCate1Sel').val('${schoolCate1}').prop("selected", true);
+		sel($('#schoolCate1Sel'));
+		$('#hcate2Sel').val('${hcate2}').prop("selected", true);
+		$('#ucate2Sel').val('${ucate2}').prop("selected", true);
+		$('#schoolCate1Se3').val('0').prop("selected", true);
+	}
+	function sel(e){
+		if(e.val() == 'h') {
+			$('#hcate2Sel').css('display', '');
+			$('#ucate2Sel').css('display', 'none');
+			$('#ucate2Sel').val('0').attr('selected', 'selected');
+		} else {
+			$('#hcate2Sel').css('display', 'none');
+			$('#hcate2Sel').val('0').attr('selected', 'selected');
+			$('#ucate2Sel').css('display', '');
+		}
+	}
 	
 	<%-- #### 기타 화면상 기능 #### --%>
 	<%-- 마우스 커서 변경 --%>
-	$('.msgBtn').css('cursor', 'pointer');
-	$('.editBtn').css('cursor', 'pointer');
+	$(document).on('mouseover', '.msgBtn, .editBtn, .apage', function(){
+		$(this).css('cursor', 'pointer');
+	});
 	
 	<%-- 모달창 종료 --%>
 	$('#close').click(function(){
@@ -149,7 +210,7 @@ $(function(){
 				<div class="col-10 col-12-small">
 					<div class="col-2 col-12-small" style="padding-left	: 0; float: right;">
 						<ul class="actions">
-							<li><a href="#" class="button primary icon"><i class="fas fa-search"></i></a></li>
+							<li><a href="#" class="button primary icon" id="srchBtn"><i class="fas fa-search"></i></a></li>
 							<li><a href="#" class="button" id="refresh"><i class="fas fa-redo"></i></a></li>
 						</ul>
 					</div>
@@ -157,7 +218,7 @@ $(function(){
 						<input type="text" name="searchMentor" id="searchMentor" value="" placeholder="검색어를 입력하세요"/>
 					</div>
 					<div class="col-6" style="padding-left: 0.5em; float: right;">
-						 <select name="school-cate2" id="school-cate2">
+						 <select name="schoolCate1Se3" id="schoolCate1Se3">
 							<option value="0">- 검색조건 -</option>
 							<option value="id">ID</option>
 							<option value="schoolName">학교명</option>
@@ -175,20 +236,20 @@ $(function(){
 			<%-- 학교 분류 --%>
 			<div class="row gtr-uniform" style="margin: 0 0 2em 0;">
 				<div class="col-2" style="padding-left: 0; width: 10em;">
-					 <select name="school-cate1" id="school-cate1" >
-						<option value="1">고등학교</option>
-						<option value="2">대학교</option>
+					 <select name="schoolCate1Sel" id="schoolCate1Sel" >
+						<option value="h">고등학교</option>
+						<option value="u">대학교</option>
 					</select>
 				</div>
 				<div class="col-2" style="width: 10em; padding-left: 0; margin-left: 1em;"> 
-					 <select name="hcate2" id="hcate2">
+					 <select name="hcate2Sel" id="hcate2Sel">
 						<option value="0">- 전체 -</option>
 						<option value="특수목적고등학교">특수목적고등학교</option>
 						<option value="일반고등학교">일반고등학교</option>
 						<option value="자율고등학교">자율고등학교</option>
 						<option value="특성화고등학교">특성화고등학교</option>
 					</select>
-					 <select name="ucate2" id="ucate2" style="display: none;">
+					 <select name="ucate2Sel" id="ucate2Sel" style="display: none;">
 						<option value="0">- 전체 -</option>
 						<option value="인문·사회">인문·사회</option>
 						<option value="자연·공학">자연·공학</option>
@@ -201,77 +262,58 @@ $(function(){
 			<%-- 멘토 목록 --%>
 			<div>
 				<table class="alt" style="text-align: center;">
+					<col width="16%">
+					<col width="30%">
+					<col width="30%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
 					<thead>
 						<tr>
-							<th></th>
 							<th style="text-align: center;">ID</th>
-							<th colspan="2" style="text-align: center;">고등학교</th>
-							<th colspan="2" style="text-align: center;">대학교</th>
+							<th colspan="2" style="text-align: center;">학교</th>
 							<th style="text-align: center;">첨삭글수</th>
 							<th style="text-align: center;">쪽지보내기</th>
 							<th style="text-align: center;">첨삭의뢰</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr data-mentor="a12346">
-							<td>1</td>
-							<td>userID</td>
-							<td>ㅇㅇ고등학교</td>
-							<td>특목고</td>
-							<td>ㅇㅇ대학교</td>
-							<td>이공계</td>
-							<td>5건</td>
+					<tbody id="mentorList">
+						<c:choose>
+							<c:when test="${fn:length(list) != 0}">
+								<c:if test='${schoolCate1 == "h"}'>
+									<c:forEach var="mentor" items="${list}">
+						<tr data-mentor="${mentor.userId}">
+							<td>${mentor.userId}</td>
+							<td>${mentor.HSchoolCode}</td>
+							<td>${mentor.HSchoolCate}</td>
+							<td>${mentor.editCnt}</td>
 							<td class="msgBtn"><i class="far fa-envelope"></i></td>
 							<td class="editBtn"><i class="fas fa-edit"></i></td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>userID</td>
-							<td>ㅇㅇ고등학교</td>
-							<td>특목고</td>
-							<td>ㅇㅇ대학교</td>
-							<td>이공계</td>
-							<td>5건</td>
+									</c:forEach>
+								</c:if>
+								<c:if test='${schoolCate1 == "u"}'>
+									<c:forEach var="mentor" items="${list}">
+						<tr data-mentor="${mentor.userId}">
+							<td>${mentor.userId}</td>
+							<td>${mentor.USchoolCode}</td>
+							<td>${mentor.USchoolCate}</td>
+							<td>${mentor.editCnt}</td>
 							<td class="msgBtn"><i class="far fa-envelope"></i></td>
 							<td class="editBtn"><i class="fas fa-edit"></i></td>
 						</tr>
-						<tr>
-							<td>3</td>
-							<td>userID</td>
-							<td>ㅇㅇ고등학교</td>
-							<td>특목고</td>
-							<td>ㅇㅇ대학교</td>
-							<td>이공계</td>
-							<td>5건</td>
-							<td class="msgBtn"><i class="far fa-envelope"></i></td>
-							<td class="editBtn"><i class="fas fa-edit"></i></td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>userID</td>
-							<td>ㅇㅇ고등학교</td>
-							<td>특목고</td>
-							<td>ㅇㅇ대학교</td>
-							<td>이공계</td>
-							<td>5건</td>
-							<td class="msgBtn"><i class="far fa-envelope"></i></td>
-							<td class="editBtn"><i class="fas fa-edit"></i></td>
-						</tr>
+									</c:forEach>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+						<tr><td colspan="6">검색 결과가 없습니다.</td></tr>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="9" align="center" style="padding-top: 4em;">
-								<ul class="pagination">
-									<li><span class="button disabled">Prev</span></li>
-									<li><a href="#" class="page active">1</a></li>
-									<li><a href="#" class="page">2</a></li>
-									<li><a href="#" class="page">3</a></li>
-									<li><span>&hellip;</span></li>
-									<li><a href="#" class="page">8</a></li>
-									<li><a href="#" class="page">9</a></li>
-									<li><a href="#" class="page">10</a></li>
-									<li><a href="#" class="button">Next</a></li>
-								</ul>
+								<ul class="pagination">${pageNavi.navigator}</ul>
 							</td>
 						</tr>
 					</tfoot>

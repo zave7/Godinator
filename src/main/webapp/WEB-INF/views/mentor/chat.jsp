@@ -3,11 +3,6 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <c:set var="other" value="${(mentee != null) ? mentee : mentor}"/>
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
 <title>Elements - Editorial by HTML5 UP</title>
@@ -123,11 +118,11 @@ $(function(){
 		</div>
 	</div>
 	<!-- Scripts -->
-		<script src="${root}/js/jquery.min.js"></script>
-		<script src="${root}/js/browser.min.js"></script>
-		<script src="${root}/js/breakpoints.min.js"></script>
-		<script src="${root}/js/util.js"></script>
-		<script src="${root}/js/main.js"></script>
+	<script src="${root}/js/jquery.min.js"></script>
+	<script src="${root}/js/browser.min.js"></script>
+	<script src="${root}/js/breakpoints.min.js"></script>
+	<script src="${root}/js/util.js"></script>
+	<script src="${root}/js/main.js"></script>
 
 </body>
 </html>

@@ -9,13 +9,63 @@
 </style>
 <script>
 $(function(){
-	/* $.ajax({
-		url: '${root}/resume/',
-		data: ,
+	<%-- 권한 확인 --%>
+	$.ajax({
+		url: '${root}/mentor/checkAuth',
 		success: function(response){
-			
+			if(response == '-1') {
+				if(confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')){
+					location.href = '${root}/login';
+				} else {
+					history.back();
+				}
+			}
+			if(response == '0') {
+				if(confirm('멘토 권한이 없습니다. 회원수정 페이지로 이동하시겠습니까?')){
+					location.href = '${root}/user/modify_1';
+				} else {
+					history.back();
+				}
+			}
 		}
-	}); */
+	});
+	
+	$('#saveBtn').click(function(){
+		if($('#boardSubject').val() == ''){
+			alert('제목을 입력하세요.');
+		} else if($('#boardContent').val() == ''){
+			alert('내용을 입력하세요.');
+		}  else {
+			if(confirm('저장 완료된 첨삭은 삭제할 수 없습니다. 작성한 첨삭을 저장하시겠습니까?')) {
+				var param = $('#mentorForm').serialize();
+				$.ajax({
+					url: '${root}/resume/writeedit',
+					type: 'POST',
+					data: param,
+					success: function(response) {
+						if(response == '2') {
+							alert('첨삭 저장이 완료되었습니다. 목록 페이지로 이동합니다.');
+							location.href = '${root}/resume/editlist';
+						} else {
+							alert('서버 문제로 인하여 첨삭 저장에 실패하였습니다. 나중에 다시 시도하세요.');
+						}
+					}
+				});
+			}
+		}
+		return false;
+	});
+
+	<%-- #### 취소 #### --%>
+	$('#cancleBtn').click(function(){
+		if(confirm('자소서 작성을 취소하시겠습니까?')) {
+			history.back();
+		} else {
+			return false;
+		}
+	});
+	
+	
 });
 </script>
 		<%-- Content --%>
@@ -35,15 +85,21 @@ $(function(){
 				<p>${editDto.boardContent}</p>
 			</div>
 			<!-- Form -->
-			<form method="post" action="#">
+			<form method="post" action="#" id="mentorForm">
+				<input type="hidden" id="bSchoolName" name="bSchoolName" value="${editDto.bSchoolName}">
+				<input type="hidden" id="bSchoolCode" name="bSchoolCode" value="${editDto.bSchoolCode}">
+				<input type="hidden" id="bSchoolCate1" name="bSchoolCate1" value="${editDto.bSchoolCate1}">
+				<input type="hidden" id="bSchoolCate2" name="bSchoolCate2" value="${editDto.bSchoolCate2}">
+				<input type="hidden" id="pseq" name="pseq" value="${pseq}">
+				<input type="hidden" id="menteeId" name="menteeId" value="${editDto.bUserId}">
 				<div class="row gtr-uniform">
 				
 					<%-- 첨삭 --%>
 					<div class="col-12">
-						<textarea name="subject" id="subject" placeholder="제목을 입력하세요" rows="1"></textarea>
+						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1"></textarea>
 					</div>
 					<div class="col-12">
-						<textarea name="content" id="content" placeholder="내용을 입력하세요" rows="20"></textarea>
+						<textarea name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>
 					</div>
 					<%-- 버튼 --%>
 					<div class="col-12">

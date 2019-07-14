@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/template/header.jsp" %><%-- html ~ body의 header --%>
+<%@ include file="/WEB-INF/views/mentor/common.jsp" %>
 <style type="text/css">
 	.far, .fas {
 		vertical-align: center;
@@ -16,13 +17,16 @@ $(function(){
 	
 	<%-- 목록 페이지 --%>
 	$('.list').click(function(){
-		location.href = '${root}/resume/editlist';
+		$('#pg').val('');
+		$('#state').val('${state}');
+		$('#schoolCate1').val('${schoolCate1}');
+		$('#list').attr("method", "GET").attr("action", "${root}/resume/editlist").submit();
 		return false;
 	});
 	
 	<%-- 첨삭 하기 --%>
 	$('#edit').click(function(){
-		location.href = '${root}/resume/writeedit?pseq=${editDto.pseq}';
+		location.href = '${root}/resume/writeedit?pseq=${editDto.boardNo}';
 		return false;
 	});
 });
@@ -33,10 +37,10 @@ $(function(){
 			<div>
 				<c:choose>
 					<c:when test="${editDto.pseq == 0}">
-				<label style="font-size: 1.7em;"><i class="far fa-file-alt"></i>&nbsp;${editDto.boardSubject}</label>
+				<label style="font-size: 1.7em;"><i class="far fa-file-alt"></i>&nbsp;${editDto.boardSubject.replace('<', '&lt')}</label>
 					</c:when>
 					<c:otherwise>
-				<label style="font-size: 1.7em;"><i class="far fa-edit"></i>&nbsp;${editDto.boardSubject}</label>
+				<label style="font-size: 1.7em;"><i class="far fa-edit"></i>&nbsp;${editDto.boardSubject.replace('<', '&lt')}</label>
 					</c:otherwise>
 				</c:choose>
 				<div style="float: left; margin-top: 1em;">

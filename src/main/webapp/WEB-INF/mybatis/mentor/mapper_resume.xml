@@ -54,6 +54,24 @@
   SELECT * FROM DUAL
   </insert>
 
+  <insert id="insertEdit" parameterType="editDto">
+  	<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+  SELECT board_seq.nextval FROM DUAL
+  	</selectKey>
+  INSERT ALL
+    INTO board(board_no, b_user_id, board_category, user_name, board_subject, board_content, b_school_name, b_school_code, b_school_cate1, b_school_cate2, b_postdate)
+    VALUES (#{boardNo}, #{bUserId}, 10, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, #{bSchoolCode}, #{bSchoolCate1}, #{bSchoolCate2}, SYSDATE)
+    INTO edit(edit_no, board_no, ref, pseq, state, mentee_id, mentor_id)
+    VALUES (edit_seq.nextval, #{boardNo}, #{pseq}, #{pseq}, '1', #{menteeId}, #{mentorId})
+  SELECT * FROM DUAL
+  </insert>
+
+  <update id="updateState" parameterType="int">
+  UPDATE edit
+  SET state = '1'
+  WHERE board_no = #{pseq}
+  </update>
+
   <select id="selResumeList" parameterType="map" resultType="editDto">
     SELECT c.board_no boardNo, c.b_user_id bUserId, c.board_subject boardSubject,
   			c.b_school_name bSchoolName, c.b_school_cate2 bSchoolCate2, c.pseq pseq, c.state state,
@@ -70,7 +88,7 @@
 	                <if test='state != "5"'>
 	                		AND e.state = #{state}
 	                </if>
-	                ORDER BY e.ref DESC, e.pseq ASC
+	                ORDER BY e.state DESC, e.ref DESC, e.pseq ASC
 	             ) total
 	        WHERE ROWNUM &lt;= #{end}
 	     ) c
@@ -89,12 +107,20 @@
     </if>
   </select>
   
-  <select id="selResume" parameterType="map" resultType="editDto">
+  <select id="selResume" parameterType="int" resultType="editDto">
   SELECT b.board_no boardNo, b.b_user_id bUserId, b.board_subject boardSubject, b.board_content boardContent,
-  			b.b_school_name bSchoolName, b.b_school_cate2 bSchoolCate2, e.pseq pseq, e.state state,
+  			b.b_school_name bSchoolName, b.b_school_code bSchoolCode, b.b_school_cate1 bSchoolCate1, b.b_school_cate2 bSchoolCate2, e.pseq pseq, e.state state,
 	        decode(to_char(b.b_postdate, 'yymmdd'), to_char(sysdate, 'yymmdd'), to_char(b.b_postdate, 'hh24:mi:ss'), to_char(b.b_postdate, 'yy.mm.dd')) bPostdate
   FROM board b, edit e
-  WHERE b.board_no = e.board_no AND b.board_no = #{seq} AND e.pseq = #{pseq}
+  WHERE b.board_no = e.board_no AND b.board_no = #{seq}
+  </select>
+  
+  <select id="selEdit" parameterType="int" resultType="editDto">
+  SELECT b.board_no boardNo, b.b_user_id bUserId, b.board_subject boardSubject, b.board_content boardContent,
+  			b.b_school_name bSchoolName, b.b_school_code bSchoolCode, b.b_school_cate1 bSchoolCate1, b.b_school_cate2 bSchoolCate2, e.pseq pseq, e.state state,
+	        decode(to_char(b.b_postdate, 'yymmdd'), to_char(sysdate, 'yymmdd'), to_char(b.b_postdate, 'hh24:mi:ss'), to_char(b.b_postdate, 'yy.mm.dd')) bPostdate
+  FROM board b, edit e
+  WHERE b.board_no = e.board_no AND pseq = #{pseq}
   </select>
   
   <select id="selEditList" parameterType="map" resultType="editDto">
@@ -123,6 +149,6 @@
   <select id="selEditCnt" parameterType="map" resultType="int">
   SELECT COUNT(edit_no)
   FROM edit
-  WHERE mentor_id = #{userId} and state = '1'
+  WHERE mentor_id = #{userId} and state = '1' and pseq = 0
   </select>
   </mapper>

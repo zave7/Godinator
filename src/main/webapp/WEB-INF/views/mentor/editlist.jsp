@@ -34,25 +34,26 @@ $(function(){
 	
 	<%-- select 이벤트 --%>
 	$('#stateSel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val($(this).val());
 		$('#schoolCate1').val('${schoolCate1}');
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/editlist").submit();
 		return false;
 	});
 	$('#schoolCate1Sel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val('${state}');
 		$('#schoolCate1').val($(this).val());
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/editlist").submit();
 		return false;
 	});
-	
+
 	<%-- 자소서 내용보기 --%>
 	$('.resumeBtn').click(function(){
 		var seq = $(this).attr('data-seq');
-		var pseq = $(this).attr('data-pseq');
-		location.href="${root}/resume/viewedit?seq=" + seq + "&pseq=" + pseq;
+		var state = $('#state').val();
+		var schoolCate1 = $('#schoolCate1').val();
+		location.href="${root}/resume/viewedit?seq=" + seq + "&state=" + state + "&schoolCate1=" + schoolCate1;
 		return false;
 	});
 	

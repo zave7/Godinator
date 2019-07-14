@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -42,7 +41,9 @@ $(function(){
 			success: function(response) {
 				if(response != 0) {
 					wsocket.send('ask#!#!#' + mentor);
-					alert('멘토에게 채팅 요청을 전송하였습니다.')
+					alert('멘토에게 채팅 요청을 전송하였습니다.');
+				} else {
+					alser('해당 멘토가 접속을 종료하였습니다.');
 				}
 			}
 		});
