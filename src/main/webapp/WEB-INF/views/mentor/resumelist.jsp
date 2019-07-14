@@ -116,7 +116,7 @@ $(function(){
 							<th></th>
 							<th width="10%" style="text-align: center;">학교명</th>
 							<th style="text-align: center;">제목</th>
-							<th style="text-align: center;">ID</th>
+							<th style="text-align: center;">멘토ID</th>
 							<th style="text-align: center;">작성일</th>
 						</tr>
 					</thead>
@@ -127,7 +127,7 @@ $(function(){
 							<td>${(resume.pseq == 0) ? ((resume.state == '0') ? '첨삭대기' : '✔') : '↳'}</td>
 							<td>${resume.bSchoolName}</td>
 							<td style="text-align: left;">${resume.boardSubject}</td>
-							<td>${resume.bUserId}</td>
+							<td>${resume.mentorId}</td>
 							<td>${resume.bPostdate}</td>
 						</tr>
 							</c:forEach>

@@ -25,12 +25,14 @@ $(function(){
 
 
 	$('#sendmsg').click(function(){
-		sendMsg();
+		if($('#msg').val().trim() != '') {
+			sendMsg();
+		}
 		return false;
 	});
 	
 	$('#msg').keypress(function(e) {
-		if (e.which == 13) {
+		if (e.which == 13 && $('#msg').val().trim() != '') {
 			sendMsg();
 			return false;
 		}

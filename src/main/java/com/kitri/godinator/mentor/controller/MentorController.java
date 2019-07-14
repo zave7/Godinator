@@ -51,8 +51,8 @@ public class MentorController {
 			String ucate2 = ((parameter.get("ucate2") != null) ? parameter.get("ucate2").toString() : "0");
 			String schoolCate3 = ((parameter.get("schoolCate3") != null && parameter.get("schoolCate3") != "") ? parameter.get("schoolCate3").toString() : "0");
 			
-			parameter.put("pageSize", "10");
-			parameter.put("articleSize", "20");
+			parameter.put("pageSize", "5");
+			parameter.put("articleSize", "10");
 			parameter.put("userId", userId);
 			parameter.put("schoolCate1", schoolCate1);
 			parameter.put("hcate2", hcate2);

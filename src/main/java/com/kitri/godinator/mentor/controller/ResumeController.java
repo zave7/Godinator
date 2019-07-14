@@ -95,8 +95,8 @@ public class ResumeController {
 			String schoolCate1 = ((parameter.get("schoolCate1") != null) ? parameter.get("schoolCate1").toString() : "h");
 			String state = ((parameter.get("state") != null) ? parameter.get("state").toString() : "5");
 			
-			parameter.put("pageSize", "10");
-			parameter.put("articleSize", "20");
+			parameter.put("pageSize", "5");
+			parameter.put("articleSize", "10");
 			parameter.put("userId", userId);
 			parameter.put("schoolCate1", schoolCate1);
 			parameter.put("state", state);
@@ -125,8 +125,8 @@ public class ResumeController {
 			String schoolCate1 = ((parameter.get("schoolCate1") != null) ? parameter.get("schoolCate1").toString() : "h");
 			String state = ((parameter.get("state") != null) ? parameter.get("state").toString() : "5");
 			
-			parameter.put("pageSize", "10");
-			parameter.put("articleSize", "20");
+			parameter.put("pageSize", "5");
+			parameter.put("articleSize", "10");
 			parameter.put("userId", userId);
 			parameter.put("schoolCate1", schoolCate1);
 			parameter.put("state", state);

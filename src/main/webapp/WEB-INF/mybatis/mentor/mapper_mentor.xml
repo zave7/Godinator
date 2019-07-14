@@ -28,7 +28,7 @@
 				                                           )
 				                                      GROUP BY  mentor_id
 				                                      ) e
-							WHERE m.H_SCHOOL_CODE = h.SCHOOL_CODE and m.user_id = t.user_id and m.user_id = e.mentorId(+) AND lower(t.mentor) = 'y' and lower(t.cate) = 'h'
+							WHERE m.H_SCHOOL_CODE = h.SCHOOL_CODE and m.user_id = t.user_id and m.user_id = e.mentorId(+) AND LOWER(t.mentor) = 'y' and LOWER(t.cate) = 'h'
 					<if test='hcate2 != "0"'>
 			  		and m.h_school_cate = #{hcate2}
 			 	 	</if>

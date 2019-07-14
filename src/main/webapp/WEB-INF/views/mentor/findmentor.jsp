@@ -44,6 +44,7 @@
 </style>
 <script>
 $(function(){
+	$('#sidebar').attr('class', 'inactive');
 	<%-- 권한 확인 --%>
 	$.ajax({
 		url: '${root}/mentor/checkAuth',

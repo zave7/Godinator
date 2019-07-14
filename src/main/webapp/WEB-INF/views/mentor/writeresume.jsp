@@ -58,6 +58,10 @@ $(function(){
 			$('#ucate2').css('display', '');
 			$('#majorDiv').css('display', '');
 		}
+		$('#schoolName').val('');
+	});
+	$('#hcate2, #ucate2').change(function(){
+		$('#schoolName').val('');
 	});
 	
 	<%-- 학교 검색창 활성화 --%>

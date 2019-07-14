@@ -53,8 +53,8 @@ public class MsgController {
 			String msgCate = ((parameter.get("msgCate") != null) ? parameter.get("msgCate").toString() : "0");
 			String srcCate = ((parameter.get("srcCate") != null) ? parameter.get("srcCate").toString() : "0");
 			
-			parameter.put("pageSize", "10");
-			parameter.put("articleSize", "20");
+			parameter.put("pageSize", "5");
+			parameter.put("articleSize", "10");
 			parameter.put("userId", userId);
 			parameter.put("msgCate", msgCate);
 			parameter.put("srcCate", srcCate);
