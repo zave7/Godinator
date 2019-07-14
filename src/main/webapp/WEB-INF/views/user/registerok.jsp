@@ -18,20 +18,6 @@ $(document).ready(function() {
 
 </script>
 
-		<title>registerok.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-<br>
 									<!-- Content -->
 									<div style="text-align: center">
 									<h2>"회원가입이 성공적으로 완료되었습니다."</h2>

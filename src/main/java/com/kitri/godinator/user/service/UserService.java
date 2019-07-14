@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.MemberPreferDto;
+import com.kitri.godinator.model.MentorDto;
 
 
 public interface UserService {
@@ -19,5 +20,6 @@ public interface UserService {
 	String selectUname(String uCode);
 	List<String> selectCate(String id);
 	int mentorModifyRegister(Map<String, String> map);
+	MemberDto findModify(String userId);
 	
 }

@@ -20,20 +20,6 @@ $(document).ready(function() {
 });
 </script>
 
-		<title>authentication.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-<br>
 									<!-- Content -->
 									<form id="authenForm" name="authenForm" method="post">
 									<h2 align="left" style="font-weight:bold; ">이메일 인증 </h2>

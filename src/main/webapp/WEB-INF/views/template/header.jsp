@@ -24,27 +24,30 @@ $(document).ready(function() {
 	
 		Kakao.init('18f3deb02686176a9f41dc7fd612c3d0');
 	$("#logoutBtn").click(function() {
-		alert("로그아웃!")
+		alert("로그아웃 되었습니다.")
 		//$("#logoutBtn").attr("method","post").attr("action","${root}/user/logout").submit();
 				var isKakao = $(this).attr("data-pass");
 				if(isKakao == 'kakao'){
 					Kakao.Auth.logout(function(data){
-						location.href = "${root}/member/logout";
-						
+						$.ajax({
+							url: '${root}/user/logout',
+							type: 'post',
+							success: function(msg) {
+								alert(msg);
+								location.href="${root}/view/user/main.jsp";
+							} 
+						});
 					});
 				} else {
-					location.href = "${root}/member/logout";
+					$.ajax({
+						url: '${root}/user/logout',
+						type: 'post',
+						success: function(msg) {
+							alert(msg);
+							location.href="${root}/view/user/main.jsp";
+						} 
+					});
 				}
-				
-		$.ajax({
-			url: '/godinator/user/logout',
-			type: 'post',
-			success: function(msg) {
-				alert(msg);
-				location.href="${root}/view/user/main.jsp";
-			} 
-		});
-		
 		return false;
 	});
 		

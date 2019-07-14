@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.MemberPreferDto;
+import com.kitri.godinator.model.MentorDto;
 
 public interface UserDao {
 
@@ -27,5 +28,6 @@ public interface UserDao {
 	int ckId(String id);
 	int memberReset(String id);
 	int mentorReset(String id);
+	MemberDto findModify(String userId);
 
 }

@@ -11,12 +11,12 @@ hr{
 $(document).ready(function() {
 	$("#userId").keyup(function() {
 		var id = $("#userId").val();
-		if(id.length < 5 || id.length > 16) {
+		if(id.length < 5 || id.length > 10) {
 			//console.log(id.length);
 			cnt = 1;
-			$("#idresult").css("color", "gray");
-			$("#idresult").text("아이디는 5자이상 16자이하입니다.");
-		} else {
+			$("#idresult").css("color", "tomato");
+			$("#idresult").text("아이디는 5자이상 10자이하입니다.");
+		}else {
 			$.ajax({
 				type : "GET",
 				url : "/godinator/user/idcheck",
@@ -36,8 +36,23 @@ $(document).ready(function() {
 		}
 	});
 	
+	// password 형식 - 정규표현식
+	// 숫자, 특수문자, 영문자 포함한 8~15자리 이내의 비밀번호만 허용
+	var passwordRule = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,14}$/;
+	
+	$("#pass").keyup(function(){
+		var pass = $(this).val();
+		
+		 if(!passwordRule.test(pass)){
+			$("#passresult").css('color', 'tomato');
+			$("#passresult").html('비밀번호는 특수문자, 영문, 숫자를 포함한 8~15자리입니다.');
+		} else{
+			$("#passresult").css('color', 'steelblue');
+			$("#passresult").html('사용 가능한 비밀번호 입니다.');
+		}
+	});
+	
 	$("#registerBtn").click(function() {
-		//정규표현식 !  >> 비밀번호 설정
 		
 		if($("#userId").val() == "") {
 			alert("아이디를 입력하세요");
@@ -112,21 +127,9 @@ function sample6_execDaumPostcode() {
 }
 </script>
 
-		<title>register_1.jsp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
 		<link rel="stylesheet" href="/godinator/css/register.css"/>
-	</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
+	
 							<!-- Content -->
 								<div id="loginAll">
 									<header class="main">
@@ -149,6 +152,7 @@ function sample6_execDaumPostcode() {
 									
 										<h3 id="contentPwd">비밀번호</h3>
 										   <input type="password" name="pass" id="pass" />
+										   <div id="passresult"></div>
 										   <br>
 									
 										<h3 id="contentPwd">비밀번호 확인</h3>
