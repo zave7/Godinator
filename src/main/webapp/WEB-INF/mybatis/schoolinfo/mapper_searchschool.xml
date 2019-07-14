@@ -148,14 +148,14 @@
 			</if>
 		</trim>
   	</select>
-  	<select id="getUserPrefer" parameterType="string" resultType="list">
-  		SELECT h_eval1
-  		FROM user_prefer
-  		WHERE user_id = #{userId}
-  		UNION
-  		SELECT u_eval1
-  		FROM user_prefer
-  		WHERE user_id = #{userId}
+  	<select id="getUserPrefer" parameterType="string" resultType="map">
+  		SELECT  (SELECT nvl(h_eval1, 0)
+                FROM user_prefer 
+                WHERE user_id = #{userId}) h, 
+                (SELECT nvl(u_eval1, 0) 
+                FROM user_prefer
+                WHERE user_id = #{userId}) u
+        FROM dual
   	</select>
   	<select id="getHRecomSchool" parameterType="string" resultType="hSchoolDto">
 		SELECT school_name schoolName, school_code schoolCode, school_cate2 schoolCate, esttype estType, home_page homePage
@@ -241,7 +241,7 @@
 		                
 		        ORDER BY total_score DESC)
 		        
-		WHERE rownum < 5;
+		WHERE rownum < 5
 		]]>
   	</select>
   	<select id="getURecomSchool" parameterType="string" resultType="USchoolDto">
@@ -328,7 +328,7 @@
 		                
 		        ORDER BY total_score DESC)
 		        
-		WHERE rownum < 5;
+		WHERE rownum < 5
 		]]>
   	</select>
   </mapper>

@@ -96,6 +96,8 @@ public class SchoolNewsController {
 	@RequestMapping(value = "/searchnews", method = RequestMethod.POST)
 	@ResponseBody
 	public String searchNews(@RequestBody Map<String, String> parameter, HttpSession httpSession) {
+		Object obj = httpSession.getAttribute("userInfo");
+		System.out.println(obj);
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
 		if(memberDto != null) {
 			parameter.put("userId", memberDto.getUserId());

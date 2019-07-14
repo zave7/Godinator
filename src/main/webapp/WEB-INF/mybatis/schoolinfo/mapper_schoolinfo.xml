@@ -84,7 +84,7 @@
   		select 	avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, 
   				avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
 		from h_school 
-		WHERE school_cate1 =    (SELECT school_cate1 
+		WHERE school_cate2 =    (SELECT school_cate2 
 		                        FROM h_school 
 		                        WHERE school_code = #{schoolCode})
   	</select>

@@ -44,7 +44,8 @@ public class SearchSchoolServiceImpl implements SearchSchoolService{
 				hJson.addProperty("region", h.getAddress());
 				hJson.addProperty("mwCate", h.getMwCate());
 				hJson.addProperty("eduOffice", h.getEduOffice());
-				hJson.addProperty("homePage", h.getHomePage());
+				StringBuffer homePage = new StringBuffer(h.getHomePage()); 
+				checkImgUrl(hJson, homePage);
 				jsonArray.add(hJson);
 			}
 			jsonObject.addProperty("schoolCate", "h");
@@ -58,7 +59,8 @@ public class SearchSchoolServiceImpl implements SearchSchoolService{
 				uJson.addProperty("schoolType", u.getType());
 				uJson.addProperty("estType", u.getEstType());
 				uJson.addProperty("region", u.getRegion());
-				uJson.addProperty("homePage", u.getLink());
+				StringBuffer link = new StringBuffer(u.getLink()); 
+				checkImgUrl(uJson, link);
 				jsonArray.add(uJson);
 			}
 			jsonObject.addProperty("schoolCate", "u");
@@ -102,7 +104,7 @@ public class SearchSchoolServiceImpl implements SearchSchoolService{
 
 	@Override
 	//유저 선호도 입력 체크 고등학교 h 대학교 u 둘다 hu
-	public List<String> getUserPrefer(String userId) {
+	public Map<String, Double> getUserPrefer(String userId) {
 		return sqlSession.getMapper(SearchSchoolDao.class).getUserPrefer(userId);
 	}
 
@@ -113,5 +115,13 @@ public class SearchSchoolServiceImpl implements SearchSchoolService{
 	@Override
 	public List<USchoolDto> getURecomSchool(String userId) {
 		return sqlSession.getMapper(SearchSchoolDao.class).getURecomSchool(userId);
+	}
+	
+	//이미지 체크
+	private void checkImgUrl(JsonObject json, StringBuffer url) {
+		if(!url.toString().contains("http")) {
+			url.insert(0, "http://");
+		}
+		json.addProperty("homePage", url.toString());
 	}
 }

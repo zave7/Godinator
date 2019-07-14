@@ -5,7 +5,7 @@
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1 class="mogyoH1R">고등학교 및 대학교 평가</h1>
+				<h1 class="mogyoH1R">고등학교 평가</h1>
 			</header>
 			<div class="row">
 				<div class="col-10 col-12-small">
@@ -18,10 +18,6 @@
 				<div class="col-7 col-12-small">
 				</div>
 				<div class="col-2 col-12-small">
-				<select id="schoolCate">
-					<option value="h">고등학교</option>
-					<option value="u">대학교</option>
-				</select>
 				</div>
 				<div class="col-3 col-12-small">
 				<input type="text" id="searchSchoolName"/>
@@ -140,7 +136,7 @@
 						<a href="" class="button primary" id="submit">확인</a>
 					</div>
 					<div class="col-2 col-1-small">
-						<a href="" class="button" id="cancel">건너뛰기</a>
+						<a href="" class="button" id="cancel">취소</a>
 					</div>
 				</div>
 		</section>
@@ -148,13 +144,11 @@
 		<script>
 			$(document).ready(function(e){
 				
+				
+				
 				var schoolCate = "h";
 				var schoolCode;
 				var clickSchoolName;
-				$("#shcoolCate").change(function() {
-					schoolCate = $(this).val();
-					return false;
-				});
 				
 			    $('.search-panel .dropdown-menu').find('a').click(function(e) {
 					e.preventDefault();
@@ -219,15 +213,9 @@
 					}
 					
 				});
-				//건너뛰기
-				$("div.submit-school-evaluation a#submit").click(function() {
-					$(location).attr("href", "${root}/schoolinfo/joinfinish");
-					return false;
-				}
 				
 				//학교 이름 검색
 				$("#searchSchoolName").keydown(function(e) {
-					var $schoolCate = $("#schoolCate").val();
 					var $keyword = $(this).val();
 					console.log($schoolCate + " " + $keyword);
 					if($keyword.trim().length != 0) {
@@ -235,7 +223,7 @@
 							url : "${root}/schoolnews/selectschool",
 							type : "GET",
 							contentType : "application/json;charset=UTF-8",
-							data : "schoolCate="+$schoolCate+"&keyword="+$keyword,
+							data : "schoolCate=h&keyword="+$keyword,
 							dataType : "JSON",
 							success : function(result) {
 								if(result != false) {

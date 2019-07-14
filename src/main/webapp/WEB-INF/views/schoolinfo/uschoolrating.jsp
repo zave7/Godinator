@@ -140,7 +140,7 @@
 						<a href="" class="button primary" id="submit">확인</a>
 					</div>
 					<div class="col-2 col-1-small">
-						<a href="" class="button" id="cancel">건너뛰기</a>
+						<a href="" class="button" id="cancel">취소</a>
 					</div>
 				</div>
 		</section>
@@ -219,11 +219,6 @@
 					}
 					
 				});
-				//건너뛰기
-				$("div.submit-school-evaluation a#submit").click(function() {
-					$(location).attr("href", "${root}/schoolinfo/joinfinish");
-					return false;
-				}
 				
 				//학교 이름 검색
 				$("#searchSchoolName").keydown(function(e) {

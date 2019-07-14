@@ -272,7 +272,7 @@
 								schoolContent += '</div>';
 								schoolContent += '<div class="row">';
 								schoolContent += 	'<div class="col-12 col-12-small">';
-								schoolContent += 		'<p class="search-simpleInfo"><span>주소 : </span><a class="url" href="http://'+school[i].homePage+'" target="_blank">'+school[i].homePage+'</a></p>';
+								schoolContent += 		'<p class="search-simpleInfo"><span>주소 : </span><a class="url" href="'+school[i].homePage+'" target="_blank">'+school[i].homePage+'</a></p>';
 								schoolContent += 	'</div>';
 								schoolContent += '</div>';
 								schoolContent += '<hr/>';
@@ -288,6 +288,8 @@
 						//핫 학교 올리기
 						$("div#hotschool").slideUp(200);
 						$("div#hotList").show();
+						
+						//학교 이름 클릭
 						$("span.school-name").on("click", function() {
 							var $cate = $(this).attr("data-cate");
 							var $code = $(this).attr("data-code");
@@ -399,6 +401,7 @@
 					} 
 					return false;
 				});
+				
 				$("span.ssdetail").on("click", function() {
 					var $cate = $(this).attr("data-cate");
 					var $code = $(this).attr("data-code");

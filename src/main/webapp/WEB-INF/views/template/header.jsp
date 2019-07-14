@@ -72,7 +72,7 @@ $(document).ready(function() {
 <link rel="stylesheet" href="${root}/css/morris.css"/>
 <link rel="stylesheet" href="${root}/css/login.css"/>
 <link rel="stylesheet" href="${root}/css/register.css"/>
-
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet">
 
 <!-- 카카오톡 로그인 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
