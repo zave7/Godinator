@@ -60,8 +60,8 @@ public class MemberController {
 	                   //user_id, user_name, h_school_code, u_school_code, user_cate, join_date
 	                   String userId = ((MemberDto)obj).getUserId();
 	                   String userName = ((MemberDto)obj).getUserName();
-	                   String hSchoolCode = ((MemberDto)obj).gethSchoolCode();
-	                   String uSchoolCode = ((MemberDto)obj).getuSchoolCode();
+	                   String hSchoolCode = ((MemberDto)obj).getHSchoolCode();
+	                   String uSchoolCode = ((MemberDto)obj).getUSchoolCode();
 	                   String userCate = ((MemberDto)obj).getUserCate();
 	                   String joinDate = ((MemberDto)obj).getJoinDate();
 	                   String temp = ((MemberDto)obj).getTemp();
@@ -125,8 +125,8 @@ public class MemberController {
 	               String userId = ((MemberDto)h).getUserId();
 	               String userName = ((MemberDto)h).getUserName();
 	               String userCate = ((MemberDto)h).getUserCate();
-	               String hSchoolCode = ((MemberDto)h).gethSchoolCode();
-	               String uSchoolCode = ((MemberDto)h).getuSchoolCode();
+	               String hSchoolCode = ((MemberDto)h).getHSchoolCode();
+	               String uSchoolCode = ((MemberDto)h).getUSchoolCode();
 	               String email = ((MemberDto)h).getEmail();
 	               String phone1 = ((MemberDto)h).getPhone1();
 	               String address = ((MemberDto)h).getAddress();
