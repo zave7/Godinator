@@ -48,7 +48,7 @@ $(function(){
 		var uniArray = new Array(uEval1,uEval2,uEval3,uEval4,uEval5,uEval6);
 		//alert(uniArray);
 		
-		alert("heval1 : "+ hEval1);
+		//alert("heval1 : "+ hEval1);
 		
 		/*  if(
 			hEval1.substring(1, 1)=='h'||
@@ -238,7 +238,7 @@ function allowDrop(ev) {
 										   <br><br>
 									<ul class="actions">
 										<li>3/4</li>
-										<li><a href="" class="button primary" id="registerPreferenceBtn">다음페이지</a></li>
+										<li><a href="" class="button primary" id="registerPreferenceBtn">건너뛰기</a></li>
 									</ul>
 								</div>
 

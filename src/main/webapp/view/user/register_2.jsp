@@ -25,11 +25,12 @@ $(document).ready(function() {
 			$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();	
 		}
 	});
-});
+
 //학교이름검색
-$("#highSchool").keydown(function(e) {
-	//var $schoolCate = $("#schoolCate").val();
+$("#highSchool").keyup(function(e) {
+	
 	var $keyword = $(this).val();
+
 	console.log($keyword);
 	if($keyword.trim().length != 0) {
 		$.ajax({
@@ -51,7 +52,7 @@ $("#highSchool").keydown(function(e) {
 							"data-code" : school[i].schoolCode,
 							"text" : school[i].schoolName,
 							"click" : function() {
-								$("#searchSchoolName").val($(this).text());
+								$("#highSchool").val($(this).text());
 								$("#schoolScrollUlH").css("display", "none");
 								$("#schoolCode").val($(this).attr("data-code"));
 								clickSchoolName = $(this).text();
@@ -75,6 +76,57 @@ $("#highSchool").keydown(function(e) {
 		$("#schoolScrollUlH").css("display", "none");
 		$("#schoolScrollUlH").empty();
 	}
+});
+
+//대학검색
+$("#university").keyup(function(e) {
+	var $keyword = $(this).val();
+
+	console.log($keyword);
+	if($keyword.trim().length != 0) {
+		$.ajax({
+			url : "${root}/user/selectUschool",
+			type : "GET",
+			contentType : "application/json;charset=UTF-8",
+			data : "keyword="+$keyword,
+			dataType : "JSON",
+			success : function(result) {
+				if(result != false) {
+				console.log(result);
+				var school = result.schoolNames;
+				console.log(school);
+				var schoolNamesCnt = result.schoolNames.length;
+				console.log(schoolNamesCnt);
+					$("#schoolScrollUlU").empty();
+					for(var i=0; i<schoolNamesCnt; i++) {
+						var li = $("<li/>", {
+							"data-code" : school[i].schoolCode,
+							"text" : school[i].schoolName,
+							"click" : function() {
+								$("#university").val($(this).text());
+								$("#schoolScrollUlU").css("display", "none");
+								$("#schoolCode").val($(this).attr("data-code"));
+								clickSchoolName = $(this).text();
+								schoolCode = $(this).attr("data-code");
+							}
+						});
+						$("#schoolScrollUlU").append(li);
+					}
+					$("#schoolScrollUlU").css("display", "list-item");
+				} else {
+					console.log(result);
+					$("#schoolScrollUlU").css("display", "none");
+					$("#schoolScrollUlU").empty();
+				}
+			},
+			error : function() {
+			}
+		});
+	} else {
+		$("#schoolScrollUlU").css("display", "none");
+		$("#schoolScrollUlU").empty();
+	}
+});
 });
 </script>
 
@@ -108,7 +160,7 @@ $("#highSchool").keydown(function(e) {
 										<br><br><br><br>
 										<h3 id="contentPwd">출신 대학교</h3>
 										   <input type="text" name="university" id="university" />
-										  <!--  <a href="#" class="button">학교 검색</a> -->
+										 <div id="schoolScrollDivU"><ul id="schoolScrollUlU"></ul></div>
 										   <br><br>
 										    <h5>대학교 구분</h5>
 										   <div id="u_category" class="custom-control-inline">
