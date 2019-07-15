@@ -6,7 +6,7 @@
   
   <mapper namespace="com.kitri.godinator.admin.dao.StatisticsDao">
   	<update id="addCnt" parameterType="String">
-  	UPDATE visit 
+  	UPDATE visit
   	SET visit_cnt = visit_cnt+1 
   	WHERE visit_user_id = #{user}
   	</update>
