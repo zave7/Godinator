@@ -79,7 +79,7 @@ public class BoardController {
 		// System.out.println("write controller in : " +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
-		System.out.println(multipartFile.toString());
+		//System.out.println(multipartFile.toString());
 
 		if (memberDto != null) {
 
@@ -98,7 +98,7 @@ public class BoardController {
 					String realSaveFolder = realPath + File.separator + saveFolder;
 					File dir = new File(realSaveFolder);
 
-					System.out.println("controller에서 저장된 경로!! : " + realPath);
+				//	System.out.println("controller에서 저장된 경로!! : " + realPath);
 					if (!dir.exists())
 						dir.mkdirs();// 폴더까지 생성
 
@@ -171,10 +171,23 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
 
+		int boardCategory = Integer.parseInt(parameter.get("boardCategory"));
+		
+		if(boardCategory != 4) {
+		
 		// System.out.println(parameter);
 		List<BbsDto> list = boardService.listArticle(parameter);
 		// System.out.println("list C : " + list);
-
+		int totalLike = 0;
+		int totalHate = 0;
+		int boardNo = 0;
+		for (int i = 0; i < list.size(); i++) {
+			boardNo = list.get(i).getBoardNo();
+			totalLike = boardService.totalLike(boardNo);
+			totalHate = boardService.totalLike(boardNo);
+			list.get(i).setLikeCount(totalLike);
+			list.get(i).setHateCount(totalHate);
+		}
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
@@ -182,7 +195,32 @@ public class BoardController {
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);
-
+		
+		} else if (boardCategory == 4) {
+			// System.out.println(parameter);
+			List<BbsDto> list = boardService.listHotArticle(parameter);
+			// System.out.println("list C : " + list);
+			int totalLike = 0;
+			int totalHate = 0;
+			int boardNo = 0;
+			for (int i = 0; i < list.size(); i++) {
+				boardNo = list.get(i).getBoardNo();
+				totalLike = boardService.totalLike(boardNo);
+				totalHate = boardService.totalHate(boardNo);
+				list.get(i).setLikeCount(totalLike);
+				list.get(i).setHateCount(totalHate);
+			}
+			//System.out.println("boardCategory : " + boardCategory + ", hot list" + list);
+			PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
+			pageNavigation.setRoot(requset.getContextPath());
+			pageNavigation.makeNavigator();
+			// System.out.println("controller : " + parameter);
+			model.addAttribute("parameter", parameter);
+			model.addAttribute("hotArticleList", list);
+			model.addAttribute("navigator", pageNavigation);
+			
+		}
+		
 		return "board/list";
 	}
 

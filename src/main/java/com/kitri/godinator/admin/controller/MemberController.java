@@ -71,14 +71,11 @@ public class MemberController {
 	                	   status = "학생";
 	                    else if (userCate.equals("p")) // 학부모
 	                	   status = "학부모";
-	                   
-	                   if(temp.equals("R")) {  // 멘토요청 보낸 이들
-	                	   i1 = "<td><input type='button' id='mentoConfirm' value='멘토승인'>";
-	                	   //i2 = "html()";
-		               }else {
-		                   i1 = "<td>";
-		                   //i2 = "html('')";
-		               }
+				/*
+				 * if(temp.equals("r")) { // 멘토요청 보낸 이들 i1 =
+				 * "<td><input type='button' id='mentoConfirm' value='멘토승인'>"; //i2 = "html()";
+				 * }else { i1 = "<td>"; //i2 = "html('')"; }
+				 */
 	                   
 	                  /** 학교 이름 GET **/
 	                   //List<HSchoolDto> name = memberService.getHSchoolName(hSchoolCode);
@@ -91,7 +88,7 @@ public class MemberController {
 	                   member.addProperty("uSchoolCode", uSchoolCode);
 	                   member.addProperty("userCate", status);
 	                   member.addProperty("joinDate", joinDate);
-	                   member.addProperty("i1", i1);
+	                   member.addProperty("temp", temp);
 	                   //member.addProperty("i2", i2);
 	                   
 	                   jsonArray.add(member);

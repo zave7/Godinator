@@ -2,105 +2,90 @@
 <!-- Sidebar -->
 
  
-					<div id="sidebar">
-						<div class="inner">
+					<!-- Sidebar -->
+<div id="sidebar">
+   <div class="inner">
+      <section id="mainPage" class="alt">
+         <span>고디네이터</span>
+      </section>
+      
+      <nav id="menu">
+         <header class="major"><h2>Menu</h2></header>
+         <ul>
+            <c:if test="${not empty userInfo}">
+               <li>
+               <span class="opener">마이페이지</span>
+               <ul>
+                  <li><a href="${root}/">진로검사</a></li>
+                  <li><a href="${root}/">모교 평가</a></li>
+               </ul>
+               </li>
+            </c:if>
+            <li>
+               <span class="opener">학교 정보</span>
+               <ul>
+                  <li><a href="${root}/searchschool/viewsearch">학교 검색</a></li>
+                  <li><a href="${root}/schoolnews/viewnews">학교 뉴스 검색</a></li>
+               </ul>
+            </li>
+            <li>
+               <span class="opener" id = "community">커뮤니티</span>
+               <ul id ="communityMenu">
+                  <li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">홍보게시판</a></li>
+                  <li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등학교 게시판</a></li>
+                  <li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">대학교 게시판</a></li>
+                  <li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">핫 게시물</a></li>
+               </ul>
+            </li>
+            <li>
+               <span class="opener">멘토링</span>
+               <ul>
+                  <li><a href="${root}/mentor/findmentor">멘토 찾기</a></li>
+                  <li><a href="${root}/msg/msgbox">쪽지함</a></li>
+                  <li><a href="${root}/resume/resumelist">자소서목록</a></li>
+                  <li><a href="${root}/resume/editlist">첨삭목록</a></li>
+               </ul>
+            </li>
+         </ul>
+      </nav>
 
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
+      <!-- Section -->
+      <section>
+         <header class="major">
+            <h2>Get in touch</h2>
+         </header>
+         <ul class="contact">
+            <li class="icon solid fa-envelope"><a href="#">claire97j@naver.com</a></li>
+            <li class="icon solid fa-phone">(000) 000-0000</li>
+            <li class="icon solid fa-home">서울시 구로구 디지털로 34길 43 <br>코오롱사이언스벨리 1차 4층
+            </li>
+         </ul>
+      </section>
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="#" ></a></li>
-										<li>
-											<span class="opener" id = "community">커뮤니티</span>
-											<ul id ="communityMenu">
-													<li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">홍보게시판</a></li>
-													<li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등학교 게시판</a></li>
-													<li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">대학교 게시판</a></li>
-													<li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">핫 게시물</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
+      <!-- Footer -->
+      <footer id="footer">
+         <p class="copyright">
+            &copy; Untitled. All rights reserved. Demo Images: <a
+               href="https://unsplash.com">Unsplash</a>. Design: <a
+               href="https://html5up.net">HTML5 UP</a>.
+         </p>
+      </footer>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="${root}/img/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="${root}/img/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="${root}/img/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
+   </div>
+</div>
+</div>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="${root}/js/jquery.min.js"></script>
-			<script src="${root}/js/browser.min.js"></script>
-			<script src="${root}/js/breakpoints.min.js"></script>
-			<script src="${root}/js/util.js"></script>
-			<script src="${root}/js/main.js"></script>
-
-	</body>
+<!-- Scripts -->
+<script src="${root}/js/browser.min.js"></script>
+<script src="${root}/js/breakpoints.min.js"></script>
+<script src="${root}/js/util.js"></script>
+<script src="${root}/js/main.js"></script>
+<script>
+   $(document).ready(function() {
+      $("section#mainPage").click(function() {
+         $(location).attr("href", "${root}/board/main");
+      });
+   });
+</script>
+</body>
 </html>

@@ -48,5 +48,7 @@ public interface BoardService {
 	//좋아요 
 	int totalLike(int boardNo);
 	int totalHate(int boardNo);
+
+	List<BbsDto> listHotArticle(Map<String, String> parameter);
 	
 }
