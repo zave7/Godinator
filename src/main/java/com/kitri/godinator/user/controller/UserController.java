@@ -618,5 +618,12 @@ public class UserController {
 
 		}
 	}
+	
+	@RequestMapping(value = "/registerok", method = RequestMethod.GET)
+	public String registerok(HttpSession session) {
+		session.removeAttribute("registerId");
+		return "user/registerok";
+	}
+	
 
 }
