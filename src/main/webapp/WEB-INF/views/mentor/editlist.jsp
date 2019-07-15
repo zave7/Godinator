@@ -21,9 +21,8 @@ $(function(){
 					history.back();
 				}
 			} else if(response == '0') {
-				if(confirm('멘토 권한이 없습니다. 이전 페이지로 이동합니다.')){
-					history.back();
-				}
+				alert('멘토 권한이 없습니다. 이전 페이지로 이동합니다.');
+				history.back();
 			} else {
 				init();
 			}
