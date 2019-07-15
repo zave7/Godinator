@@ -21,9 +21,15 @@ public class StatisticsController {
 	private StatisticsService service;
 	
 	@RequestMapping(value = "/countVisit", method = RequestMethod.GET)
-	public void deleteInfo (@RequestParam(name = "user", defaultValue = "") String user, Model model) throws Exception {
+	public void countVisit (@RequestParam(name = "user", defaultValue = "") String user) throws Exception {
 		System.out.println("> 로그인안한 사람들 방문 수 세기 Controller 입성 : " + user);
 		service.addCnt(user);
+	}
+	
+	@RequestMapping(value = "/countUserVisit", method = RequestMethod.GET)
+	public void countUserVisit (@RequestParam(name = "id", defaultValue = "") String id) throws Exception {
+		System.out.println("> 로그인한 사람들 방문 수 세기 Controller 입성 : " + id);
+		//service.addCnt(user);
 	}
 
 

@@ -16,7 +16,22 @@ public class StatisticsServiceImpl implements StatisticsService{
 	@Override
 	public String addCnt(String user) {
 		System.out.println("> (StatisticsServiceImpl) > cnt 올리기");
-		return sqlSession.getMapper(StatisticsDao.class).addCnt(user);
+		sqlSession.getMapper(StatisticsDao.class).addCnt(user);
+		return "";
+	}
+
+	@Override
+	public String enrollVisit(String id) {
+		System.out.println("> (StatisticsServiceImpl) > 신규 ID 생성시 cnt 올리기");
+		sqlSession.getMapper(StatisticsDao.class).enrollVisit(id);
+		return "";
+	}
+
+	@Override
+	public String addUserCnt(String StaticId) {
+		System.out.println("> (StatisticsServiceImpl) > 로그인한 ID cnt 올리기 : " + StaticId);
+		sqlSession.getMapper(StatisticsDao.class).addUserCnt(StaticId);
+		return "";
 	}
 
 }

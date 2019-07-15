@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.kitri.godinator.admin.service.StatisticsService;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.MemberPreferDto;
 import com.kitri.godinator.model.MentorDto;
@@ -29,6 +30,9 @@ import com.kitri.godinator.user.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private StatisticsService statisticsService;
 
 	@RequestMapping(value = "/modifyMember", method = RequestMethod.POST)
 	public @ResponseBody String modifyMember(MemberDto memberDto, Model model, HttpSession session) {
@@ -174,6 +178,11 @@ public class UserController {
 			// 세션에 정보 얻어서 메인페이지로 넘어가기
 			session.setAttribute("userInfo", memberDto);
 			//System.out.println("SESSION에 넣어졌니?");
+			
+			/** 윤영 : visit 통계용 : 로그인한사람**/
+			String StaticId = memberDto.getUserId();
+			statisticsService.addUserCnt(StaticId);
+			
 			if (hName != "") {
 				model.addAttribute("hName", hName);
 			}
@@ -229,6 +238,10 @@ public class UserController {
 	public String register(MemberDto memberDto, Model model) {
 
 		int cnt = userService.register(memberDto);
+		/** 윤영 : visit 통계용 **/
+		String id = memberDto.getUserId();
+		statisticsService.enrollVisit(id);
+		
 		if (cnt != 0) {
 			model.addAttribute("registerInfo", memberDto);
 			return "user/register_2";

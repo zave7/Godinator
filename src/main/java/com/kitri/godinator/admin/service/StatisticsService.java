@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 public interface StatisticsService {
 
 	String addCnt(String user);
+	String enrollVisit(String id);
+	String addUserCnt(String StaticId);
 	
 	
 }
