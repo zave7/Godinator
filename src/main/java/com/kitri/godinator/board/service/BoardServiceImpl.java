@@ -158,13 +158,13 @@ public class BoardServiceImpl implements BoardService {
 			// 좋아요 확인 후 insert(좋아요 누를 때)
 
 			int firstClick = sqlSession.getMapper(BoardDao.class).insertLike(loveDto);
-			System.out.println(inLikeUnlike + "버튼 눌렀음  : " + firstClick);
+			//System.out.println(inLikeUnlike + "버튼 눌렀음  : " + firstClick);
 
 			check = "like";
 
 		} else if (likeResult == 1) {
 
-			System.out.println("들어옴!!!! 눌른 버튼 : " + inLikeUnlike + ", 눌려있던 버튼 : " + outLikeUnlike);
+			//System.out.println("들어옴!!!! 눌른 버튼 : " + inLikeUnlike + ", 눌려있던 버튼 : " + outLikeUnlike);
 			// outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
 
 			if (inLikeUnlike.equals(outLikeUnlike)) {
@@ -208,6 +208,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int totalHate(int boardNo) {
 		return sqlSession.getMapper(BoardDao.class).totalHate(boardNo);
+	}
+
+	@Override
+	public List<BbsDto> listHotArticle(Map<String, String> parameter) {
+		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
+		int end = pg * BoardConstance.ARTICLE_SIZE;
+		int start = end - BoardConstance.ARTICLE_SIZE;
+
+		parameter.put("start", start + "");
+		parameter.put("end", end + "");
+
+		return sqlSession.getMapper(BoardDao.class).listHotArticle(parameter);
 	}
 
 }

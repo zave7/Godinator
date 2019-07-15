@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
@@ -171,32 +171,21 @@ $(document).ready(function() {
 });
 </script>	
 
-</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
-								</header>
-
 							<!-- Content -->
 									<header class="main">
 									<br>
-										<h2>홍보게시판</h2>
+									<c:if test="${parameter.boardCategory == 1}">
+										<h2>홍보게시판</h2> 
+									</c:if>
+									<c:if test="${parameter.boardCategory == 2}">
+										<h2>고등학교 게시판</h2> 
+									</c:if>
+									<c:if test="${parameter.boardCategory == 3}">
+										<h2>대학교 게시판</h2> 
+									</c:if>
+									<c:if test="${parameter.boardCategory == 4}">
+										<h2><font color="red">Hot</font> 게시판</h2> 
+									</c:if>
 									</header>
 								<hr class = "major"/>	
 								<!-- 작성 전체 폼 -->

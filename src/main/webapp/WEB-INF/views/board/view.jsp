@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %> 
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
@@ -245,26 +245,6 @@ $(document).ready(function() {
 
 
 </script>
-
-
-
-</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>${article.bUserId}</strong></a>님 환영합니다.
-									<a>로그인</a><a>마이페이지</a>
-								</header>
-
-							<!-- Content -->
 							
 							<!-- 제목 -->
 										
@@ -281,11 +261,11 @@ $(document).ready(function() {
 									<div class = "col-2"></div>
 									<div class="col-8">
 									<hr style="margin: 0;">
-										<span style = "float:left;">
+										<!-- <span style = "float:left;">
 										<a href="#">
 											<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg">
 										</a>
-										</span>
+										</span> -->
 										
 										<span style = "float: left;">
 											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f; padding-top: 0;padding-bottom: 5em;" >${article.bUserId}</a>
@@ -294,8 +274,8 @@ $(document).ready(function() {
 									<span style="float:right;">${article.bPostdate}</span>
 									<br>
 									<!-- 첨부파일 -->
-									<span style="float:right;"><a href = "#" id = "download"><i class = "fas fa-download"></i>첨부파일</a></span>&nbsp;
-									<br>
+									<!-- <span style="float:right;"><a href = "#" id = "download"><i class = "fas fa-download"></i>첨부파일</a></span>&nbsp;
+									<br> -->
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>

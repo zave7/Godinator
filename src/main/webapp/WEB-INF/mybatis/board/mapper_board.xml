@@ -55,20 +55,14 @@
 		            	<if test="key == 'board_subject'">
 		            		and board_subject like '%'||#{word}||'%'
 		            	</if>
-		            	<if test="key != 'board_subject'">
-		            		and ${key} = #{word}
-		            	</if>
+		            	
 		            	<!-- 작성자로 검색 -->
 		            	<if test="key == 'b_user_id'">
 		            		and b_user_id like '%'||#{word}||'%'
 		            	</if>
-		            	<if test="key != 'b_user_id'">
-		            		and ${key} = #{word}
-		            	</if>
+		            
 		            	<!-- 학교 이름으로 검색하기 -->
-		            	<!-- <if test="key == 'b_school_name'">
-		            		and b_school_name like '%'||#{word}||'%'
-		            	</if>
+		            	<!-- 
 		            	<if test="key != 'b_school_name'">
 		            		and ${key} = #{word}
 		            	</if> -->
@@ -78,7 +72,44 @@
 		        where rownum &lt;= #{end}
 		    )c
 		where c.r &gt; #{start}
+		 <if test="word != null and word != ''" >
+			<if test="key == 'b_school_name'">
+           		and b_school_name like '%'||#{word}||'%'
+           	</if>
+		 </if>
 	</select> 
+	
+	
+	
+	<!-- hot 게시물 에 뿌려주기 -->
+	<select id="listHotArticle" parameterType="map" resultType="bbsDto">
+	select c.board_no boardNo, c.board_category boardCategory,c.b_user_id bUserId, c.board_subject boardSubject, c.b_school_name bSchoolName, c.b_view_count bViewCount, 
+    decode(to_char(c.b_postdate ,'yymmdd'),
+                    to_char(sysdate,'yymmdd'), to_char(c.b_postdate,'hh24:mi:ss'),
+                    to_char(c.b_postdate ,'yy.mm.dd')) bPostdate, 
+		    c.region region, c.lc, c.lc*1 + c.b_view_count*0.1 hot, TRUNC(sysdate - to_date(c.b_postdate)) today
+		from
+		    (
+		    select rownum r, total.* 
+		    from
+		        (
+		        select b.board_no, b.board_category, b.b_user_id, b.board_subject, b.b_school_name, b.b_view_count, b.b_postdate, b.region, l.lc
+					from board b, (
+					                    select count(*) lc, board_no
+					                    from love
+					                    where like_unlike = 'L'
+					                    group by board_no
+					                    ) l
+					where b.board_no = l.board_no
+
+		            ) total
+		        where rownum &lt;= #{end}
+		    )c
+		where c.r &gt; #{start}
+        	and c.lc*1 + c.b_view_count*0.1 &gt;= 5
+        	and TRUNC(sysdate - to_date(c.b_postdate)) = 0
+        	order by hot desc, bpostdate
+	</select>
 	
 	<!-- 게시물 보기 -->
 	<select id = "viewArticle" parameterType="int" resultType="bbsDto">
@@ -164,6 +195,7 @@
 	<update id = "updateLike" parameterType="loveDto">
 		update love set 
 			like_unlike = #{likeUnlike}
+			where user_id = #{userId}
 	</update>
 	
 	<!-- 좋아요 싫어요 전체 숫자 -->

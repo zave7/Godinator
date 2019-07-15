@@ -61,4 +61,7 @@ public interface BoardDao {
 	//싫어요 전체 개수
 	int totalHate(int boardNo);
 	
+	//핫게시물
+	List<BbsDto> listHotArticle(Map<String, String> parameter);
+	
 }
