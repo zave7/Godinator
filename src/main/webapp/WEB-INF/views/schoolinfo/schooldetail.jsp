@@ -8,6 +8,8 @@
 <c:set var="schoolName" value="${requestScope.schoolName}"/>
 <c:set var="cateAvg" value="${requestScope.cateAvg}"/>
 <c:set var="schoolType" value="${requestScope.schoolType}"/>
+<c:set var="latitude" value="${requestScope.latitude}"/>
+<c:set var="longitude" value="${requestScope.longitude}"/>
 	<!-- Content -->
 	<section>
 		<header class="main">
@@ -143,11 +145,11 @@
 	        var data = google.visualization.arrayToDataTable([
 	        	  ['학교 구분', '${schoolType} 평균', '${schoolName}'],
 		          ['시설', ${cateAvg.EVAL1AVG}, ${schoolDto.eval1Avg}],
-		          ['학업 분위기', ${cateAvg.EVAL1AVG}, ${schoolDto.eval2Avg}],
-		          ['교직원(교육, 인성)', ${cateAvg.EVAL1AVG}, ${schoolDto.eval3Avg}],
-		          ['진로 교육', ${cateAvg.EVAL1AVG}, ${schoolDto.eval4Avg}],
-		          ['?', ${cateAvg.EVAL1AVG}, ${schoolDto.eval5Avg}],
-		          ['취업률/진학률', ${cateAvg.EVAL1AVG}, ${schoolDto.eval6Avg}]
+		          ['학업 분위기', ${cateAvg.EVAL2AVG}, ${schoolDto.eval2Avg}],
+		          ['교직원(교육, 인성)', ${cateAvg.EVAL3AVG}, ${schoolDto.eval3Avg}],
+		          ['진로 교육', ${cateAvg.EVAL4AVG}, ${schoolDto.eval4Avg}],
+		          ['취업률/진학률', ${cateAvg.EVAL5AVG}, ${schoolDto.eval5Avg}],
+		          ['동아리 활성화', ${cateAvg.EVAL6AVG}, ${schoolDto.eval6Avg}]
 	        ]);
 	
 	        var options = {
@@ -333,14 +335,14 @@
 				console.log("지도 함수 호출");
 				var mapContainer = document.getElementById('schooldetail-map'), // 지도를 표시할 div 
 				mapOption = { 
-				    center: new kakao.maps.LatLng(${schoolDto.latitude}, ${schoolDto.longitude}), // 지도의 중심좌표
+				    center: new kakao.maps.LatLng('${latitude}', '${longitude}'), // 지도의 중심좌표
 				    level: 3 // 지도의 확대 레벨
 				};
 				
 				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 				
 				//마커가 표시될 위치입니다 
-				var markerPosition  = new kakao.maps.LatLng(${schoolDto.latitude}, ${schoolDto.longitude}); 
+				var markerPosition  = new kakao.maps.LatLng('${latitude}', '${longitude}');
 				
 				//마커를 생성합니다
 				var marker = new kakao.maps.Marker({

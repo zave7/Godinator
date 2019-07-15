@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- 바로 위에는 section 끝 -->	
+<!-- 바로 �에section -->	
 	</div>
 </div>
 
@@ -8,7 +8,7 @@
 <div id="sidebar">
 	<div class="inner">
 		<section id="mainPage" class="alt">
-			<span>고디네이터</span>
+			<span>고디�이/span>
 		</section>
 		
 		<nav id="menu">
@@ -16,35 +16,36 @@
 			<ul>
 				<c:if test="${not empty userInfo}">
 					<li>
-					<span class="opener">마이페이지</span>
+					<span class="opener">마이�이지</span>
 					<ul>
-						<li><a href="${root}/jinro/geomsa">진로검사</a></li>
-						<li><a href="${root}/">모교 평가</a></li>
+						<li><a href="${root}/jinro/geomsa">진로검/a></li>
+						<li><a href="${root}/schoolinfo/hrating">고등�교 모교 ��</a></li>
+						<li><a href="${root}/schoolinfo/urating">��교 모교 ��</a></li>
 					</ul>
 					</li>
 				</c:if>
 				<li>
-					<span class="opener">학교 정보</span>
+					<span class="opener">�교 �보</span>
 					<ul>
-						<li><a href="${root}/searchschool/viewsearch">학교 검색</a></li>
-						<li><a href="${root}/schoolnews/viewnews">학교 뉴스 검색</a></li>
+						<li><a href="${root}/searchschool/viewsearch">�교 검/a></li>
+						<li><a href="${root}/schoolnews/viewnews">�교 �스 검/a></li>
 					</ul>
 				</li>
 				<li>
-					<span class="opener" id = "community">커뮤니티</span>
+					<span class="opener" id = "community">커�티</span>
 					<ul id ="communityMenu">
-						<li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">홍보게시판</a></li>
-						<li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등학교 게시판</a></li>
-						<li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">대학교 게시판</a></li>
-						<li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">핫 게시물</a></li>
+						<li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">�보게시/a></li>
+						<li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등�교 게시/a></li>
+						<li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">��교 게시/a></li>
+						<li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">게시�/a></li>
 					</ul>
 				</li>
 				<li>
-					<span class="opener">멘토링</span>
+					<span class="opener">멘토�/span>
 					<ul>
 						<li><a href="${root}/mentor/findmentor">멘토 찾기</a></li>
-						<li><a href="${root}/msg/msgbox">쪽지함</a></li>
-						<li><a href="${root}/resume/resumelist">자소서목록</a></li>
+						<li><a href="${root}/msg/msgbox">쪽�/a></li>
+						<li><a href="${root}/resume/resumelist">�소�목�/a></li>
 						<li><a href="${root}/resume/editlist">첨삭목록</a></li>
 					</ul>
 				</li>
@@ -59,7 +60,7 @@
 			<ul class="contact">
 				<li class="icon solid fa-envelope"><a href="#">claire97j@naver.com</a></li>
 				<li class="icon solid fa-phone">(000) 000-0000</li>
-				<li class="icon solid fa-home">서울시 구로구 디지털로 34길 43 <br>코오롱사이언스벨리 1차 4층
+				<li class="icon solid fa-home">�울구로굔�로 34�43 <br>코오롱사�언�벨�1�4�
 				</li>
 			</ul>
 		</section>

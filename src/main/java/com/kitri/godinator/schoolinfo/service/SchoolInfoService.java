@@ -2,6 +2,8 @@ package com.kitri.godinator.schoolinfo.service;
 
 import java.util.Map;
 
+import org.springframework.ui.Model;
+
 public interface SchoolInfoService {
 
 	public String getEvals(Map<String, Object> parameter);
@@ -14,4 +16,8 @@ public interface SchoolInfoService {
 
 	public void insertAndUpdateHEvalByUser(Map<String, String> parameter);
 
+	public Map<String, String> getUserEvalLog(String userId, Model model, String schoolCate);
+
+	public void getUserEval(String userId, Model model, String schoolCate);
+	
 }

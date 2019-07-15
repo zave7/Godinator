@@ -91,7 +91,7 @@
 					var nextGoogle = $("#nextGoogle").val();
 					var nextNaver = $("#nextNaver").val();
 					var schoolCate = $("#schoolCate").val();
-					var param = JSON.stringify({"keyWord" : schoolName, "nextGoogle" : nextGoogle, "nextNaver" : nextNaver, "schoolCate" : schoolCate});
+					var param = JSON.stringify({"keyWord" : schoolName, "nextGoogle" : nextGoogle, "nextNaver" : nextNaver, "schoolCate" : schoolCate, "schoolCode" : $("#schoolCode").val()});
 					$.ajax({
 						url : '${root}/schoolnews/searchnews',
 						type : 'POST',

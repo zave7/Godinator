@@ -1,4 +1,4 @@
-package com.kitri.godinator.schoolinfo.controller;
+﻿package com.kitri.godinator.schoolinfo.controller;
 
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class SchoolInfoController {
 	
 	@RequestMapping(value = "/schooldetail", method = RequestMethod.GET)
 	public String viewSchoolDetail(@RequestParam Map<String, String> parameter, Model model, HttpSession httpSession) {
-		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("registerId");
 		if(memberDto != null) {
 			System.out.println("memberDto.getUserId() : "+memberDto.getUserId());
 			parameter.put("userId", memberDto.getUserId());
@@ -53,21 +53,30 @@ public class SchoolInfoController {
 		Object schoolDto = map.get("schoolDto");
 		String imgUrl = (String)map.get("imgUrl");
 		String shcoolCode = "";
+		String latitude = "";
+		String longitude = "";
 		if(schoolCate != null && "h".equals(schoolCate)) {
 			model.addAttribute("schoolDto", (HSchoolDto)schoolDto);
 			shcoolCode = ((HSchoolDto)schoolDto).getSchoolCode();
+			latitude = ((HSchoolDto)schoolDto).getLatitude();
+			longitude = ((HSchoolDto)schoolDto).getLongitude();
 		} else if(schoolCate != null && "u".equals(schoolCate)) {
 			model.addAttribute("schoolDto", (USchoolDto)schoolDto);
 			shcoolCode = ((USchoolDto)schoolDto).getCode();
+			latitude = ((HSchoolDto)schoolDto).getLatitude();
+			longitude = ((HSchoolDto)schoolDto).getLongitude();
 		}
 		model.addAttribute("imgUrl", imgUrl);
 		model.addAttribute("schoolCate", schoolCate);
 		model.addAttribute("schoolCode", shcoolCode);
 		model.addAttribute("cateAvg", map.get("cateAvg"));
-//		TODO 기본적인 비즈니스 로직은 서비스에서 / 처음 호출 : 학교정보, 지도뷰, 통계 이후 호출 : 장단점  
+		model.addAttribute("latitude", latitude);
+		model.addAttribute("longitude", longitude);
+//		기본적인 비즈니스 로직은 서비스에서 / 처음 호출 : 학교정보, 지도뷰, 통계 이후 호출 : 장단점  
 		return "schoolinfo/schooldetail";
 	}
 	
+
 	@RequestMapping(value = "/schooleval", method = RequestMethod.GET)
 	@ResponseBody
 	public String getEvals(@RequestParam Map<String, Object> parameter) {
@@ -78,6 +87,7 @@ public class SchoolInfoController {
 	}
 	
 	
+	// 장단점
 	@RequestMapping(value = "/poscon", method = RequestMethod.PATCH)
 	@ResponseBody
 	public String getUpDownByUser(@RequestBody Map<String, Object> parameter, HttpSession session, HttpServletRequest request) {
@@ -129,7 +139,7 @@ public class SchoolInfoController {
 				return "redirect:main";
 			}
 		} else {
-			return "redirect:main";
+			return "redirect:view/user/main";
 		}
 	}
 	// 회원가입 완료
@@ -139,49 +149,75 @@ public class SchoolInfoController {
 	}
 	// 고등학교 모교 평가 페이지 이동
 	@RequestMapping(value = "/hrating", method = RequestMethod.GET)
-	public String viewHSchoolRating(HttpSession session) {
+	public String viewHSchoolRating(HttpSession session, Model model) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if(memberDto != null) {
-			//TODO 로그인 한 경우에 해당하는 고등학교 평가 기록을 가져온다
-			return "schoolinfo/hschoolrating";
-		} else {
-			return "redirect:main";
+		String userId = "";
+		if(memberDto != null)
+			userId = memberDto.getUserId();
+		else {
+			userId = (String) session.getAttribute("registerId");
+			model.addAttribute("joinCheck", "true");
 		}
+		if("".equals(userId)) 
+			return "redirect:board/main";
+		//로그인 한 경우에 해당하는 고등학교 평가 기록을 가져온다
+		Map<String, String> result = schoolInfoService.getUserEvalLog(userId, model, "h");
+		if(result != null) {
+			model.addAttribute("record", result);
+			schoolInfoService.getUserEval(userId, model, "h");
+			System.out.println("고등학교 기록 : "+result);
+		}
+
+		return "schoolinfo/hschoolrating";
 	}
 	// 고등학교 모교 평가 페이지 완료
 	@RequestMapping(value = "/hrating", method = RequestMethod.POST)
 	public String hSchoolRatingSubmit(HttpSession session, @RequestParam Map<String, String> parameter) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if(memberDto != null) {
-			parameter.put("userId", memberDto.getUserId());
-			schoolInfoService.insertAndUpdateHEvalByUser(parameter);
-			return "schoolinfo/uschoolrating";
-		} else {
-			return "schoolinfo/loginsession";
-		}
+		String userId = "";
+		if(memberDto != null)
+			userId = memberDto.getUserId();
+		else 
+			userId = (String) session.getAttribute("registerId");
+		parameter.put("userId", userId);
+		schoolInfoService.insertAndUpdateHEvalByUser(parameter);
+		return "schoolinfo/uschoolrating";
 	}
 	// 대학교 모교 평가 페이지 이동
 	@RequestMapping(value = "/urating", method = RequestMethod.GET)
-	public String viewUSchoolRating(HttpSession session) { 
+	public String viewUSchoolRating(HttpSession session, Model model) { 
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if(memberDto != null) {
-			//TODO 로그인 한 경우에 해당하는 대학교 평가 기록을 가져온다
-			return "schoolinfo/uschoolrating";
-		} else {
-			return "redirect:main";
+		String userId = "";
+		if(memberDto != null)
+			userId = memberDto.getUserId();
+		else {
+			userId = (String) session.getAttribute("registerId");
+			model.addAttribute("joinCheck", "true");
 		}
+		System.out.println("\"\".equals(userId) : "+"".equals(userId));
+		if("".equals(userId)) 
+			return "redirect:board/main";
+		//로그인 한 경우에 해당하는 대학교 평가 기록을 가져온다
+		Map<String, String> result = schoolInfoService.getUserEvalLog(userId, model, "u");
+		if(result != null) {
+			model.addAttribute("record", result);
+			schoolInfoService.getUserEval(userId, model, "u");
+			System.out.println("대학교 기록 : "+result);
+		}
+		return "schoolinfo/uschoolrating";
 	}
 	// 대학교 모교 평가 페이지 완료
 	@RequestMapping(value = "/urating", method = RequestMethod.POST)
 	public String USchoolRatingSubmit(HttpSession session, @RequestParam Map<String, String> parameter) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if(memberDto != null) {
-			parameter.put("userId", memberDto.getUserId());
-			schoolInfoService.insertAndUpdateHEvalByUser(parameter);
-			return "user/registerok";
-		} else {
-			return "schoolinfo/loginsession";
-		}
+		String userId = "";
+		if(memberDto != null)
+			userId = memberDto.getUserId();
+		else 
+			userId = (String) session.getAttribute("registerId");
+		parameter.put("userId", userId);
+		schoolInfoService.insertAndUpdateHEvalByUser(parameter);
+		return "user/registerok";
 	}
 	
 	//회원가입

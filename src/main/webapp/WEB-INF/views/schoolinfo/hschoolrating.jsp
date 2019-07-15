@@ -1,17 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../template/header.jsp" %>
-
+<c:set var="record" value="${requestScope.record}"/>
+<c:set var="evalA" value="${requestScope.evalA}"/>
+<c:set var="evalD" value="${requestScope.evalD}"/>
+<c:set var="schoolCode" value="${requestScope.schoolCode}"/>
+<c:set var="schoolName" value="${requestScope.schoolName}"/>
+<c:set var="joinCheck" value="${requestScope.joinCheck}"/>
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1 class="mogyoH1R">고등학교 평가</h1>
+				<label style="font-size: 3em; text-align: center;">고등학교 평가</label>
 			</header>
 			<div class="row">
 				<div class="col-10 col-12-small">
 				</div>
 				<div class="col-2 col-12-small">
+					<c:if test="${schoolCode == '' || schoolCode eq null}">
 					<h3 class="mogyoH2R">모교 검색</h3>
+					</c:if>
 				</div>
 			</div>
 			<div class="row">
@@ -20,12 +27,17 @@
 				<div class="col-2 col-12-small">
 				</div>
 				<div class="col-3 col-12-small">
-				<input type="text" id="searchSchoolName"/>
-				<div id="schoolScrollDiv"><ul id="schoolScrollUl"></ul></div>
+				<c:if test="${schoolCode == '' || schoolCode eq null}">
+					<input type="text" id="searchSchoolName"/>
+					<div id="schoolScrollDiv"><ul id="schoolScrollUl"></ul></div>
+				</c:if>
+				<c:if test="${schoolCode != '' || schoolCode ne null}">
+					<label style="font-size: 1em; text-align: right;">${schoolName}</label>
+				</c:if>
 				</div>
 			</div>
 			<!-- Content -->
-				<h2 id="content">항목 평가</h2>
+				<label style="font-size: 2em;">항목 평가</label>
 				<div class="row">
 					<div class="col-6 col-12-small">
 						<span>시설 : </span><div class="starRev" id="facilities">
@@ -117,10 +129,11 @@
 					</div>
 				</div>
 				<hr>
-				<h2 id="content">학교 장단점</h2>
+				<br>
+				<label style="font-size: 2em;">학교 장단점</label>
 				<div class="row">
 				<div class="col-2 col-12-small">
-					<h3 class="mogyoH2L">장점</h3>
+					<label style="font-size: 1em;">장점</label>
 				</div>
 				<div class="col-10 col-12-small">
 				</div>
@@ -132,7 +145,7 @@
 				</div>
 				<div class="row">
 				<div class="col-2 col-12-small">
-					<h3 class="mogyoH2L">단점</h3>
+					<label style="font-size: 1em;">단점</label>
 				</div>
 				<div class="col-10 col-12-small">
 				</div>
@@ -158,8 +171,15 @@
 		<script>
 			$(document).ready(function(e){
 				
-				var schoolCate = "h";
+				var recordCheck = '${empty record}';
+				var evalACheck = '${empty evalA}';
+				var evalDCheck = '${empty evalD}';
+				var joinCheck = '${joinCheck}';
 				var schoolCode;
+				if("${schoolCode != '' || schoolCode ne null}" == "true") {
+					schoolCode = "${schoolCode}";
+				}
+				var schoolCate = "h";
 				var clickSchoolName;
 				
 			    $('.search-panel .dropdown-menu').find('a').click(function(e) {
@@ -169,12 +189,6 @@
 					$('.search-panel span#search_concept').text(concept);
 					$('.input-group #search_param').val(param);
 				});
-			    
-			    //건너뛰기
-			    $("div.submit-school-evaluation a#cancel").click(function() {
-			    	$(location).attr("href", "${root}/schoolinfo/urating");
-			    	return false;
-			    });
 			    
 			    //확인
 				$("div.submit-school-evaluation a#submit").click(function() {
@@ -208,11 +222,12 @@
 							$clubVital = $($clubVital).last().text();
 							$study = $($study).last().text();
 							console.log($course);
+							
 							var facilities = $('<input type="hidden" value="'+$facilities+'" name="facilities">');
 							var teachers = $('<input type="hidden" value="'+$teachers+'" name="teachers">');
 							var course = $('<input type="hidden" value="'+$course+'" name="course">');
-							var erate = $('<input type="hidden" value="'+$erate+'" name="course">');
-							var clubVital = $('<input type="hidden" value="'+$clubVital+'" name="course">');
+							var erate = $('<input type="hidden" value="'+$erate+'" name="erate">');
+							var clubVital = $('<input type="hidden" value="'+$clubVital+'" name="clubVital">');
 							var study = $('<input type="hidden" value="'+$study+'" name="study">');
 							var pschoolCate = $('<input type="hidden" value="'+schoolCate+'" name="schoolCate">');
 							var pschoolCode = $('<input type="hidden" value="'+schoolCode+'" name="schoolCode">');
@@ -234,7 +249,6 @@
 						alert("항목을 평가해주세요");
 						return false;
 					}
-					alert("fdsf");
 					
 				});
 				
@@ -288,10 +302,79 @@
 				});
 				
 				$('div.starRev span').click(function(){
-				  $(this).parent().children('span').removeClass('on');
-				  $(this).addClass('on').prevAll('span').addClass('on');
-				  return false;
+					if(recordCheck == "false") {
+						alert("이미 평가했습니다");
+						return false;
+					}
+					$(this).parent().children('span').removeClass('on');
+				  	$(this).addClass('on').prevAll('span').addClass('on');
+				  	return false;
 				});
+				
+				if(recordCheck == "false") {
+					
+					var facilities = Number('${record.H_EVAL1}');
+					var teachers = Number('${record.H_EVAL2}');
+					var course = Number('${record.H_EVAL3}');
+					var erate = Number('${record.H_EVAL4}');
+					var clubVital = Number('${record.H_EVAL5}');
+					var study = Number('${record.H_EVAL6}');
+					var $facilities = $("#facilities").find("span");
+					var $teachers = $("#teachers").find("span");
+					var $course = $("#course").find("span");
+					var $erate = $("#erate").find("span");
+					var $clubVital = $("#clubVital").find("span");
+					var $study = $("#study").find("span");
+					console.log(facilities);
+					console.log(teachers);
+					console.log(course);
+					console.log(erate);
+					console.log(clubVital);
+					console.log(study);
+					for(var i=0; i<10; i++) {
+						if(i < facilities) {
+							$($facilities[i]).addClass("on");
+							console.log($($facilities[i]).attr("class"));
+						}
+						if(i < teachers)
+							$($teachers[i]).addClass("on");
+						
+						if(i < course)
+							$($course[i]).addClass("on");
+						
+						if(i < erate)
+							$($erate[i]).addClass("on");
+						
+						if(i < clubVital)
+							$($clubVital[i]).addClass("on");
+						
+						if(i < study)
+							$($study[i]).addClass("on");
+					}
+				}
+				if(evalACheck == "false") {
+					$("#eval_a").val("${evalA}").attr("readonly", "readonly");
+				}
+				if(evalDCheck == "false") {
+					$("#eval_d").val("${evalD}").attr("readonly", "readonly");
+				}
+				if(joinCheck != "true") {
+			    	$("a#cancel").text("취소");
+		    	}
+				if(recordCheck == "false" && evalACheck == "false" && evalDCheck == "false") {
+					$("a#submit").remove();
+					$("a#cancel").remove();
+				}
+				//건너뛰기 & 취소
+			    $("div.submit-school-evaluation a#cancel").click(function() {
+			    	if(joinCheck != "true") {
+			    		$(location).attr("href", "${root}/board/main");
+				    	return false;
+			    	} else {
+				    	$(location).attr("href", "${root}/schoolinfo/urating");
+				    	return false;
+			    	}
+			    });
 			});
 		</script>
 <%@ include file="../template/sidebar.jsp" %>
