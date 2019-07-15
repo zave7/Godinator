@@ -153,4 +153,12 @@
   FROM edit
   WHERE mentor_id = #{userId} and state = '1' and pseq = 0
   </select>
+
+  <select id="selStayCnt" parameterType="map" resultType="int">
+  SELECT COUNT(edit_no)
+  FROM edit
+  WHERE mentor_id = #{userId} and state = '0' and pseq = 0
+  </select>
+  
+  
   </mapper>

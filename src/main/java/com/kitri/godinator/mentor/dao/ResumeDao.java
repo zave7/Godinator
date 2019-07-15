@@ -18,5 +18,6 @@ public interface ResumeDao {
 	List<EditDto> selEditList(Map<String, String> parameter);
 	int selEditCnt(Map<String, String> parameter);
 	void updateState(int pseq);
+	int selStayCnt(Map<String, String> parameter);
 
 }

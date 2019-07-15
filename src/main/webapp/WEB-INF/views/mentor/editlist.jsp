@@ -107,7 +107,7 @@ $(function(){
 					</select>
 				</div>
 				<div class="col-8" style="float:right;">
-					<label style="float: right; vertical-align: center;">첨삭완료 : ${editcnt}건</label>
+					<label style="float: right; vertical-align: center;">첨삭완료 : ${editcnt}건  |  첨삭대기 : ${stayCnt}건</label>
 				</div>
 			</div>
 			<%-- 자소서&첨삭 목록 --%>

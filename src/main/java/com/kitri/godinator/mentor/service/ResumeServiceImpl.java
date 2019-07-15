@@ -84,6 +84,12 @@ public class ResumeServiceImpl implements ResumeService {
 		return sqlSession.getMapper(ResumeDao.class).selEditCnt(parameter);
 	}
 	
+	// #### 첨삭대기중인 글 갯수 ####
+	@Override
+	public int getStayCnt(Map<String, String> parameter) {
+		return sqlSession.getMapper(ResumeDao.class).selStayCnt(parameter);
+	}
+	
 	// #### 페이징 처리 ####
 	@Override
 	public MentorPageNaviDto getPageNavi(Map<String, String> parameter) {
@@ -106,5 +112,7 @@ public class ResumeServiceImpl implements ResumeService {
 		editDto.setBoardContent(editDto.getBoardContent().replace("\n", "<br>"));
 		return editDto;
 	}
+
+	
 
 }

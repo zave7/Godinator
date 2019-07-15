@@ -17,5 +17,6 @@ public interface ResumeService {
 	int getEditCnt(Map<String, String> parameter);
 	int saveEdit(EditDto editDto);
 	EditDto getEdit(int pseq);
+	int getStayCnt(Map<String, String> parameter);
 
 }

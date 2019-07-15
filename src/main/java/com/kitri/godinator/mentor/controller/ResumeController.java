@@ -138,7 +138,9 @@ public class ResumeController {
 			pageNavi.makeNavigator();
 			
 			int editcnt = resumeService.getEditCnt(parameter);
+			int stayCnt = resumeService.getStayCnt(parameter);
 			
+			model.addAttribute("stayCnt", stayCnt);
 			model.addAttribute("editcnt", editcnt);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("resumelist", list);
