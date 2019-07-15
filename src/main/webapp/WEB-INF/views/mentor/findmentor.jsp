@@ -122,11 +122,21 @@ $(function(){
 	
 	<%-- 검색 --%>
 	$('#srchBtn').click(function(){
-		getMentors('');
+		if($('#schoolCate1Se3').val() == '0'){
+			alert('검색 조건을 선택하세요.');
+		} else {
+			getMentors('');
+		}
+		return false;
 	});
 	$('#searchMentor').keypress(function(e) {
 		if (e.which == 13) {
-			getMentors('');
+			if($('#schoolCate1Se3').val() == '0'){
+				alert('검색 조건을 선택하세요.');
+			} else {
+				getMentors('');
+			}
+			return false;
 		}
 	});
 	
