@@ -57,7 +57,7 @@
 					newsContents += '	<div class="news">';
 					newsContents += '		<div class="row">';
 					newsContents += '			<div class="col-3 col-3-small">';
-					newsContents += '				<span class="image main"><img src="'+data[i].imgUrl+'" alt="" /></span>';
+					newsContents += '				<span class="image main"><img class="schoolNews" src="'+data[i].imgUrl+'" alt="" /></span>';
 					newsContents += '			</div>';
 					newsContents += '			<div class="col-9 col-9-small">';
 					newsContents += '				<p class="newsContent subject"><a href="'+data[i].url+'">'+data[i].subject+'</a></p>';

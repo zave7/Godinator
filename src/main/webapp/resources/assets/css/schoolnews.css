@@ -46,6 +46,6 @@ ul#schoolScrollUl>li:hover {
 	font-weight: bold;
 }
 
-img {
+img.schoolNews {
 	width: 60% !important;
 }
