@@ -177,4 +177,16 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 		result += sqlSession.getMapper(SchoolInfoDao.class).insertEvalByUser(parameter); 
 		return result;
 	}
+
+	@Override
+	public void insertAndUpdateHEvalByUser(Map<String, String> parameter) {
+		String schoolCate = parameter.get("schoolCate");
+		if("h".equals(schoolCate)) {
+			sqlSession.getMapper(SchoolInfoDao.class).insertHEvalByUser(parameter);
+			sqlSession.getMapper(SchoolInfoDao.class).updateHEvalAvgByUser(parameter);
+		} else if("u".equals(schoolCate)) {
+			sqlSession.getMapper(SchoolInfoDao.class).insertUEvalByUser(parameter);
+			sqlSession.getMapper(SchoolInfoDao.class).updateUEvalAvgByUser(parameter);
+		}
+	}
 }

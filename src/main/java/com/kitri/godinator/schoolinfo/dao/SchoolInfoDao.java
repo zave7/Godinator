@@ -18,4 +18,8 @@ public interface SchoolInfoDao {
 	public Map<String, Integer> getUEvalCateAvg(Map<String, String> parameter);
 	public int insertEvalByUser(Map<String, String> parameter);
 	public int updateEvalAvgByUser(Map<String, String> parameter);
+	public void insertHEvalByUser(Map<String, String> parameter);
+	public void updateHEvalAvgByUser(Map<String, String> parameter);
+	public void insertUEvalByUser(Map<String, String> parameter);
+	public void updateUEvalAvgByUser(Map<String, String> parameter);
 }

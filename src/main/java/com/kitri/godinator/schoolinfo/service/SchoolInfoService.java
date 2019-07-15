@@ -12,4 +12,6 @@ public interface SchoolInfoService {
 
 	public int insertEvalByUser(Map<String, String> parameter);
 
+	public void insertAndUpdateHEvalByUser(Map<String, String> parameter);
+
 }
