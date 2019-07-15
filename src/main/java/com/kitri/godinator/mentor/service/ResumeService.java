@@ -10,10 +10,13 @@ public interface ResumeService {
 
 	String srchSchool(Map<String, String> srcCnd);
 	int saveResume(EditDto editDto);
-	MentorPageNavi getPageNavi(Map<String, String> parameter);
+	MentorPageNaviDto getPageNavi(Map<String, String> parameter);
 	List<EditDto> getResumeList(Map<String, String> parameter);
-	EditDto getResume(Map<String, String> parameter);
+	EditDto getResume(int seq);
 	List<EditDto> getEditList(Map<String, String> parameter);
 	int getEditCnt(Map<String, String> parameter);
+	int saveEdit(EditDto editDto);
+	EditDto getEdit(int pseq);
+	int getStayCnt(Map<String, String> parameter);
 
 }

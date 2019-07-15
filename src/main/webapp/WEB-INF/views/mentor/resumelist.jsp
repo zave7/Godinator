@@ -31,14 +31,14 @@ $(function(){
 	
 	<%-- select 이벤트 --%>
 	$('#stateSel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val($(this).val());
 		$('#schoolCate1').val('${schoolCate1}');
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
 		return false;
 	});
 	$('#schoolCate1Sel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val('${state}');
 		$('#schoolCate1').val($(this).val());
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/resumelist").submit();
@@ -48,8 +48,9 @@ $(function(){
 	<%-- 자소서 내용보기 --%>
 	$('.resumeBtn').click(function(){
 		var seq = $(this).attr('data-seq');
-		var pseq = $(this).attr('data-pseq');
-		location.href="${root}/resume/viewresume?seq=" + seq + "&pseq=" + pseq;
+		var state = $('#state').val();
+		var schoolCate1 = $('#schoolCate1').val();
+		location.href="${root}/resume/viewresume?seq=" + seq + "&state=" + state + "&schoolCate1=" + schoolCate1;
 		return false;
 	});
 	
@@ -115,7 +116,7 @@ $(function(){
 							<th></th>
 							<th width="10%" style="text-align: center;">학교명</th>
 							<th style="text-align: center;">제목</th>
-							<th style="text-align: center;">ID</th>
+							<th style="text-align: center;">멘토ID</th>
 							<th style="text-align: center;">작성일</th>
 						</tr>
 					</thead>
@@ -126,7 +127,7 @@ $(function(){
 							<td>${(resume.pseq == 0) ? ((resume.state == '0') ? '첨삭대기' : '✔') : '↳'}</td>
 							<td>${resume.bSchoolName}</td>
 							<td style="text-align: left;">${resume.boardSubject}</td>
-							<td>${resume.bUserId}</td>
+							<td>${resume.mentorId}</td>
 							<td>${resume.bPostdate}</td>
 						</tr>
 							</c:forEach>

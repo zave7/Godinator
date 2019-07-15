@@ -34,25 +34,26 @@ $(function(){
 	
 	<%-- select 이벤트 --%>
 	$('#stateSel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val($(this).val());
 		$('#schoolCate1').val('${schoolCate1}');
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/editlist").submit();
 		return false;
 	});
 	$('#schoolCate1Sel').change(function(){
-		$('#pg').val('${pg}');
+		$('#pg').val('');
 		$('#state').val('${state}');
 		$('#schoolCate1').val($(this).val());
 		$('#list').attr("method", "GET").attr("action", "${root}/resume/editlist").submit();
 		return false;
 	});
-	
+
 	<%-- 자소서 내용보기 --%>
 	$('.resumeBtn').click(function(){
 		var seq = $(this).attr('data-seq');
-		var pseq = $(this).attr('data-pseq');
-		location.href="${root}/resume/viewedit?seq=" + seq + "&pseq=" + pseq;
+		var state = $('#state').val();
+		var schoolCate1 = $('#schoolCate1').val();
+		location.href="${root}/resume/viewedit?seq=" + seq + "&state=" + state + "&schoolCate1=" + schoolCate1;
 		return false;
 	});
 	
@@ -106,7 +107,7 @@ $(function(){
 					</select>
 				</div>
 				<div class="col-8" style="float:right;">
-					<label style="float: right; vertical-align: center;">첨삭완료 : ${editcnt}건</label>
+					<label style="float: right; vertical-align: center;">첨삭완료 : ${editcnt}건  |  첨삭대기 : ${stayCnt}건</label>
 				</div>
 			</div>
 			<%-- 자소서&첨삭 목록 --%>
@@ -122,7 +123,7 @@ $(function(){
 							<th></th>
 							<th style="text-align: center;">학교명</th>
 							<th style="text-align: center;">제목</th>
-							<th style="text-align: center;">ID</th>
+							<th style="text-align: center;">멘티ID</th>
 							<th style="text-align: center;">작성일</th>
 						</tr>
 					</thead>
@@ -133,7 +134,7 @@ $(function(){
 							<td>${(resume.pseq == 0) ? ((resume.state == '0') ? '첨삭대기' : '✔') : '↳'}</td>
 							<td>${resume.bSchoolName}</td>
 							<td style="text-align: left;">${resume.boardSubject}</td>
-							<td>${resume.bUserId}</td>
+							<td>${resume.menteeId}</td>
 							<td>${resume.bPostdate}</td>
 						</tr>
 							</c:forEach>

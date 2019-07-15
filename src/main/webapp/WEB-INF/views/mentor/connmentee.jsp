@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -42,7 +41,9 @@ $(function(){
 			success: function(response) {
 				if(response != 0) {
 					wsocket.send('ask#!#!#' + mentor);
-					alert('멘토에게 채팅 요청을 전송하였습니다.')
+					alert('멘토에게 채팅 요청을 전송하였습니다.');
+				} else {
+					alser('해당 멘토가 접속을 종료하였습니다.');
 				}
 			}
 		});
@@ -53,7 +54,7 @@ $(function(){
 	<%-- #### function #### --%>
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
-		wsocket = new WebSocket("ws://localhost:80/godinator/connchat");
+		wsocket = new WebSocket("ws://192.168.14.21:80/godinator/connchat");
 		wsocket.onmessage = onMessage;
 		
 	}
@@ -78,8 +79,10 @@ $(function(){
 		if($(this).val() == '1') {
 			$('#hcate2').css('display', '');
 			$('#ucate2').css('display', 'none');
+			$('#ucate2').val('0').attr('selected', 'selected');
 		} else {
 			$('#hcate2').css('display', 'none');
+			$('#hcate2').val('0').attr('selected', 'selected');
 			$('#ucate2').css('display', '');
 		}
 		getOnlineMentors();
@@ -88,24 +91,34 @@ $(function(){
 		getOnlineMentors();
 	});
 	$('#search').click(function(){
-		getOnlineMentors();
+		if($('#searchMentor').val().trim() != '') {
+			getOnlineMentors();
+		}
 		return false;
 	});
 	$('#searchMentor').keypress(function(e) {
-		if (e.which == 13) {
+		if (e.which == 13 && $(this).val().trim() != '') {
 			getOnlineMentors();
 		}
+	});
+	
+	<%-- 새로고침 --%>
+	$('#refresh').click(function(){
+		$('#searchMentor').val('');
+		$('#school-cate3').val('id').attr('selected', 'selected');
+		$('#hcate2').val('0').attr('selected', 'selected');
+		$('#ucate2').val('0').attr('selected', 'selected');
+		$('#school-cate1').val('1').attr('selected', 'selected');
+		$('#school-cate1').trigger("change");
 	});
 	
 	<%-- 접속중 멘토 목록 --%>
 	function getOnlineMentors(){
 		var cate1 = $('#school-cate1 option:selected').val();
 		var cate2 = (cate1 == '1') ? $('#hcate2 option:selected').val() : $('#ucate2 option:selected').val();
-		console.log(cate2);
 		var cate3 = $('#school-cate3 option:selected').val();
 		var search = $('#searchMentor').val().trim();
 		var param =  {'cate1': cate1, 'cate2': cate2, 'cate3': cate3, 'search': search};
-		console.log(param);
 		$.ajax({
 			url: '${root}/chat/list',
 			type: 'GET',
@@ -129,6 +142,7 @@ $(function(){
 					mentorlist += '</tr>';
 				}
 				$('#searchMentor').val('');
+				$('#school-cate3').val('id').attr('selected', 'selected');
 				$('#mentorList').html(mentorlist);
 			}
 		});
@@ -154,7 +168,7 @@ $(function(){
 						<div class="col-2 col-12-small" style="padding-left	: 0; float: right;">
 							<ul class="actions">
 								<li><a href="#" id="search" class="button primary icon"><i class="fas fa-search"></i></a></li>
-								<li><a href="#" class="button"><i class="fas fa-redo"></i></a></li>
+								<li><a href="#" class="button" id="refresh"><i class="fas fa-redo"></i></a></li>
 							</ul>
 						</div>
 						<div class="col-2" style="padding-left: 0.5em; width: 15em; padding-right: 1em; float: right;">

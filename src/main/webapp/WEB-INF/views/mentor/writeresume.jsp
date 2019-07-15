@@ -43,6 +43,7 @@
 	
 </style>
 <script>
+history.forward();
 $(function(){
 	var cate1;
 	var cate2;
@@ -57,6 +58,10 @@ $(function(){
 			$('#ucate2').css('display', '');
 			$('#majorDiv').css('display', '');
 		}
+		$('#schoolName').val('');
+	});
+	$('#hcate2, #ucate2').change(function(){
+		$('#schoolName').val('');
 	});
 	
 	<%-- 학교 검색창 활성화 --%>
@@ -158,7 +163,11 @@ $(function(){
 
 	<%-- #### 취소 #### --%>
 	$('#cancleBtn').click(function(){
-		
+		if(confirm('자소서 작성을 취소하시겠습니까?')) {
+			history.back();
+		} else {
+			return false;
+		}
 	});
 	
 	<%-- #### function #### --%>
@@ -200,7 +209,7 @@ $(function(){
 			
 			<!-- Form -->
 
-			<form method="post" action="#">
+			<form method="post" action="#"  id="mentorForm">
 				<input type="hidden" id="bSchoolName" name="bSchoolName">
 				<input type="hidden" id="bSchoolCode" name="bSchoolCode">
 				<input type="hidden" id="bSchoolCate1" name="bSchoolCate1">

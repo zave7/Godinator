@@ -69,7 +69,6 @@ $(document).ready(function() {
 <link rel="stylesheet" href="${root}/css/schoolnews.css"/>
 <link rel="stylesheet" href="${root}/css/schoolrating.css"/>
 <link rel="stylesheet" href="${root}/css/searchschool.css"/>
-<link rel="stylesheet" href="${root}/css/morris.css"/>
 <link rel="stylesheet" href="${root}/css/login.css"/>
 <link rel="stylesheet" href="${root}/css/register.css"/>
 <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet">

@@ -13,8 +13,11 @@ public interface ResumeDao {
 	int insertEdit(EditDto editDto);
 	List<EditDto> selResumeList(Map<String, String> parameter);
 	int getTotalCount(Map<String, String> parameter);
-	EditDto selResume(Map<String, String> parameter);
+	EditDto selResume(int seq);
+	EditDto selEdit(int pseq);
 	List<EditDto> selEditList(Map<String, String> parameter);
 	int selEditCnt(Map<String, String> parameter);
+	void updateState(int pseq);
+	int selStayCnt(Map<String, String> parameter);
 
 }

@@ -9,7 +9,7 @@
   <select id="selOncate" parameterType="String" resultType="String">
   SELECT cate
   FROM mentor
-  WHERE user_id = #{id} and mentor = 'y'
+  WHERE user_id = #{id} and LOWER(mentor) = 'y'
   </select>
   
   <insert id="insertOnChat" parameterType="onChatDto">
@@ -27,7 +27,7 @@
   	<when test='cate1 == "1"'>
   	SELECT m.user_id userId, h.school_name hSchoolCode, h.school_cate1 hSchoolCate
   	FROM member m, h_school h, onchat c
-  	WHERE m.H_SCHOOL_CODE = h.SCHOOL_CODE and m.user_id = c.user_id and c.oncate = 'h'
+  	WHERE m.H_SCHOOL_CODE = h.SCHOOL_CODE and m.user_id = c.user_id and LOWER(c.oncate) = 'h'
 		<if test='cate2 != "0"'>
   		and m.h_school_cate = #{cate2}
  	 	</if>
@@ -38,7 +38,7 @@
   	<otherwise>
   	SELECT m.user_id userId, u.name uSchoolCode, m.u_school_cate uSchoolCate
   	FROM member m, u_school u, onchat c
-  	WHERE m.u_SCHOOL_CODE = u.CODE and m.user_id = c.user_id and c.oncate = 'u'
+  	WHERE m.u_SCHOOL_CODE = u.CODE and m.user_id = c.user_id and LOWER(c.oncate) = 'u'
   		<if test='cate2 != "0"'>
   		and m.u_school_cate = #{cate2}
  	 	</if>
@@ -50,12 +50,13 @@
   <if test='cate3 == "id"'>
   		and m.user_id like '%'||#{search}||'%'
   </if>
+  ORDER BY m.join_date
   </select>
   
   <select id="checkOnlineMentor" parameterType="String" resultType="int">
   SELECT count(user_id)
   FROM onchat
-  WHERE user_id = #{mentor} and oncate != 'm'
+  WHERE user_id = #{mentor} and LOWER(oncate) != 'm'
   </select>
 
   <select id="checkOnlineUser" parameterType="String" resultType="int">
