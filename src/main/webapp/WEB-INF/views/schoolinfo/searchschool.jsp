@@ -9,13 +9,13 @@
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1><span id="searchschooltitle">학교 검색</span></h1>
+				<label style="font-size: 3em; text-align: center;">학교 검색</label>
 			</header>
 			<hr class="major" />
 
 			<div class="row search-condition">
 				<div class="col-2 col-12-small">
-					<label>학교 sss구분</label>
+					<label>학교 구분</label>
 					<select name="shcoolCate" id="shcoolCate">
 						<option value="h" selected="selected">고등학교</option>
 						<option value="u">대학교</option>
@@ -131,7 +131,7 @@
 						<div class="col-3 col-12-small recomSchool">
 							<p class="recomSchoolName" data-code="${hSchool.schoolCode}" data-cate="h"><span>${hSchool.schoolName}</span></p>
 							<br>
-							<p><span class="juris">${hSchool.schoolCate2}</span>&#9475;<span class="estab">${hSchool.estType}</span></p>
+							<p class="searchSchoolType"><span class="juris">${hSchool.schoolCate2}</span>&#9475;<span class="estab">${hSchool.estType}</span></p>
 							<br>
 								<p class="url" data-url="${hSchool.homePage}">
 									<c:choose>
@@ -152,9 +152,9 @@
 				<div class="row">
 					<c:forEach var="uSchool" items="${uRecomList}">
 						<div class="col-3 col-12-small recomSchool">
-							<p class="recomSchoolName" data-code="${hSchool.schoolCode}" data-cate="u"><span>${uSchool.name}</span></p>
+							<p class="recomSchoolName" data-code="${uSchool.code}" data-cate="u"><span>${uSchool.name}</span></p>
 							<br>
-							<p><span class="juris">${uSchool.type}</span>&#9475;<span class="estab">${uSchool.estType}</span></p>
+							<p class="searchSchoolType"><span class="juris">${uSchool.type}</span>&#9475;<span class="estab">${uSchool.estType}</span></p>
 							<br>
 								<p class="url" data-url="${uSchool.link}">
 									<c:choose>
@@ -186,7 +186,7 @@
 					<c:if test="${cate != hSchool.schoolCate1}">
 						<hr>
 						<c:set var="cate" value="${hSchool.schoolCate1}"/>
-						<h3 class="searchschool-h3">${hSchool.schoolCate1}</h3><br>
+						<label class="schoolCate" style="font-size: 1em;">&nbsp;${hSchool.schoolCate1}</label>
 						&#9475;
 					</c:if>
 					<span class="ssdetail" data-cate="h" data-code="${hSchool.schoolCode}">${hSchool.schoolName}</span><b class="up">(up)</b>&#9475;
@@ -195,7 +195,7 @@
 					<c:if test="${cate != uSchool.type}">
 						<hr>
 						<c:set var="cate" value="${uSchool.type}"/>
-						<h3 class="searchschool-h3">${uSchool.type}</h3><br>
+						<label class="schoolCate" style="font-size: 1em;">&nbsp;${uSchool.type}</label>
 						&#9475;
 					</c:if>
 					<span class="ssdetail" data-cate="u" data-code="${uSchool.code}">${uSchool.name}</span><b class="up">(up)</b>&#9475;

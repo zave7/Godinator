@@ -95,6 +95,19 @@ div.recomSchool * {
 	display: inline-block;
 }
 p.recomSchoolName:hover {
+	cursor: pointer;
+}
+p.recomSchoolName {
 	color: black;
 	cursor: pointer;
+}
+label.schoolCate {
+	font-size: 150% !important;
+	margin-bottom: 5px;
+}	
+p.searchSchoolType {
+	margin-left: 20% !important;
+}
+p.url {
+	margin-left: 20% !important;
 }

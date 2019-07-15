@@ -14,10 +14,10 @@
 	<section>
 		<header class="main">
 		<c:if test="${schoolCate == 'h'}">
-			<h2 class="schooldetail">${schoolDto.schoolName}</h2>
+			<label style="font-size: 2em; text-align: center;">${schoolDto.schoolName}</label>
 		</c:if>
 		<c:if test="${schoolCate == 'u'}">
-			<h2 class="schooldetail">${schoolDto.name}</h2>
+			<label style="font-size: 2em; text-align: center;">${schoolDto.name}</label>
 		</c:if>
 		</header>
 			<div class="row">
@@ -25,7 +25,7 @@
 					<span class="image main"><img src="${imgUrl}" alt="" /></span>
 				</div>
 				<div class="col-4 col-12-small">
-					<h3>학교정보</h3>
+					<label style="font-size: 2em; text-align: center;">학교 정보</label>
 					<c:if test="${schoolCate == 'h'}">
 					<fieldset> 
 						<legend>관할 교육청</legend> 
@@ -56,35 +56,41 @@
 
 		<hr class="major" />
 
+		<label style="font-size: 2em;">항목별 평가 지수</label>
 		<div class="row">
             		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-							<h2>항목별 학교 평가 지수</h2>
-                  <!-- ============================================================== -->
-                  <!--line chart  -->
-                  <!-- ============================================================== -->
-                          <div class="card">
-                              <div class="card-body">
-                                  <div id="curve_chart"></div>
-                              </div>
-                          </div>
-            		</div>
-                  <!-- ============================================================== -->
-                  <!--end line chart  -->
-                  <!-- ============================================================== -->
+		                  <c:choose>
+			                  <c:when test="${not empty schoolDto.eval1Avg}">
+			                          <div class="card">
+			                              <div class="card-body">
+			                                  <div id="curve_chart" style="width: 100%;"></div>
+			                              </div>
+			                          </div>
+			                  </c:when>
+			                  <c:otherwise>
+			                  		<label style="font-size: 3em; text-align: center;">아직 평가되지 않았습니다!</label>
+			                  </c:otherwise>
+		                  </c:choose>
+	            	</div>
           	</div>
 
 		<hr class="major" />
 		
-		<div class="row">
-			<h2>학교 위치</h2>
-			<div id="schooldetail-map">
+		<label style="font-size: 2em;">학교 위치</label>
+		<c:if test="${schoolCate == 'h'}">
+			<div class="row">
+				<div id="schooldetail-map" style="width: 80%;">
+				</div>
 			</div>
-			
-			<p>대전 어딘가</p>
-		</div>
+			<br>
+			<p id="schoolDetailAddress">${schoolDto.address}${schoolDto.addressDetail}</p>
+		</c:if>
+		<c:if test="${schoolCate == 'u'}">
+			<p id="schoolDetailAddress">${schoolDto.address}</p>
+		</c:if>
 		<hr class="major" />
 
-		<h2>학교 장단점</h2>
+		<label style="font-size: 2em;">학교 장단점</label>
 		<div class="row">
 			<div class="col-1 col-12-small">
 			</div>
@@ -137,37 +143,42 @@
 		
 		<!-- 구글차트 -->
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	    <script type="text/javascript">
-	      google.charts.load('current', {'packages':['corechart']});
-	      google.charts.setOnLoadCallback(drawChart);
+		<!-- 지도 -->
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3eff8dc3c024272148b81baa4f00552"></script>
+	    <script>
 	      
-	      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	        	  ['학교 구분', '${schoolType} 평균', '${schoolName}'],
-		          ['시설', ${cateAvg.EVAL1AVG}, ${schoolDto.eval1Avg}],
-		          ['학업 분위기', ${cateAvg.EVAL2AVG}, ${schoolDto.eval2Avg}],
-		          ['교직원(교육, 인성)', ${cateAvg.EVAL3AVG}, ${schoolDto.eval3Avg}],
-		          ['진로 교육', ${cateAvg.EVAL4AVG}, ${schoolDto.eval4Avg}],
-		          ['취업률/진학률', ${cateAvg.EVAL5AVG}, ${schoolDto.eval5Avg}],
-		          ['동아리 활성화', ${cateAvg.EVAL6AVG}, ${schoolDto.eval6Avg}]
-	        ]);
-	
-	        var options = {
-	          title: '10점 만점!!',
-	          curveType: 'function',
-	          legend: { position: 'bottom' }
-	        };
-	
-	        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-	
-	        chart.draw(data, options);
-	      }
-	    </script>
-		<script>
 		$(document).ready(function() {
 			
-			var schoolCate = "${requestScope.schoolCate}";
-			var schoolCode = "${requestScope.schoolCode}";
+			var schoolTypeChart = '${schoolType}';
+			var schoolNameChart = '${schoolName}';
+			console.log(schoolTypeChart+"  :  " +schoolNameChart);
+			google.charts.load('current', {'packages':['corechart']});
+		    google.charts.setOnLoadCallback(drawChart);
+		      
+		      function drawChart() {
+		        var data = google.visualization.arrayToDataTable([
+		        	  ['학교 구분', schoolTypeChart+' 평균', schoolNameChart],
+			          ['시설', ${cateAvg.EVAL1AVG}, ${schoolDto.eval1Avg}],
+			          ['학업 분위기', ${cateAvg.EVAL2AVG}, ${schoolDto.eval2Avg}],
+			          ['교직원(교육, 인성)', ${cateAvg.EVAL3AVG}, ${schoolDto.eval3Avg}],
+			          ['진로 교육', ${cateAvg.EVAL4AVG}, ${schoolDto.eval4Avg}],
+			          ['취업률/진학률', ${cateAvg.EVAL5AVG}, ${schoolDto.eval5Avg}],
+			          ['동아리 활성화', ${cateAvg.EVAL6AVG}, ${schoolDto.eval6Avg}]
+		        ]);
+		
+		        var options = {
+		          title: '10점 만점!!',
+		          curveType: 'function',
+		          legend: { position: 'bottom' }
+		        };
+		
+		        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+		
+		        chart.draw(data, options);
+		      }
+			
+			var schoolCate = "${schoolCate}";
+			var schoolCode = "${schoolCode}";
 			var searchType = "r";
 			var adDiv = 'a';
 			//$('#subChart span.subDate').text(dataValues[0].y);
@@ -293,8 +304,8 @@
 										} else {
 											var cf = confirm("로그인 후 이용해주세요");
 											if(cf) {
-												alert(result.referer);
-												$(location).attr("href", "${root}/searchschool/viewsearch");
+												//alert(result.referer); 이전 페이지 주소
+												$(location).attr("href", "${root}/view/user/login.jsp");
 											}
 										}
 									},
@@ -325,38 +336,37 @@
 				console.log(adDiv);
 				getEvals(adDiv, searchType, 1);
 			});
-		});
-		</script>
-		<!-- 지도 -->
-		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3eff8dc3c024272148b81baa4f00552"></script>
-		<script>
 		function map() {
-			setTimeout(function() {
-				console.log("지도 함수 호출");
-				var mapContainer = document.getElementById('schooldetail-map'), // 지도를 표시할 div 
-				mapOption = { 
-				    center: new kakao.maps.LatLng('${latitude}', '${longitude}'), // 지도의 중심좌표
-				    level: 3 // 지도의 확대 레벨
-				};
-				
-				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-				
-				//마커가 표시될 위치입니다 
-				var markerPosition  = new kakao.maps.LatLng('${latitude}', '${longitude}');
-				
-				//마커를 생성합니다
-				var marker = new kakao.maps.Marker({
-					position: markerPosition
-				});
-				
-				//마커가 지도 위에 표시되도록 설정합니다
-				marker.setMap(map);
-				
-				//아래 코드는 지도 위의 마커를 제거하는 코드입니다
-				//marker.setMap(null); 
-				console.log("지도 함수 종료");
-			}, 3000);
+			if(schoolCate == "h") {
+				setTimeout(function() {
+					
+					console.log("지도 함수 호출");
+					var mapContainer = document.getElementById('schooldetail-map'), // 지도를 표시할 div 
+					mapOption = { 
+					    center: new kakao.maps.LatLng('${latitude}', '${longitude}'), // 지도의 중심좌표
+					    level: 3 // 지도의 확대 레벨
+					};
+					
+					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+					
+					//마커가 표시될 위치입니다 
+					var markerPosition  = new kakao.maps.LatLng('${latitude}', '${longitude}');
+					
+					//마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+						position: markerPosition
+					});
+					
+					//마커가 지도 위에 표시되도록 설정합니다
+					marker.setMap(map);
+					
+					//아래 코드는 지도 위의 마커를 제거하는 코드입니다
+					//marker.setMap(null); 
+					console.log("지도 함수 종료");
+				}, 1500);
+			}
 		}
 		map();
+		});
 		</script>
 <%@ include file="../template/sidebar.jsp" %>

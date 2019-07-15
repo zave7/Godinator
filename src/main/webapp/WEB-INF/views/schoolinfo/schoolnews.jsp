@@ -5,13 +5,13 @@
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1 class="newsH1C">학교 뉴스 검색</h1>
+				<label style="font-size: 3em; text-align: center;">학교 뉴스 검색</label>
 			</header>
 			<div class="row">
 				<div class="col-4 col-12-small">
 				</div>
 				<div class="col-2 col-12-small">
-					<h3 class="mogyoH2R">학교 검색</h3>
+					<label style="font-size: 2em; text-align: center;">학교 검색</label>
 				</div>
 				<div class="col-2 col-12-small">
 					<select id="schoolCate">

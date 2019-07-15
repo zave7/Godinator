@@ -40,15 +40,17 @@ public class SearchSchoolController {
 				String userId = memberDto.getUserId();
 				System.out.println(userId);
 				System.out.println(!"0".equals(map.get("H")));
-				if(!"0".equals(map.get("H"))) {
-					List<HSchoolDto> hRecomList = searchSchoolService.getHRecomSchool(userId);
-					model.addAttribute("hRecomList", hRecomList);
-					System.out.println(hRecomList);
-				} 
-				if(!"0".equals(map.get("U"))) {
-					List<USchoolDto> uRecomList = searchSchoolService.getURecomSchool(userId);
-					model.addAttribute("uRecomList", uRecomList);
-					System.out.println(uRecomList);
+				if(map != null) {
+					if(!"0".equals(map.get("H"))) {
+						List<HSchoolDto> hRecomList = searchSchoolService.getHRecomSchool(userId);
+						model.addAttribute("hRecomList", hRecomList);
+						System.out.println(hRecomList);
+					} 
+					if(!"0".equals(map.get("U"))) {
+						List<USchoolDto> uRecomList = searchSchoolService.getURecomSchool(userId);
+						model.addAttribute("uRecomList", uRecomList);
+						System.out.println(uRecomList);
+					}
 				}
 			}
 			List<HSchoolDto> hSchoolList = searchSchoolService.getHSchoolList();

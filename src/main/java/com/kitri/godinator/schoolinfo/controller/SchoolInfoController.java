@@ -55,16 +55,22 @@ public class SchoolInfoController {
 		String shcoolCode = "";
 		String latitude = "";
 		String longitude = "";
+		String schoolType = "";
+		String schoolName = "";
 		if(schoolCate != null && "h".equals(schoolCate)) {
 			model.addAttribute("schoolDto", (HSchoolDto)schoolDto);
 			shcoolCode = ((HSchoolDto)schoolDto).getSchoolCode();
 			latitude = ((HSchoolDto)schoolDto).getLatitude();
 			longitude = ((HSchoolDto)schoolDto).getLongitude();
+			schoolType = ((HSchoolDto)schoolDto).getSchoolCate2();
+			schoolName = ((HSchoolDto)schoolDto).getSchoolName();
 		} else if(schoolCate != null && "u".equals(schoolCate)) {
 			model.addAttribute("schoolDto", (USchoolDto)schoolDto);
 			shcoolCode = ((USchoolDto)schoolDto).getCode();
-			latitude = ((HSchoolDto)schoolDto).getLatitude();
-			longitude = ((HSchoolDto)schoolDto).getLongitude();
+			latitude = ((USchoolDto)schoolDto).getLatitude();
+			longitude = ((USchoolDto)schoolDto).getLongitude();
+			schoolType = ((USchoolDto)schoolDto).getType();
+			schoolName = ((USchoolDto)schoolDto).getName();
 		}
 		model.addAttribute("imgUrl", imgUrl);
 		model.addAttribute("schoolCate", schoolCate);
@@ -72,6 +78,10 @@ public class SchoolInfoController {
 		model.addAttribute("cateAvg", map.get("cateAvg"));
 		model.addAttribute("latitude", latitude);
 		model.addAttribute("longitude", longitude);
+		model.addAttribute("schoolType", schoolType);
+		model.addAttribute("schoolName", schoolName);
+		System.out.println("schoolCate : "+ schoolCate + " shcoolCode : " + shcoolCode);
+		System.out.println("schoolName : "+ schoolName + " schoolType : " + schoolType);
 //		기본적인 비즈니스 로직은 서비스에서 / 처음 호출 : 학교정보, 지도뷰, 통계 이후 호출 : 장단점  
 		return "schoolinfo/schooldetail";
 	}

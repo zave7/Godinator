@@ -45,3 +45,11 @@ div.adis-contents a[data-state="u"] {
 div.adis-contents a[data-state="d"] {
 	border: 3px solid blue !important;
 }
+div#schooldetail-map {
+	width: 80%;
+	margin: 0 auto;
+}
+p#schoolDetailAddress {
+	font-size: 2em;
+	text-align: center;
+}
