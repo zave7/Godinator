@@ -151,7 +151,7 @@ $(document).ready(function() {
 									    						idcnt = parseInt(data.idcount);
 									    						// 아이디 존재 여부 x
 									    						if(idcnt == 0){
-									    							alert("카톡 아이디 없슴 , 회원가입!");
+									    							alert("가입된 이력이 없습니다. 회원가입 페이지로 이동합니다.");
 									    							// 로그인 처음인 경우, 회원가입 처리
 													    			
 													    						// 카톡 id로 로그인
@@ -162,7 +162,7 @@ $(document).ready(function() {
 													    						$("#gender").val(gender);
 													    						$("#kakao_profile").val(profile_image);
 													    						
-													    						$("#kakaologin").attr("action", "${root}/user/moveRegister").submit();
+													    						$("#kakaologin").attr("method","post").attr("action", "${root}/user/moveRegister").submit();
 													    						
 													    					}else{ // 아이디 존재 여부 o
 													    						

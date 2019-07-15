@@ -195,7 +195,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/moveRegister", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/moveRegister", method = RequestMethod.GET)
 	public String moveRegister() {
 
 		return "/user/authentication";
