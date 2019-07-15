@@ -9,6 +9,28 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <!-- Scripts -->
+
+<html>
+<head>
+<title>Elements - Editorial by HTML5 UP</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="${root}/css/main.css" />
+<link rel="stylesheet" href="${root}/css/recommendation.css"/>
+<link rel="stylesheet" href="${root}/css/schooldetail.css"/>
+<link rel="stylesheet" href="${root}/css/schoolnews.css"/>
+<link rel="stylesheet" href="${root}/css/schoolrating.css"/>
+<link rel="stylesheet" href="${root}/css/searchschool.css"/>
+<link rel="stylesheet" href="${root}/css/login.css"/>
+<link rel="stylesheet" href="${root}/css/register.css"/>
+<!-- <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet"> -->
+
+<!-- 카카오톡 로그인 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 <script src="${root}/js/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -51,34 +73,13 @@ $(document).ready(function() {
 		return false;
 	});
 		
-	$("#moveMypageBtn").click(function() {//회원정보수정
+	$(document).on("click", "#moveMypageBtn", function() {//회원정보수정
 		//alert("회원수정하러 가실렵니까?");
 		$("#editForm").attr("method","post").attr("action","${root}/user/moveMypage").submit();
 		return false;
 	});
 	});
 </script>
-<html>
-<head>
-<title>Elements - Editorial by HTML5 UP</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="${root}/css/main.css" />
-<link rel="stylesheet" href="${root}/css/recommendation.css"/>
-<link rel="stylesheet" href="${root}/css/schooldetail.css"/>
-<link rel="stylesheet" href="${root}/css/schoolnews.css"/>
-<link rel="stylesheet" href="${root}/css/schoolrating.css"/>
-<link rel="stylesheet" href="${root}/css/searchschool.css"/>
-<link rel="stylesheet" href="${root}/css/login.css"/>
-<link rel="stylesheet" href="${root}/css/register.css"/>
-<link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet">
-
-<!-- 카카오톡 로그인 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
 </head>
 
 <body class="is-preload">

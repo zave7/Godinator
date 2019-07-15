@@ -14,7 +14,7 @@
 
 			<div class="row search-condition">
 				<div class="col-2 col-12-small">
-					<label>학교 구분</label>
+					<label>학교 sss구분</label>
 					<select name="shcoolCate" id="shcoolCate">
 						<option value="h" selected="selected">고등학교</option>
 						<option value="u">대학교</option>
