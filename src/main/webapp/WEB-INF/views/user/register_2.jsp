@@ -25,7 +25,6 @@ $(document).ready(function() {
 			$("#schoolForm").attr("action","/godinator/user/mentorRegister").submit();	
 		}
 	});
-
 //학교이름검색
 $("#highSchool").keyup(function(e) {
 	var $keyword = $(this).val();
@@ -75,7 +74,6 @@ $("#highSchool").keyup(function(e) {
 		$("#schoolScrollUlH").empty();
 	}
 });
-
 //대학검색
 $("#university").keyup(function(e) {
 	var $keyword = $(this).val();
@@ -144,7 +142,7 @@ $("#university").keyup(function(e) {
 										<h3 id="contentId">출신 고등학교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
 										  <div id="schoolScrollDivH"><ul id="schoolScrollUlH"></ul></div>
-										   <br><br>
+										   <!-- <br><br>
 										   <h5>고등학교 구분</h5>
 										   <div id="h_category" class="custom-control-inline">
 													<select class="form-control" id="hSchoolCate" name="hSchoolCate">
@@ -153,7 +151,7 @@ $("#university").keyup(function(e) {
 														<option value="자율고등학교">자율고등학교</option>
 														<option value="특성화고등학교">특성화고등학교</option>
 													</select>
-										   </div>
+										   </div> -->
 										<br><br><br><br>
 										<h3 id="contentPwd">출신 대학교</h3>
 										   <input type="text" name="university" id="university" />
@@ -196,7 +194,7 @@ $("#university").keyup(function(e) {
 										   <br>
 									<ul class="actions">
 										<li>2/4</li>
-										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">건너뛰기</a></li>
+										<li><a href="#" class="button primary" id="mentorRegisterBtn" name="mentorRegisterBtn">다음페이지</a></li>
 									</ul>
 									
 								</div>

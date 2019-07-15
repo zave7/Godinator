@@ -93,7 +93,7 @@ public class UserController {
 		session.removeAttribute("userInfo");
 		System.out.println("로그아웃 : 여기까지는 오나?");
 		//model.addAttribute("logoutMsg", msg);
-		session.setAttribute("userInfo", "");
+		//session.setAttribute("userInfo", "");
 		return msg;
 		//return "redirect:/view/user/main.jsp";
 
@@ -117,6 +117,7 @@ public class UserController {
 
 		return "user/modify_1";
 	}
+	
 
 	@RequestMapping(value = "/moveSchoolModify", method = RequestMethod.POST)
 	public String moveSchoolModify(HttpSession session, @RequestParam(name = "hName", defaultValue = "") String hName,
@@ -313,7 +314,7 @@ public class UserController {
 	}
 	@RequestMapping(value = "/mentorRegister", method = RequestMethod.POST)
 	public String mentorRegister(MemberDto memberDto, // 학교별 cate 담겨있음
-			@RequestParam("registerId") String registerId, @RequestParam("hSchoolCate") String hSchoolCate,
+			@RequestParam("registerId") String registerId,
 			@RequestParam("uSchoolCate") String uSchoolCate,
 			@RequestParam(name = "highSchool", defaultValue = "") String highSchool,
 			@RequestParam(name = "university", defaultValue = "") String university,
@@ -323,6 +324,10 @@ public class UserController {
 		System.out.println("ucheck: " + ucheck);
 		System.out.println("hcheck : " + hcheck);
 
+		
+		String hSchoolCate = userService.findHcate(highSchool);
+		System.out.println("hschoolcate : "+ hSchoolCate);
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("registerId", registerId);// 로그인한 아이디
 		map.put("highSchool", highSchool);// 입력한 고등학교 이름
@@ -334,8 +339,8 @@ public class UserController {
 
 		
 		int cnt = userService.mentorRegister(map);
-		System.out.println(memberDto.getHSchoolCode());
-		System.out.println(memberDto.getUSchoolCode());
+		//System.out.println(memberDto.getHSchoolCode());
+		//System.out.println(memberDto.getUSchoolCode());
 		if (cnt > 0) {
 			model.addAttribute("registerId", registerId);
 			model.addAttribute("highSchool", highSchool);

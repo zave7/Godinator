@@ -17,7 +17,7 @@ hr{
 	border: 1px dashed #5a5a5a;
 }
 </style>		
-	</head>
+	
 <script type="text/javascript">
 $(document).ready(function() {
 

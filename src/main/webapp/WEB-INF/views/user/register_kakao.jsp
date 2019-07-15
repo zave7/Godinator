@@ -45,13 +45,7 @@ $(document).ready(function() {
 		} else if($("#userName").val() == "") {
 			alert("이름을 입력하세요");
 			return;
-		} else if($("#pass").val() == "") {
-			alert("비밀번호를 입력하세요");
-			return;
-		} else if($("#pass").val() != $("#passcheck").val()) {
-			alert("비밀번호를 확인하세요");
-			return;
-		} /* else if(cnt != 0) {
+		}  /* else if(cnt != 0) {
 			alert("아이디 중복 확인을 하세요");
 			return;
 		} */else if($("#userCate").val() =="선택하세요"){
@@ -136,15 +130,15 @@ function sample6_execDaumPostcode() {
 										   <div id="idresult"></div>
 										   <br>
 									
-										<h3 id="contentPwd">비밀번호</h3>
-										   <input type="password" name="pass" id="pass" value="${pass}" />
+										<!-- <h3 id="contentPwd">비밀번호</h3> -->
+										   <input type="hidden" name="pass" id="pass" value="${pass}" />
 										   <br>
 									
-										<h3 id="contentPwd">비밀번호 확인</h3>
+										<%-- <h3 id="contentPwd">비밀번호 확인</h3>
 										   <input type="password" name="passcheck" id="passcheck" value="${pass}"/>
 										   <div id="pwdCheck"></div>
 										   <br>
-										   <br>
+										   <br> --%>
 										
 										<!-- <label for="email">이메일</label><br>
 									<div id="email" class="custom-control-inline"> -->

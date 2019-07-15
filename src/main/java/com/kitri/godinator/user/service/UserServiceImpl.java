@@ -150,6 +150,12 @@ public class UserServiceImpl implements UserService{
 		return sqlSession.getMapper(UserDao.class).findModify(userId);
 	}
 
+	@Override
+	public String findHcate(String highSchool) {
+		return sqlSession.getMapper(UserDao.class).findHcate(highSchool);
+	}
+
+
 }
 
 

@@ -21,5 +21,6 @@ public interface UserService {
 	List<String> selectCate(String id);
 	int mentorModifyRegister(Map<String, String> map);
 	MemberDto findModify(String userId);
+	String findHcate(String highSchool);
 	
 }

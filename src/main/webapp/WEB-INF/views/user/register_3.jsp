@@ -238,7 +238,7 @@ function allowDrop(ev) {
 										   <br><br>
 									<ul class="actions">
 										<li>3/4</li>
-										<li><a href="" class="button primary" id="registerPreferenceBtn">건너뛰기</a></li>
+										<li><a href="" class="button primary" id="registerPreferenceBtn">다음페이지</a></li>
 									</ul>
 								</div>
 

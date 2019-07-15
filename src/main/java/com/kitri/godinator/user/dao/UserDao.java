@@ -29,5 +29,6 @@ public interface UserDao {
 	int memberReset(String id);
 	int mentorReset(String id);
 	MemberDto findModify(String userId);
+	String findHcate(String highSchool);
 
 }
