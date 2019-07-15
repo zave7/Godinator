@@ -610,7 +610,7 @@ public class UserController {
 			model.addAttribute("userId", registerId);
 			model.addAttribute("highSchool", highSchool);
 			model.addAttribute("university", university);
-			return "schoolinfo/hrating";
+			return "schoolinfo/hschoolrating";
 		} else {
 			return "error";
 
