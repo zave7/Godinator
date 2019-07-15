@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -243,7 +243,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(MemberDto memberDto, Model model) {
+	public String register(MemberDto memberDto, Model model, HttpSession session) {
 
 		int cnt = userService.register(memberDto);
 		/** 윤영 : visit 통계용 **/
@@ -252,6 +252,7 @@ public class UserController {
 		
 		if (cnt != 0) {
 			model.addAttribute("registerInfo", memberDto);
+			session.setAttribute("registerId", id);
 			return "user/register_2";
 			
 		} else {
