@@ -65,9 +65,10 @@ $(document).ready(function(){
              			 var td2 = $("<td>").html(schoolName);
              			 var td3 = $("<td>").html(phone);
              			 var td4 = $("<td>").html(address);
+             			 var td5 = $("<td>").html('0');
              			 //var td6 = $("<td>").html('<input type="button" class="button" id="modifyBtn" value="수정">');
              			 
-             			 tr.append(td1).append(td2).append(td3).append(td4);
+             			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
              			 $("#schoollist").append(tr);
              			 
           			   } // for문 
@@ -90,15 +91,15 @@ $(document).ready(function(){
   		var schoolName = a[1].childNodes[0].nodeValue;
   		var phone = a[2].childNodes[0].nodeValue;
   		var schoolAddress = a[3].childNodes[0].nodeValue;
-  		//var mento = a[4].childNodes[0].nodeValue;
-  		console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress);
+  		var mento = a[4].childNodes[0].nodeValue;
+  		console.log(schoolCate+'/'+schoolName+'/'+phone+'/'+schoolAddress+'/'+mento+'/');
   		
   		//$('input[name=schoolCate]').attr('value', a);
   		$("#schoolCate").val(schoolCate);
   		$("#schoolName").val(schoolName);
   		$("#phone").val(phone);
   		$("#schoolAddress").val(schoolAddress);
-  		//$("#mento").val(mento);
+  		$("#mento").val(mento);
   		
   		$("#hiddenInfo").attr("method","GET").attr("action","${root}/school/goModify").submit();
   		
@@ -132,8 +133,9 @@ $(document).ready(function(){
                         			 var td2 = $("<td>").html(schoolName);
                         			 var td3 = $("<td>").html(phone);
                         			 var td4 = $("<td>").html(address);
+                        			 var td5 = $("<td>").html('0');
                         			 
-                        			 tr.append(td1).append(td2).append(td3).append(td4);
+                        			 tr.append(td1).append(td2).append(td3).append(td4).append(td5);
                         			 $("#schoollist").append(tr);
                         			 //$("#schoollist").remove();
                         			 
@@ -183,14 +185,16 @@ $(document).ready(function(){
       <table class="table" id="schoollistTop">
          <thead>
             <tr>
-               <th style="width: 160px;">학교유형</th>
+               <th>학교유형</th>
                <th>학교명</th>
                <th>전화번호</th>
                <th>학교주소</th>
+               <th>총 멘토수</th>
             </tr>
          </thead>
          
-         <tbody id="schoollist"></tbody>
+         <tbody id="schoollist">
+         </tbody>
          
       </table>
    </div>
@@ -199,6 +203,7 @@ $(document).ready(function(){
 	   	<input type="hidden" name="schoolName" id="schoolName" value="">
 	   	<input type="hidden" name="phone" id="phone" value="">
 	   	<input type="hidden" name="schoolAddress" id="schoolAddress" value="">
+	   	<input type="hidden" name="mento" id="mento" value="">
 	   	<input type="hidden" name="adress" id="adress" value="">
 	   	<input type="hidden" name="adressDetail" id="adressDetail" value="">
    </form>

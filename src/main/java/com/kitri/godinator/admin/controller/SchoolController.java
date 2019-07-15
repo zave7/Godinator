@@ -18,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.kitri.godinator.admin.service.SchoolService;
 import com.kitri.godinator.model.HSchoolDto;
+import com.kitri.godinator.model.MemberDto;
 
 
 @Controller
@@ -197,7 +198,7 @@ public class SchoolController {
 	   model.addAttribute("schoolName",schoolName);
 	   model.addAttribute("phone",phone);
 	   
-	   return "admin/schoolmodify";
+	   return "admin/manageschool";
    }
    
    // 학교삭제
@@ -209,5 +210,36 @@ public class SchoolController {
 	   schoolService.deleteInfo(schoolCode);
 	   
 	   return "삭제가 완료되었습니다.";
+   }
+   
+   @RequestMapping(value = "/mentoInfo", method = RequestMethod.GET)
+   @ResponseBody
+   public String getMentoInfo (@RequestParam (name = "schoolCode") String schoolCode, Model model) throws Exception {
+	   JsonObject mentoInfos = new JsonObject();
+       JsonArray jsonArray = new JsonArray();
+	   
+	   System.out.println("	> 멘토정보를 얻어올 학교 코드 : " + schoolCode);
+	   
+	   List<MemberDto> list = schoolService.getMentoInfo(schoolCode);
+	   for(Object h : list) {
+           if(h != null) {
+        	   JsonObject mentoInfo = new JsonObject();
+               String userId = ((MemberDto)h).getUserId();
+               String userName = ((MemberDto)h).getUserName();
+               String userCate = ((MemberDto)h).getUserCate();
+               String joinDate = ((MemberDto)h).getJoinDate();
+               
+               mentoInfo.addProperty("userId", userId);
+               mentoInfo.addProperty("userName", userName);
+               mentoInfo.addProperty("userCate", userCate);
+               mentoInfo.addProperty("joinDate", joinDate);
+               
+               jsonArray.add(mentoInfo);
+               //System.out.println("	> 해당학교 멘토list : " + jsonArray);
+           }
+       }  
+	   mentoInfos.add("mentoInfos", jsonArray);
+	   System.out.println(mentoInfos);
+       return mentoInfos.toString();
    }
 }
