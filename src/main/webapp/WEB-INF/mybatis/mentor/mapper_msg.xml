@@ -126,4 +126,20 @@
   	</otherwise>
   </choose>
   </update>
+  
+  <update id="updateStusR">
+  UPDATE msg
+  <choose>
+  	<when test="sendId == userId">
+  SET send_stus = '0'
+  WHERE msg_no = #{seq} AND send_id = #{userId}
+  	</when>
+  	<otherwise>
+  SET recv_stus = '0'
+  WHERE msg_no = #{seq} AND recv_id = #{userId}
+  	</otherwise>
+  </choose>
+  </update>
+  
+  
   </mapper>

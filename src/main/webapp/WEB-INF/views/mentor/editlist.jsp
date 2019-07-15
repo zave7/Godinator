@@ -21,9 +21,7 @@ $(function(){
 					history.back();
 				}
 			} else if(response == '0') {
-				if(confirm('멘토 권한이 없습니다. 회원수정 페이지로 이동하시겠습니까?')){
-					location.href = '${root}/user/modify_1';
-				} else {
+				if(confirm('멘토 권한이 없습니다. 이전 페이지로 이동합니다.')){
 					history.back();
 				}
 			} else {

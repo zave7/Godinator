@@ -73,16 +73,16 @@ $(function(){
 					<div class="row gtr-uniform">
 						<%-- 쪽지 --%>
 						<div class="col-12">
-							<textarea name="subject" id="subject" placeholder="제목을 입력하세요" rows="1"></textarea>
+							<textarea style="resize: none;" name="subject" id="subject" placeholder="제목을 입력하세요" rows="1"></textarea>
 						</div>
 						<div class="col-12">
-							<textarea name="content" id="content" placeholder="내용을 입력하세요" rows="10"></textarea>
+							<textarea style="resize: none;" name="content" id="content" placeholder="내용을 입력하세요" rows="10"></textarea>
 						</div>
 						<%-- 버튼 --%>
 						<div class="col-12">
 							<div style="float: right;">
 								<ul class="actions">
-									<li><input type="submit" id="save" value="저    장" class="primary" /></li>
+									<li><input type="submit" id="save" value="전    송" class="primary" /></li>
 									<li><input type="reset" id="cancle" value="취    소" /></li>
 								</ul>
 							</div>

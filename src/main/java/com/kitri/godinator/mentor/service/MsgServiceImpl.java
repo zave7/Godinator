@@ -93,4 +93,23 @@ public class MsgServiceImpl implements MsgService{
 		}
 		return result;
 	}
+
+	@Override
+	public String restoreMsg(String[] seqArr, String[] sendIdArr, String userId) {
+		String result = "1";
+		int len = seqArr.length;
+		
+		for(int i=0; i<len; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("seq", seqArr[i]);
+			map.put("sendId", sendIdArr[i]);
+			map.put("userId", userId);
+			int cnt = sqlSession.getMapper(MsgDao.class).updateStusR(map);
+			if(cnt == 0) {
+				result = "0";
+				return result;
+			}
+		}
+		return result;
+	}
 }

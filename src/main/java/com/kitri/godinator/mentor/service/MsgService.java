@@ -13,5 +13,6 @@ public interface MsgService {
 	MsgDto getMsg(String seq, String userId);
 	String mvTrash(String[] seqArr, String[] sendIdArr, String userId);
 	String delMsg(String[] seqArr, String[] sendIdArr, String userId);
+	String restoreMsg(String[] seqArr, String[] sendIdArr, String userId);
 
 }

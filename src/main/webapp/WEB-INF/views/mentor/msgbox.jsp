@@ -40,11 +40,13 @@ $(function(){
 	
 	<%-- 검색 --%>
 	$('#srchBtn').click(function(){
-		getMsgList('');
+		if($('#src-cate').val() != '0') {
+			getMsgList('');
+		}
 		return false;
 	});
 	$('#search').keypress(function(e) {
-		if (e.which == 13 && $(this).val().trim() != '') {
+		if (e.which == 13 && $(this).val().trim() != '' && $('#src-cate').val() != '0') {
 			getMsgList('');
 			return false;
 		}
@@ -126,6 +128,35 @@ $(function(){
 		});
 		return false;
 	});
+	<%-- 복구 --%>
+	$('#restoreBtn').click(function(){
+		var seqArr = [];
+		var sendIdArr = [];
+		var type;
+		$("input[name=msg]:checked").each(function(i, e) {
+			seqArr[i] = $(this).parents('tr').attr('data-seq'); 
+			sendIdArr[i] = $(this).parents('tr').attr('data-sendId'); 
+		});
+		if(seqArr.length == 0){
+			alert('복구할 항목을 선택하세요.');
+			return false;
+		} else {
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+				url: '${root}/msg/restore',
+				data: {seqArr : seqArr, sendIdArr : sendIdArr},
+				success: function(response) {
+					if(response != "0") {
+						alert('선택한 항목이 복구되었습니다.');
+						getMsgList('');
+					} else {
+						alsert('복구 작업에 실패하였습니다. 나중에 다시 시도하세요.');
+					}
+				}
+			});
+		}
+		return false;
+	});
 	
 	<%-- function --%>
 	function init(){
@@ -174,6 +205,7 @@ $(function(){
 					<div style="float: left; margin-left: 0.5em;">
 						<ul class="actions">
 							<li><a href="#" class="button primary icon" id="delBtn"><i class="far fa-trash-alt"></i></a></li>
+							<li style="display: ${(msgCate == '2') ? '' : 'none'};"><a href="#" class="button icon" id="restoreBtn"><i class="fas fa-trash-restore-alt"></i></a></li>
 						</ul>
 					</div>
 				</div>
@@ -244,7 +276,7 @@ $(function(){
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-						<tr><td colspan="6">쪽지가 없습니다.</td></tr>	
+						<tr><td colspan="7">쪽지가 없습니다.</td></tr>	
 							</c:otherwise>
 						</c:choose>
 					</tbody>

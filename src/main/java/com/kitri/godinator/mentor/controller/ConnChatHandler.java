@@ -41,6 +41,7 @@ public class ConnChatHandler extends TextWebSocketHandler{
 			
 			// 접속중인 유저 목록에 추가
 			connUser.put(id, session);
+			
 			if("m".equals(oncate)) {
 				connMentee.put(id, session);
 			}
