@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../template/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="hSchoolList" value="${requestScope.hSchoolList}"/>
 <c:set var="uSchoolList" value="${requestScope.uSchoolList}"/>
 <c:set var="hRecomList" value="${requestScope.hRecomList}"/>
@@ -123,32 +124,52 @@
 			</div>
 			<h2>회원님을 위한 추천학교 목록</h2>
 			<hr>
-			<div class="row school-recommendation">
-			<c:forEach var="hSchool" items="${hRecomList}">
-				<div class="col-3 col-12-small recomSchool">
-					<div class="img"><span class="image main"><img src="" alt="" /></span></div>
-					<p class="shcool-name"><span>${hSchool.schoolName}</span></p>
-					<hr>
-					<p><span class="juris">${hSchool.estType}</span>&#9475;<span class="estab">${hSchool.estType}</span></p>
-					<hr>
-					<p><span class="kind">${hSchool.schoolCate2}</span>&#9475;<span class="coeducation">${hSchool.schoolCate2}</span></p>
-					<hr>
-					<p class="url">${hSchool.homePage}</p>
+			<div class="school-recommendation">
+			<c:if test="${not empty hRecomList}">
+				<div class="row">
+					<c:forEach var="hSchool" items="${hRecomList}">
+						<div class="col-3 col-12-small recomSchool">
+							<p class="recomSchoolName" data-code="${hSchool.schoolCode}" data-cate="h"><span>${hSchool.schoolName}</span></p>
+							<br>
+							<p><span class="juris">${hSchool.schoolCate2}</span>&#9475;<span class="estab">${hSchool.estType}</span></p>
+							<br>
+								<p class="url" data-url="${hSchool.homePage}">
+									<c:choose>
+										 <c:when test="${fn:length(hSchool.homePage) > 29}">
+							            	<c:out value="${fn:substring(hSchool.homePage,0,29)}"/>...
+							             </c:when>
+										 <c:otherwise>
+								            <c:out value="${hSchool.homePage}"/>
+								         </c:otherwise> 
+									</c:choose>
+						         </p>
+						</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
-			<hr>
-			<c:forEach var="uSchool" items="${uRecomList}">
-				<div class="col-3 col-12-small recomSchool">
-					<div class="img"><span class="image main"><img src="" alt="" /></span></div>
-					<p class="shcool-name"><span>${uSchool.name}</span></p>
-					<hr>
-					<p><span class="juris">${uSchool.estType}</span>&#9475;<span class="estab">${uSchool.estType}</span></p>
-					<hr>
-					<p><span class="kind">${uSchool.type}</span>&#9475;<span class="coeducation">${uSchool.type}</span></p>
-					<hr>
-					<p class="url">${uSchool.link}</p>
+				<hr>
+			</c:if>
+			<c:if test="${not empty uRecomList}">
+				<div class="row">
+					<c:forEach var="uSchool" items="${uRecomList}">
+						<div class="col-3 col-12-small recomSchool">
+							<p class="recomSchoolName" data-code="${hSchool.schoolCode}" data-cate="u"><span>${uSchool.name}</span></p>
+							<br>
+							<p><span class="juris">${uSchool.type}</span>&#9475;<span class="estab">${uSchool.estType}</span></p>
+							<br>
+								<p class="url" data-url="${uSchool.link}">
+									<c:choose>
+										 <c:when test="${fn:length(uSchool.link) > 29}">
+							            	<c:out value="${fn:substring(uSchool.link,0,29)}"/>...
+							             </c:when>
+										 <c:otherwise>
+								            <c:out value="${uSchool.link}"/>
+								         </c:otherwise> 
+									</c:choose>
+						         </p>
+						</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
+			</c:if>
 			</div>
 			<div class="row" id="hotList">
 				<div class="col-10 col-12-small">
@@ -376,6 +397,8 @@
 									var thisPg = $(this).attr("data-pg");
 									search(thisPg);
 								});
+							} else {
+								$("#pros-cons").empty();
 							}
 						},
 						error : function() {
@@ -383,11 +406,18 @@
 						}
 					});
 				}
+				//엔터 이벤트
+				$("#keyword").keydown(function (key) {
+					if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+						search(1);
+			        }
+			    });
 				
 				// 검색 버튼 클릭 이벤트
 				$("a#searchSchool").click(function() {
 					//학교구분, 지역, 학교유형, 남녀공학, 키워드
 					search(1);
+					return false;
 				});
 				//목록보기 클릭			
 				$("#hotList a").on("click", function() {
@@ -408,6 +438,18 @@
 					var url = "${root}/schoolinfo/schooldetail?schoolCate="+$cate+"&schoolCode="+$code;
 		            window.open(url, "_blank"); 
 					return false;
+				});
+				
+				$("p.recomSchoolName").on("click", function() {
+					var $cate = $(this).attr("data-cate");
+					var $code = $(this).attr("data-code");
+					var url = "${root}/schoolinfo/schooldetail?schoolCate="+$cate+"&schoolCode="+$code;
+		            window.open(url, "_blank"); 
+					return false;
+				});
+				$("p.url").on("click", function() {
+					var url = $(this).attr("data-url");
+					window.open(url, "_blank"); 
 				});
 				
 				

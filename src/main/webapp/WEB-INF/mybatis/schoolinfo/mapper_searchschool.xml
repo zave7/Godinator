@@ -158,7 +158,7 @@
         FROM dual
   	</select>
   	<select id="getHRecomSchool" parameterType="string" resultType="hSchoolDto">
-		SELECT school_name schoolName, school_code schoolCode, school_cate2 schoolCate, esttype estType, home_page homePage
+		SELECT school_name schoolName, school_code schoolCode, school_cate2 schoolCate2, esttype estType, home_page homePage
 		
 		FROM    (SELECT  nvl(
 		                    (select count(*) 
@@ -181,7 +181,9 @@
 		                    
 		                    from eval_school 
 		                    
-		                    WHERE school_code = h.school_code) +
+		                    WHERE school_code = h.school_code
+		                    
+		                    AND ad_div = 'a') +
 		                    
 		                    (SELECT h_eval1 * h.eval1_avg + 
 		                    
@@ -268,7 +270,9 @@
 		                    
 		                    from eval_school 
 		                    
-		                    WHERE code = u.code) +
+		                    WHERE code = u.code
+		                    
+		                    AND ad_div = 'a') +
 		                    
 		                    (SELECT u_eval1 * u.eval1_avg + 
 		                    
@@ -300,7 +304,7 @@
 		                
 		                link
 		                
-		        FROM    (SELECT u.type type, rk
+		        FROM    (SELECT u.type school_type, rk
 		        
 		                FROM    (SELECT sum(search_cnt) totalCnt, type, 
 		                
@@ -324,7 +328,7 @@
 		                
 		                join u_school u
 		                
-		                on cate.type = u.type
+		                on cate.school_type = u.type
 		                
 		        ORDER BY total_score DESC)
 		        

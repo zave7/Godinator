@@ -260,10 +260,10 @@ $(function(){
 					</div>
 					<%-- 자소서 --%>
 					<div class="col-12">
-						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1"></textarea>
+						<textarea style="resize: none;" name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1"></textarea>
 					</div>
 					<div class="col-12">
-						<textarea name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>
+						<textarea style="resize: none;" name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>
 					</div>
 					<%-- 버튼 --%>
 					<div class="col-12">

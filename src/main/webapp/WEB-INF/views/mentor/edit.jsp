@@ -77,7 +77,7 @@ $(function(){
 				<label style="margin-bottom: 5px; font-size: 1.2em; color: gray;">${editDto.bSchoolName}&nbsp;&nbsp;║&nbsp;&nbsp;<c:choose><c:when test="${editDto.bSchoolCate1 != 'h'}">${fn:split(editDto.bSchoolCate2, '||')[0]}&nbsp;&nbsp;║&nbsp;&nbsp;${fn:split(editDto.bSchoolCate2, '||')[1]}</c:when><c:otherwise>${editDto.bSchoolCate2}</c:otherwise></c:choose></label>
 				<hr class="major" style="margin-top: 0;"/>
 			</div>
-			<div class="box" style="background-color: rgb(229, 229, 229);">
+			<div class="box" style="background-color: rgb(229, 229, 229); height: 250px; overflow-y: auto;">
 				<p><strong>제  목</strong></p>
 				<p>${editDto.boardSubject}</p>
 				<p></p>
@@ -96,10 +96,10 @@ $(function(){
 				
 					<%-- 첨삭 --%>
 					<div class="col-12">
-						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1">RE: </textarea>
+						<textarea style="resize: none;" name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1">RE: </textarea>
 					</div>
 					<div class="col-12">
-						<textarea name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>
+						<textarea style="resize: none;" name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="15"></textarea>
 					</div>
 					<%-- 버튼 --%>
 					<div class="col-12">

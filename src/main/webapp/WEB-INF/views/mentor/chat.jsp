@@ -50,7 +50,7 @@ $(function(){
 	
 	<%-- 웹소켓 통신 연결 --%>
 	function connect(){
-		wsocket = new WebSocket("ws://192.168.14.26:8080/godinator/startchat");
+		wsocket = new WebSocket("ws://192.168.14.21:8080/godinator/startchat");
 		wsocket.onmessage = onMessage;
 	}
 	
@@ -88,7 +88,7 @@ $(function(){
 			<div class="inner">
 				<%-- Content --%>
 				<div style="margin-top: 3em;">
-					<label style="font-size: 1.7em;">${(mentee != null) ? '멘토' : '멘티'}와의 채팅</label>
+					<label style="font-size: 1.7em;">${(mentee != null) ? '멘티' : '멘토'}와의 채팅</label>
 					<div class="col-2" style="float: right;">
 						<ul class="actions">
 							<li><input type="button" id="back" value="돌아가기" class="primary" /></li>

@@ -107,4 +107,17 @@ public class MsgController {
 		}
 		return result;
 	}
+	
+	@RequestMapping("/restore")
+	public @ResponseBody String restoreMsg(@RequestParam(value = "seqArr") String[] seqArr, @RequestParam(value = "sendIdArr") String[] sendIdArr, HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		String result = "0";
+		if(memberDto != null) {
+			String userId = memberDto.getUserId();
+			result = msgService.restoreMsg(seqArr, sendIdArr, userId);
+		}
+		return result;
+	}
+	
+	
 }

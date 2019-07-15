@@ -14,5 +14,6 @@ public interface MsgDao {
 	void updateRecvDate(int seq);
 	int updateStusT(Map<String, String> map);
 	int updateStusD(Map<String, String> map);
+	int updateStusR(Map<String, String> map);
 
 }

@@ -94,3 +94,7 @@ div.recomSchool {
 div.recomSchool * {
 	display: inline-block;
 }
+p.recomSchoolName:hover {
+	color: black;
+	cursor: pointer;
+}

@@ -18,7 +18,7 @@
 					<li>
 					<span class="opener">마이페이지</span>
 					<ul>
-						<li><a href="${root}/">진로검사</a></li>
+						<li><a href="${root}/jinro/geomsa">진로검사</a></li>
 						<li><a href="${root}/">모교 평가</a></li>
 					</ul>
 					</li>
@@ -58,7 +58,7 @@
 			</header>
 			<ul class="contact">
 				<li class="icon solid fa-envelope"><a href="#">claire97j@naver.com</a></li>
-				<li class="icon solid fa-phone">(000) 000-0000</li>
+				<li class="icon solid fa-phone">(135) 123-4567</li>
 				<li class="icon solid fa-home">서울시 구로구 디지털로 34길 43 <br>코오롱사이언스벨리 1차 4층
 				</li>
 			</ul>

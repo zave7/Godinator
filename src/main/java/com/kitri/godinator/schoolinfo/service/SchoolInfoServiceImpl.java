@@ -15,6 +15,7 @@ import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -179,14 +180,111 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 	}
 
 	@Override
+	@Transactional
 	public void insertAndUpdateHEvalByUser(Map<String, String> parameter) {
+		System.out.println("insertAndUpdateHEvalByUser : " + parameter);
 		String schoolCate = parameter.get("schoolCate");
+		String userId = parameter.get("userId");
 		if("h".equals(schoolCate)) {
-			sqlSession.getMapper(SchoolInfoDao.class).insertHEvalByUser(parameter);
-			sqlSession.getMapper(SchoolInfoDao.class).updateHEvalAvgByUser(parameter);
+			//평가가 없을 경우 평가 업데이트
+			int userRecord = sqlSession.getMapper(SchoolInfoDao.class).selectHEvalByUser(userId);
+			System.out.println("userRecord : "+userRecord);
+			if(userRecord == 0) {
+				sqlSession.getMapper(SchoolInfoDao.class).insertRecordHEvalByUser(parameter);
+				sqlSession.getMapper(SchoolInfoDao.class).updateHEvalAvgByUser(parameter);
+				sqlSession.getMapper(SchoolInfoDao.class).udpateHAlmaMater(parameter);
+			}
+			// 장단점 없을 경우 인서트
+			String eval_a = parameter.get("eval_a");
+			if(eval_a != null && !"".equals(eval_a)) {
+				String evalA = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalA(userId);
+				if(evalA == null) {
+					sqlSession.getMapper(SchoolInfoDao.class).insertUserHEvalA(parameter);
+				}
+			}
+			
+			String eval_d = parameter.get("eval_d");
+			if(eval_d != null && !"".equals(eval_d)) {
+				String evalD = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalD(userId);
+				if(evalD == null) {
+					sqlSession.getMapper(SchoolInfoDao.class).insertUserHEvalD(parameter);
+				}
+			}
 		} else if("u".equals(schoolCate)) {
-			sqlSession.getMapper(SchoolInfoDao.class).insertUEvalByUser(parameter);
-			sqlSession.getMapper(SchoolInfoDao.class).updateUEvalAvgByUser(parameter);
+			//평가가 없을 경우 평가 업데이트
+			int userRecord = sqlSession.getMapper(SchoolInfoDao.class).selectUEvalByUser(userId);
+			if(userRecord == 0) {
+				sqlSession.getMapper(SchoolInfoDao.class).insertRecordUEvalByUser(parameter);
+				sqlSession.getMapper(SchoolInfoDao.class).updateUEvalAvgByUser(parameter);
+				sqlSession.getMapper(SchoolInfoDao.class).udpateUAlmaMater(parameter);
+			}
+			// 장단점 없을 경우 인서트
+			String eval_a = parameter.get("eval_a");
+			if(eval_a != null && !"".equals(eval_a)) {
+				String evalA = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalA(userId);
+				if(evalA == null) {
+					sqlSession.getMapper(SchoolInfoDao.class).insertUserUEvalA(parameter);
+				}
+			}
+			String eval_d = parameter.get("eval_d");
+			if(eval_d != null && !"".equals(eval_d)) {
+				String evalD = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalD(userId);
+				if(evalD == null) {
+					sqlSession.getMapper(SchoolInfoDao.class).insertUserUEvalD(parameter);
+				}
+			}
+		}
+	}
+
+	@Override
+	@Transactional
+	public Map<String, String> getUserEvalLog(String userId, Model model, String schoolCate) {
+		Map<String, String> result = null;
+		if("h".equals(schoolCate)) {
+			String hEval = sqlSession.getMapper(SchoolInfoDao.class).checkHAlmaMater(userId);
+			System.out.println(hEval);
+			if(hEval != null) {
+				result = sqlSession.getMapper(SchoolInfoDao.class).getUserHRecord(userId);
+				Map<String, String> hMap = sqlSession.getMapper(SchoolInfoDao.class).getUserHschoolCode(userId);
+				model.addAttribute("schoolCode", hMap.get("SCHOOLCODE"));
+				model.addAttribute("schoolName", hMap.get("SCHOOLNAME"));
+				System.out.println(hMap);
+			}
+		} else if("u".equals(schoolCate)) {
+			String uEval =  sqlSession.getMapper(SchoolInfoDao.class).checkUAlmaMater(userId);
+			if(uEval != null) {
+				result = sqlSession.getMapper(SchoolInfoDao.class).getUserURecord(userId);
+				Map<String, String> uMap = sqlSession.getMapper(SchoolInfoDao.class).getUserUschoolCode(userId);
+				model.addAttribute("schoolCode", uMap.get("SCHOOLCODE"));
+				model.addAttribute("schoolName", uMap.get("SCHOOLNAME"));
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	@Transactional
+	public void getUserEval(String userId, Model model, String schoolCate) {
+		if("h".equals(schoolCate)) {
+			System.out.println("여기까지오니");
+			String evalA = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalA(userId);
+			String evalD = sqlSession.getMapper(SchoolInfoDao.class).getUserHEvalD(userId);
+			if(evalA != null) {
+				model.addAttribute("evalA", evalA);
+			}
+			if(evalD != null) {
+				model.addAttribute("evalD", evalD);
+			}
+			System.out.println("끝났니") ;
+		} else if("u".equals(schoolCate)) {
+			String evalA = sqlSession.getMapper(SchoolInfoDao.class).getUserUEvalA(userId);
+			String evalD = sqlSession.getMapper(SchoolInfoDao.class).getUserUEvalD(userId);
+			if(evalA != null) {
+				model.addAttribute("evalA", evalA);
+			}
+			if(evalD != null) {
+				model.addAttribute("evalD", evalD);
+			}
 		}
 	}
 }
