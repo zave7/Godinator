@@ -163,7 +163,7 @@ function sample6_execDaumPostcode() {
 
 										<!-- <label for="email">이메일</label><br>
 									<div id="email" class="custom-control-inline"> -->
-									<input type="hidden" class="form-control" id=email name="email" placeholder="" size="25" value="${emailStr}"> @
+									<input type="hidden" class="form-control" id=email name="email" placeholder="" size="25" value="${emailStr}">
 									<input type="hidden" id="emailDomain" name="emailDomain" value="${emailDomain}">
 									<!-- </div> -->
 

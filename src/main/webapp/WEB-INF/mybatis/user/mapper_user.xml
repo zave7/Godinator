@@ -42,14 +42,14 @@
   	<select id="idCheck" parameterType="String" resultType="int">
   		select count(*)
   		from member
-  		where user_id = #{id}
+  		where user_id = #{id} and withdraw='n'
   	</select>
   	
   	<insert id="register" parameterType="memberDto">
   		insert into member
   		(user_id, user_name, pass, email, email_domain, phone1, phone2, phone3, zipcode, address, address_detail, user_cate, withdraw, join_date)
   		values(#{userId}, #{userName}, #{pass}, #{email}, #{emailDomain}, #{phone1},
-  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail},#{userCate},'N', sysdate)
+  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail},#{userCate},'n', sysdate)
 
   	</insert>
   	
@@ -91,7 +91,7 @@
 			phone1, phone2, phone3, zipcode, address, address_detail "ADDRESSDETAIL", h_school_code "HSCHOOLCODE", h_school_cate "HSCHOOLCATE", 
 			u_school_code "USCHOOLCODE", u_school_cate "USCHOOLCATE", user_cate "USERCATE", join_date "JOINDATE", withdraw, latitude, longitude
 		from member
-		where user_id = #{userId} and pass = #{pass} and withdraw='N'
+		where user_id = #{userId} and pass = #{pass} and withdraw='n'
   	</select>
   	<select id="findModify" parameterType="String" resultType="memberDto">
   		select user_id "USERID" , user_name "USERNAME", pass, email, email_domain "EMAILDOMAIN", 
@@ -109,7 +109,7 @@
   	</update>
   	<update id="withdrawMember" parameterType="String">
   		update member
-  		set withdraw = 'Y'
+  		set withdraw = 'y'
   		where user_id=#{id}
   	</update>
   </mapper>
