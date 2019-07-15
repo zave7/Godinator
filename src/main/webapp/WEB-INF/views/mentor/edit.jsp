@@ -96,7 +96,7 @@ $(function(){
 				
 					<%-- 첨삭 --%>
 					<div class="col-12">
-						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1"></textarea>
+						<textarea name="boardSubject" id="boardSubject" placeholder="제목을 입력하세요" rows="1">RE: </textarea>
 					</div>
 					<div class="col-12">
 						<textarea name="boardContent" id="boardContent" placeholder="내용을 입력하세요" rows="20"></textarea>

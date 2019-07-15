@@ -68,7 +68,7 @@
 										
 											<%-- 첨삭 --%>
 											<div class="col-12">
-												<textarea name="subject" id="subject" placeholder="제목을 입력하세요" rows="1"></textarea>
+												<textarea name="subject" id="subject" rows="1">RE: </textarea>
 											</div>
 											<div class="col-12">
 												<textarea name="content" id="content" placeholder="내용을 입력하세요" rows="20"></textarea>

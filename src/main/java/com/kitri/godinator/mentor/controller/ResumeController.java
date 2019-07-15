@@ -70,7 +70,6 @@ public class ResumeController {
 		EditDto editDto = resumeService.getResume(pseq);
 		model.addAttribute("editDto", editDto);
 		model.addAttribute("pseq", pseq);
-		System.out.println(pseq);
 		return "mentor/edit";
 	}
 	
