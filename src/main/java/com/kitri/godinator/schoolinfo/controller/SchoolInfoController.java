@@ -35,6 +35,7 @@ public class SchoolInfoController {
 	public String viewSchoolDetail(@RequestParam Map<String, String> parameter, Model model, HttpSession httpSession) {
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
 		if(memberDto != null) {
+			System.out.println("memberDto.getUserId() : "+memberDto.getUserId());
 			parameter.put("userId", memberDto.getUserId());
 			// 유저 학교 검색 로그
 			schoolInfoCommonService.mergeSearchLog(parameter);
@@ -102,6 +103,7 @@ public class SchoolInfoController {
 		return "inserting";
 	}
 	
+	//이제 안씀
 	@RequestMapping(value = "/rating", method = RequestMethod.GET)
 	public String viewRating(HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
@@ -112,6 +114,7 @@ public class SchoolInfoController {
 		return path;
 	}
 	
+	//회원가입시 모교 평가 이제 안씀
 	@RequestMapping(value = "/rating", method = RequestMethod.POST)
 	public String setRating(@RequestParam Map<String, String> parameter, HttpSession session) {
 		//필요한 값 : 항목 6개, 장단점, 아이디, 학교 구분, 학교 번호
@@ -123,11 +126,67 @@ public class SchoolInfoController {
 			if(result != 0) {
 				return "user/registerok";
 			} else {
-				return "user/registerfail";
+				return "redirect:main";
 			}
 		} else {
 			return "redirect:main";
 		}
 	}
+	// 회원가입 완료
+	@RequestMapping(value = "/joinfinish", method = RequestMethod.GET)
+	public String joinFinish() {
+		return "user/registerok";
+	}
+	// 고등학교 모교 평가 페이지 이동
+	@RequestMapping(value = "/hrating", method = RequestMethod.GET)
+	public String viewHSchoolRating(HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			//TODO 로그인 한 경우에 해당하는 고등학교 평가 기록을 가져온다
+			return "schoolinfo/hschoolrating";
+		} else {
+			return "redirect:main";
+		}
+	}
+	// 고등학교 모교 평가 페이지 완료
+	@RequestMapping(value = "/hrating", method = RequestMethod.POST)
+	public String hSchoolRatingSubmit(HttpSession session, @RequestParam Map<String, String> parameter) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			schoolInfoService.insertAndUpdateHEvalByUser(parameter);
+			return "schoolinfo/uschoolrating";
+		} else {
+			return "schoolinfo/loginsession";
+		}
+	}
+	// 대학교 모교 평가 페이지 이동
+	@RequestMapping(value = "/urating", method = RequestMethod.GET)
+	public String viewUSchoolRating(HttpSession session) { 
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			//TODO 로그인 한 경우에 해당하는 대학교 평가 기록을 가져온다
+			return "schoolinfo/uschoolrating";
+		} else {
+			return "redirect:main";
+		}
+	}
+	// 대학교 모교 평가 페이지 완료
+	@RequestMapping(value = "/urating", method = RequestMethod.POST)
+	public String USchoolRatingSubmit(HttpSession session, @RequestParam Map<String, String> parameter) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			parameter.put("userId", memberDto.getUserId());
+			schoolInfoService.insertAndUpdateHEvalByUser(parameter);
+			return "user/registerok";
+		} else {
+			return "schoolinfo/loginsession";
+		}
+	}
 	
+	//회원가입
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register(HttpSession session, @RequestParam Map<String, String> parameter) {
+			return "user/registerok";
+	}
 }

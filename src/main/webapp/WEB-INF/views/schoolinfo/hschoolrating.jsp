@@ -5,7 +5,7 @@
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1 class="mogyoH1R">고등학교 및 대학교 평가</h1>
+				<h1 class="mogyoH1R">고등학교 평가</h1>
 			</header>
 			<div class="row">
 				<div class="col-10 col-12-small">
@@ -18,10 +18,6 @@
 				<div class="col-7 col-12-small">
 				</div>
 				<div class="col-2 col-12-small">
-				<select id="schoolCate">
-					<option value="h">고등학교</option>
-					<option value="u">대학교</option>
-				</select>
 				</div>
 				<div class="col-3 col-12-small">
 				<input type="text" id="searchSchoolName"/>
@@ -92,7 +88,21 @@
 				</div><br>
 				<div class="row">
 					<div class="col-6 col-12-small">
-						<span>학생 복지 : </span><div class="starRev" id="welfare">
+						<span>취업/진학률 : </span><div class="starRev" id="erate">
+										  <span class="starR">1</span>
+										  <span class="starR">2</span>
+										  <span class="starR">3</span>
+										  <span class="starR">4</span>
+										  <span class="starR">5</span>
+										  <span class="starR">6</span>
+										  <span class="starR">7</span>
+										  <span class="starR">8</span>
+										  <span class="starR">9</span>
+										  <span class="starR">10</span>
+										</div>
+					</div>
+					<div class="col-6 col-12-small">
+						<span>동아리 활성화 : </span><div class="starRev" id="clubVital">
 										  <span class="starR">1</span>
 										  <span class="starR">2</span>
 										  <span class="starR">3</span>
@@ -151,10 +161,6 @@
 				var schoolCate = "h";
 				var schoolCode;
 				var clickSchoolName;
-				$("#shcoolCate").change(function() {
-					schoolCate = $(this).val();
-					return false;
-				});
 				
 			    $('.search-panel .dropdown-menu').find('a').click(function(e) {
 					e.preventDefault();
@@ -163,6 +169,14 @@
 					$('.search-panel span#search_concept').text(concept);
 					$('.input-group #search_param').val(param);
 				});
+			    
+			    //건너뛰기
+			    $("div.submit-school-evaluation a#cancel").click(function() {
+			    	$(location).attr("href", "${root}/schoolinfo/urating");
+			    	return false;
+			    });
+			    
+			    //확인
 				$("div.submit-school-evaluation a#submit").click(function() {
 					var $keyword = $("#searchSchoolName").val();
 					if(clickSchoolName != $keyword) {
@@ -172,16 +186,17 @@
 					var $facilities = $("#facilities").find("span.on");
 					var $teachers = $("#teachers").find("span.on");
 					var $course = $("#course").find("span.on");
-					var $welfare = $("#welfare").find("span.on");
+					var $erate = $("#erate").find("span.on");
+					var $clubVital = $("#clubVital").find("span.on");
 					var $study = $("#study").find("span.on");
 					var $eval_a = $("#eval_a").val();
 					var $eval_d = $("#eval_d").val();
 					console.log($eval_a);
-					if($facilities.length != 0 && $teachers.length != 0 && $course.length != 0 && $welfare.length != 0 && $study.length != 0) {
+					if($facilities.length != 0 && $teachers.length != 0 && $course.length != 0 && $erate.length != 0 && $study.length != 0 && $clubVital.length != 0) {
 						var check = confirm("입력 확인 시 수정이 불가합니다. 신중히 작성해주시기 바랍니다.\n작성 완료하시겠습니까?");
 						if(check) {
 							var $form = $('<form></form>');
-							var url = '${root}/schoolinfo/rating';
+							var url = '${root}/schoolinfo/hrating';
 							$form.attr('action', url);
 							$form.attr('method', 'post');
 							$form.appendTo('body');
@@ -189,13 +204,15 @@
 							$facilities = $($facilities).last().text();
 							$teachers = $($teachers).last().text();
 							$course = $($course).last().text();
-							$welfare = $($welfare).last().text();
+							$erate = $($erate).last().text();
+							$clubVital = $($clubVital).last().text();
 							$study = $($study).last().text();
 							console.log($course);
 							var facilities = $('<input type="hidden" value="'+$facilities+'" name="facilities">');
 							var teachers = $('<input type="hidden" value="'+$teachers+'" name="teachers">');
 							var course = $('<input type="hidden" value="'+$course+'" name="course">');
-							var welfare = $('<input type="hidden" value="'+$welfare+'" name="welfare">');
+							var erate = $('<input type="hidden" value="'+$erate+'" name="course">');
+							var clubVital = $('<input type="hidden" value="'+$clubVital+'" name="course">');
 							var study = $('<input type="hidden" value="'+$study+'" name="study">');
 							var pschoolCate = $('<input type="hidden" value="'+schoolCate+'" name="schoolCate">');
 							var pschoolCode = $('<input type="hidden" value="'+schoolCode+'" name="schoolCode">');
@@ -208,7 +225,7 @@
 								$form.append(eval_d);
 							}
 							
-							$form.append(facilities).append(teachers).append(course).append(welfare).append(study).append(pschoolCate).append(pschoolCode);
+							$form.append(facilities).append(teachers).append(course).append(erate).append(clubVital).append(study).append(pschoolCate).append(pschoolCode);
 							console.log($form);
 							$form.submit();
 						}
@@ -217,25 +234,19 @@
 						alert("항목을 평가해주세요");
 						return false;
 					}
+					alert("fdsf");
 					
 				});
-				//건너뛰기
-				$("div.submit-school-evaluation a#submit").click(function() {
-					$(location).attr("href", "${root}/schoolinfo/joinfinish");
-					return false;
-				}
 				
 				//학교 이름 검색
 				$("#searchSchoolName").keydown(function(e) {
-					var $schoolCate = $("#schoolCate").val();
 					var $keyword = $(this).val();
-					console.log($schoolCate + " " + $keyword);
 					if($keyword.trim().length != 0) {
 						$.ajax({
 							url : "${root}/schoolnews/selectschool",
 							type : "GET",
 							contentType : "application/json;charset=UTF-8",
-							data : "schoolCate="+$schoolCate+"&keyword="+$keyword,
+							data : "schoolCate=h&keyword="+$keyword,
 							dataType : "JSON",
 							success : function(result) {
 								if(result != false) {

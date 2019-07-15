@@ -36,3 +36,13 @@ div.tel{
 	line-height: 100px;
 	text-align: center;
 }
+section#mainPage>span {
+	font-size: 2em;
+}
+section#mainPage {
+	text-align: center;
+}
+section#mainPage:hover {
+	cursor: pointer;
+	text-align: center;
+}

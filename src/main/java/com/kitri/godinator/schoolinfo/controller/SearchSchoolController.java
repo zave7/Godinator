@@ -1,5 +1,6 @@
 package com.kitri.godinator.schoolinfo.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,19 +34,24 @@ public class SearchSchoolController {
 			MemberDto memberDto = (MemberDto) httpSession.getAttribute("userInfo");
 			Map<String, Object> schoolMap = new HashMap<String, Object>();
 			
-	//		if(memberDto != null) {
-	//			List<String> preference = searchSchoolService.getUserPrefer(memberDto.getUserId());
-	//			String userId = memberDto.getUserName();
-	//			if("h".equals(preference.get(0))) {
-	//				List<HSchoolDto> hRecomList = searchSchoolService.getHRecomSchool(userId);
-	//				model.addAttribute("hRecomList", hRecomList);
-	//			} 
-	//			if("u".equals(preference.get(1))) {
-	//				List<USchoolDto> uRecomList = searchSchoolService.getURecomSchool(userId);
-	//				model.addAttribute("uRecomList", uRecomList);
-	//			}
-	//		}
-			
+//			if(memberDto != null) {
+//				System.out.println(memberDto.getUserId());
+//				Map<String, String> map = searchSchoolService.getUserPrefer(memberDto.getUserId());
+//				System.out.println(map);
+//				String userId = memberDto.getUserId();
+//				System.out.println(userId);
+//				System.out.println(!"0".equals(map.get("H")));
+//				if(!"0".equals(map.get("H"))) {
+//					List<HSchoolDto> hRecomList = searchSchoolService.getHRecomSchool(userId);
+//					model.addAttribute("hRecomList", hRecomList);
+//					System.out.println(hRecomList);
+//				} 
+//				if(!"0".equals(map.get("U"))) {
+//					List<USchoolDto> uRecomList = searchSchoolService.getURecomSchool(userId);
+//					model.addAttribute("uRecomList", uRecomList);
+//					System.out.println(uRecomList);
+//				}
+//			}
 			List<HSchoolDto> hSchoolList = searchSchoolService.getHSchoolList();
 			List<USchoolDto> uSchoolList = searchSchoolService.getUSchoolList();
 			

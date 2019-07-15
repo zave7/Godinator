@@ -10,14 +10,11 @@ hr {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    var user = "unknown";
-    countVisit(user);
+	var user = "unknown";
+	countVisit(user);	
     
     /*  윤영 part 방문자 통계用  */
     function countVisit(user) { 
-    //$(user).attr("action","/godinator/admin/countVisit").submit();
-    //alert('여기와염' + user);
-          
     	$.ajax({
 			url : "${root}/admin/countVisit",
 	        type : "get",
@@ -25,6 +22,19 @@ $(document).ready(function() {
 	        data : "user="+user,
     	});
 	}
+    
+    function countUserVisit(id) { 
+        alert('여기와염' + id);
+              
+        	$.ajax({
+    			url : "${root}/admin/countUserVisit",
+    	        type : "get",
+    	        contentType : "application/json;charset=UTF-8",
+    	        data : "id="+id,
+        	});
+    	}
+    
+    
 });
 </script>
 

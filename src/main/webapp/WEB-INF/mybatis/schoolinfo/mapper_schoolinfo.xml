@@ -84,7 +84,7 @@
   		select 	avg(eval1_avg) eval1Avg, avg(eval2_avg) eval2Avg, avg(eval3_avg) eval3Avg, 
   				avg(eval4_avg) eval4Avg, avg(eval5_avg) eval5Avg, avg(eval6_avg) eval6Avg
 		from h_school 
-		WHERE school_cate1 =    (SELECT school_cate1 
+		WHERE school_cate2 =    (SELECT school_cate2 
 		                        FROM h_school 
 		                        WHERE school_code = #{schoolCode})
   	</select>
@@ -96,10 +96,32 @@
 		                        FROM u_school 
 		                        WHERE code = #{schoolCode})
   	</select>
-  	<insert id="insertEvalByUser" parameterType="map">
-  		
+  	<insert id="insertHEvalByUser" parameterType="map">
+  		insert into user_prefer (user_id, h_eval1, h_eval2, h_eval3, h_eval4, h_eval5, h_eval6)
+		values(#{userId}, #{facilities}, #{study}, #{teachers}, #{course}, #{erate}, #{clubVital});
   	</insert>
-  	<update id="updateEvalAvgByUser" parameterType="map">
-  	
+  	<update id="updateHEvalAvgByUser" parameterType="map">
+  		update h_school set eval1_avg = ((eval1_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval2_avg = ((eval2_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval3_avg = ((eval3_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval4_avg = ((eval4_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval5_avg = ((eval5_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval6_avg = ((eval6_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval_cnt = eval_cnt + 1
+                    WHERE school_code = #{schoolCode};
+  	</update>
+  	<insert id="insertUEvalByUser" parameterType="map">
+  		insert into user_prefer (user_id, u_eval1, u_eval2, u_eval3, u_eval4, u_eval5, u_eval6)
+		values(#{userId}, #{facilities}, #{study}, #{teachers}, #{course}, #{erate}, #{clubVital});
+  	</insert>
+  	<update id="updateUEvalAvgByUser" parameterType="map">
+  		update u_school set eval1_avg = ((eval1_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval2_avg = ((eval2_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval3_avg = ((eval3_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval4_avg = ((eval4_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval5_avg = ((eval5_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval6_avg = ((eval6_avg * decode(eval_cnt, 0, 1)) + 5) / (eval_cnt+1), 
+                    eval_cnt = eval_cnt + 1
+                    WHERE school_code = #{schoolCode};
   	</update>
   </mapper>

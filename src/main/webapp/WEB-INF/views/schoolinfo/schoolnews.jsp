@@ -5,7 +5,7 @@
 	<!-- Content -->
 		<section>
 			<header class="main">
-				<h1 class="newsH1C">학교 뉴스 종합</h1>
+				<h1 class="newsH1C">학교 뉴스 검색</h1>
 			</header>
 			<div class="row">
 				<div class="col-4 col-12-small">

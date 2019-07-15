@@ -10,5 +10,16 @@
   	SET visit_cnt = visit_cnt+1 
   	WHERE visit_user_id = #{user}
   	</update>
+  	
+  	<insert id="enrollVisit" parameterType="String" >
+  	INSERT INTO visit
+	VALUES (sysdate, '0', #{id})
+  	</insert>
+  	
+  	<update id="addUserCnt" parameterType="String">
+  	UPDATE visit
+  	SET visit_cnt = visit_cnt+1 
+  	WHERE visit_user_id = #{StaticId}
+  	</update>
   
   </mapper>

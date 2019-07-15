@@ -7,10 +7,8 @@
 <!-- Sidebar -->
 <div id="sidebar">
 	<div class="inner">
-		<section id="search" class="alt">
-			<form method="post" action="#">
-				<input type="text" name="query" id="query" placeholder="Search" />
-			</form>
+		<section id="mainPage" class="alt">
+			<span>고디네이터</span>
 		</section>
 		
 		<nav id="menu">
@@ -84,6 +82,12 @@
 <script src="${root}/js/breakpoints.min.js"></script>
 <script src="${root}/js/util.js"></script>
 <script src="${root}/js/main.js"></script>
-
+<script>
+	$(document).ready(function() {
+		$("section#mainPage").click(function() {
+			$(location).attr("href", "${root}/board/main");
+		});
+	});
+</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -79,6 +80,12 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 			schoolType = ((USchoolDto)schoolDto).getType();
 		}
 		map.put("schoolDto", schoolDto);
+		String regex = "^\\/\\/([^:\\/\\s]+)(:([^\\/]*))?((\\/[^\\s/\\/]+)*)?\\/?([^#\\s\\?]*)(\\?([^#\\s]*))?(#(\\w*))?$";
+		Pattern p = Pattern.compile(regex);
+		if(!p.matcher(imgUrl).matches()) {
+			imgUrl = "/godinator/resources/images/noImage.PNG";
+//			imgUrl = "/godinator/img/noimage.PNG";
+		}
 		map.put("imgUrl", imgUrl);
 		map.put("cateAvg", cateAvg);
 		map.put("schoolType", schoolType);
@@ -169,5 +176,17 @@ public class SchoolInfoServiceImpl implements SchoolInfoService{
 		result += sqlSession.getMapper(SchoolInfoDao.class).updateEvalAvgByUser(parameter); 
 		result += sqlSession.getMapper(SchoolInfoDao.class).insertEvalByUser(parameter); 
 		return result;
+	}
+
+	@Override
+	public void insertAndUpdateHEvalByUser(Map<String, String> parameter) {
+		String schoolCate = parameter.get("schoolCate");
+		if("h".equals(schoolCate)) {
+			sqlSession.getMapper(SchoolInfoDao.class).insertHEvalByUser(parameter);
+			sqlSession.getMapper(SchoolInfoDao.class).updateHEvalAvgByUser(parameter);
+		} else if("u".equals(schoolCate)) {
+			sqlSession.getMapper(SchoolInfoDao.class).insertUEvalByUser(parameter);
+			sqlSession.getMapper(SchoolInfoDao.class).updateUEvalAvgByUser(parameter);
+		}
 	}
 }
