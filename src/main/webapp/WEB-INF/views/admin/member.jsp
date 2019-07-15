@@ -81,9 +81,9 @@ $(document).ready(function(){
                          var uSchoolCode = data.members[i].uSchoolCode;
                          var userCate = data.members[i].userCate;
                          var joinDate = data.members[i].joinDate;
-                         var temp = data.members[i].i1;
-                         var temp2 = data.members[i].i2;
-                          //console.log(schoolCate + '/'+schoolName);
+                         var temp = data.members[i].temp;
+                         //var temp2 = data.members[i].i2;
+                         console.log("temp??"+temp);
                            
                          var tr = $("<tr>").attr("class", "table-active");
           	    		 var td1 = $("<td>").html(userId);
@@ -92,8 +92,14 @@ $(document).ready(function(){
              			 var td4 = $("<td>").html(uSchoolCode);
              			 var td5 = $("<td>").html(userCate);
              			 var td6 = $("<td>").html(joinDate);
-             			 var td7 = $("<td><input type='button' id='mentoConfirm' value='멘토승인'>").html();
-            			 //var td7 = $(temp).html();
+             			 var td7 = "";
+             			 if(temp == "r") { // 대기
+             			 	td7 = $("<td><input type='button' id='mentoConfirm' value='멘토승인'>").html();
+             			 } else if (temp == "n") { // 아님
+	            			td7 = $("<td>").html(""); // 멘토
+             			 } else {
+             				td7 = $("<td>").html("멘토끼에엑!!"); 
+             			 }
              			 
              			 tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
              			 $("#memberlist").append(tr);
