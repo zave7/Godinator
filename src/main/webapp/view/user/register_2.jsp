@@ -28,9 +28,7 @@ $(document).ready(function() {
 
 //학교이름검색
 $("#highSchool").keyup(function(e) {
-	
 	var $keyword = $(this).val();
-
 	console.log($keyword);
 	if($keyword.trim().length != 0) {
 		$.ajax({
@@ -81,7 +79,6 @@ $("#highSchool").keyup(function(e) {
 //대학검색
 $("#university").keyup(function(e) {
 	var $keyword = $(this).val();
-
 	console.log($keyword);
 	if($keyword.trim().length != 0) {
 		$.ajax({

@@ -73,12 +73,12 @@
   	
   	<insert id="insertMentorh" parameterType="String">
   		insert into mentor (user_id, mentor, aprvl_date, cate)
-		values(#{registerId}, 'R', '', 'h')
+		values(#{registerId}, 'r', '', 'h')
   	</insert>
   	
   	<insert id="insertMentoru" parameterType="String">
   		insert into mentor (user_id, mentor, aprvl_date, cate)
-		values(#{registerId}, 'R', '', 'u')
+		values(#{registerId}, 'r', '', 'u')
   	</insert>
   	
   	<insert id="insertMemberPreference" parameterType="memberPreferDto">
