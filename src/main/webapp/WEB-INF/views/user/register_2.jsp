@@ -26,8 +26,56 @@ $(document).ready(function() {
 		}
 	});
 });
-
-
+//학교이름검색
+$("#highSchool").keydown(function(e) {
+	//var $schoolCate = $("#schoolCate").val();
+	var $keyword = $(this).val();
+	console.log($keyword);
+	if($keyword.trim().length != 0) {
+		$.ajax({
+			url : "${root}/user/selectHschool",
+			type : "GET",
+			contentType : "application/json;charset=UTF-8",
+			data : "keyword="+$keyword,
+			dataType : "JSON",
+			success : function(result) {
+				if(result != false) {
+				console.log(result);
+				var school = result.schoolNames;
+				console.log(school);
+				var schoolNamesCnt = result.schoolNames.length;
+				console.log(schoolNamesCnt);
+					$("#schoolScrollUlH").empty();
+					for(var i=0; i<schoolNamesCnt; i++) {
+						var li = $("<li/>", {
+							"data-code" : school[i].schoolCode,
+							"text" : school[i].schoolName,
+							"click" : function() {
+								$("#searchSchoolName").val($(this).text());
+								$("#schoolScrollUlH").css("display", "none");
+								$("#schoolCode").val($(this).attr("data-code"));
+								clickSchoolName = $(this).text();
+								schoolCode = $(this).attr("data-code");
+							}
+						});
+						$("#schoolScrollUlH").append(li);
+					}
+					$("#schoolScrollUlH").css("display", "list-item");
+				} else {
+					console.log(result);
+					$("#schoolScrollUlH").css("display", "none");
+					$("#schoolScrollUlH").empty();
+				}
+			},
+			error : function() {
+				
+			}
+		});
+	} else {
+		$("#schoolScrollUlH").css("display", "none");
+		$("#schoolScrollUlH").empty();
+	}
+});
 </script>
 
 		<link rel="stylesheet" href="/godinator/css/main.css" />
@@ -46,7 +94,7 @@ $(document).ready(function() {
 									<div>
 										<h3 id="contentId">출신 고등학교</h3>
 										   <input type="text" name="highSchool" id="highSchool" />
-										  <!--  <a href="#" class="button">학교 검색</a> -->
+										  <div id="schoolScrollDivH"><ul id="schoolScrollUlH"></ul></div>
 										   <br><br>
 										   <h5>고등학교 구분</h5>
 										   <div id="h_category" class="custom-control-inline">

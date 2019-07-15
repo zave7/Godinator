@@ -5,10 +5,23 @@
 hr{
 	border: 1px dashed #5a5a5a;
 }
-</style>
-<style>
-	#imagesHigh>div>img, .bin, #imagesUni>div>img{
+
+	#imagesHigh>div>img, #imagesUni>div>img{
 	width: 10% !important;
+	}
+	
+	.iconHigh, .iconUni{
+	float: left;
+	padding-right: 20px; 
+	}
+	
+	.icon{
+	padding-left: 20px;
+	}
+	
+	.bin{
+	width: 8% !important;
+	height: 10% !important;
 	}
 </style>
 <script type="text/javascript">
@@ -35,10 +48,56 @@ $(function(){
 		var uniArray = new Array(uEval1,uEval2,uEval3,uEval4,uEval5,uEval6);
 		//alert(uniArray);
 		
+		alert("heval1 : "+ hEval1);
+		
+		/*  if(
+			hEval1.substring(1, 1)=='h'||
+			hEval2.substring(1, 1)=='h'||
+			hEval3.substring(1, 1)=='h'||
+			hEval4.substring(1, 1)=='h'||
+			hEval5.substring(1, 1)=='h'||
+			hEval6.substring(1, 1)=='h'
+		 ){
+			//(고등학교)우선순위 중복 해결 
+			if(hEval1==hEval2||hEval1==hEval3||hEval1==hEval4||hEval1==hEval5||hEval1==hEval6){
+				alert("고등학교 우선순위 중복을 확인하세요");
+			}else if(hEval2==hEval3||hEval2==hEval4||hEval2==hEval5||hEval2==hEval6){
+				alert("고등학교 우선순위 중복을 확인하세요");
+			}else if(hEval3==hEval4||hEval3==hEval5||hEval3==hEval6){
+				alert("고등학교 우선순위 중복을 확인하세요");
+			}else if(hEval4==hEval5||hEval4==hEval6){
+				alert("고등학교 우선순위 중복을 확인하세요");
+			}else if(hEval5==hEval6){
+				alert("고등학교 우선순위 중복을 확인하세요");
+			}
+		 } 
+		
+		 if(uEval1.substring(1, 1)=='u'||
+					uEval2.substring(1, 1)=='u'||
+					uEval3.substring(1, 1)=='u'||
+					uEval4.substring(1, 1)=='u'||
+					uEval5.substring(1, 1)=='u'||
+					uEval6.substring(1, 1)=='u'){
+			//(대학교)우선순위 중복 해결 
+			if(uEval1==uEval2||uEval1==uEval3||uEval1==uEval4||uEval1==uEval5||uEval1==uEval6){
+				alert("대학교 우선순위 중복을 확인하세요");
+			}else if(uEval2==uEval3||uEval2==uEval4||uEval2==uEval5||uEval2==uEval6){
+				alert("대학교 우선순위 중복을 확인하세요");
+			}else if(uEval3==uEval4||uEval3==uEval5||uEval3==uEval6){
+				alert("대학교 우선순위 중복을 확인하세요");
+			}else if(uEval4==uEval5||uEval4==uEval6){
+				alert("대학교 우선순위 중복을 확인하세요");
+			}else if(uEval5==uEval6){
+				alert("대학교 우선순위 중복을 확인하세요");
+			}
+		 } */
+	
 		$(this).attr("href", "/godinator/user/preference?highArray="+highArray + "&uniArray="+uniArray+
 				"&registerId="+$("#registerId").val() + "&highSchool="+$("#highSchool").val()+"&university="+$("#university").val());
 	
-  });
+ 
+	//return false;
+	});
 	
 });
 

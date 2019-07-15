@@ -40,30 +40,13 @@ $(document).ready(function() {
 						alert("비밀번호를 입력해주세요");
 						return;
 					} else {
-						/* $.ajax({
-							url:'${root}/user/login',
-							type:'post',
-							data: $("#loginForm").serialize(),
-							success: function(msg){
-								if(msg=="forward:/view/user/main.jsp"){
-									location.href=msg;
-								}else{
-								console.log(msg);
-								}
-							} 
-						}); */
-						
 						$("#loginForm").attr("method", "post").attr("action", "${root}/user/login").submit();
 					}
 			});
 	});
 	
 	/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>카카오톡 로그인>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>. */
-	
-
-	
 	</script>
-
 							<!-- Content -->
 								<div id="loginAll">
 									<header class="main">

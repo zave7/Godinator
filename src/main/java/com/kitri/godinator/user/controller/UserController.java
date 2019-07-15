@@ -18,9 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.kitri.godinator.model.HSchoolDto;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.MemberPreferDto;
 import com.kitri.godinator.model.MentorDto;
+import com.kitri.godinator.model.USchoolDto;
+import com.kitri.godinator.schoolinfo.service.SchoolInfoCommonService;
 import com.kitri.godinator.user.service.UserService;
 
 @Controller
@@ -29,6 +34,9 @@ import com.kitri.godinator.user.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SchoolInfoCommonService schoolInfoCommonService;
 
 	@RequestMapping(value = "/modifyMember", method = RequestMethod.POST)
 	public @ResponseBody String modifyMember(MemberDto memberDto, Model model, HttpSession session) {
@@ -238,6 +246,33 @@ public class UserController {
 		}
 
 	}
+	@RequestMapping(value = "/selectHschool", method = RequestMethod.GET)
+	@ResponseBody
+		public String selectHschool(@RequestParam Map<String, String> parameter) {
+			System.out.println("controller 값 : " + parameter.get("keyword"));
+			JsonObject schoolNames = new JsonObject();
+			JsonArray jsonArray = new JsonArray();
+			
+			//고등학교
+				List<HSchoolDto> list = schoolInfoCommonService.selectHSchoolName(parameter);
+					for(Object h : list) {
+						if(h != null) {
+							JsonObject school = new JsonObject();
+							String schoolName = ((HSchoolDto)h).getSchoolName();
+							String schoolCode = ((HSchoolDto)h).getSchoolCode();
+							school.addProperty("schoolName", schoolName);
+							school.addProperty("schoolCode", schoolCode);
+							jsonArray.add(school);
+						}
+					}	
+				schoolNames.add("schoolNames", jsonArray);
+			 
+			System.out.println("schoolNames.toString() : "+schoolNames.toString());
+			if(jsonArray.size() != 0)
+				return schoolNames.toString();
+			else 
+				return "false";
+		}
 
 	@RequestMapping(value = "/mentorRegister", method = RequestMethod.POST)
 	public String mentorRegister(MemberDto memberDto, // 학교별 cate 담겨있음
@@ -539,7 +574,7 @@ public class UserController {
 			model.addAttribute("userId", registerId);
 			model.addAttribute("highSchool", highSchool);
 			model.addAttribute("university", university);
-			return "user/registerok";
+			return "schoolinfo/hrating";
 		} else {
 			return "error";
 
