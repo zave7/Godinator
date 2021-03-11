@@ -8,3 +8,5 @@
 
    ### # 시연 동영상
    - https://www.youtube.com/watch?v=dFwcLEWjtBQ
+   ### # 프로젝트 PDF
+   - [Godinator_발표_PDF](https://drive.google.com/file/d/12fWDh5jccA1GkprdF6fFUN-EUlgICcQB/view?usp=sharing)
